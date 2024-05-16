@@ -1,0 +1,113 @@
+const express = require("express");
+const router = express.Router();
+const {
+  updateOrCreateSeekerResume,
+  getUserResumeDetails,
+  getAResume,
+  getMyResume,
+} = require("../controllers/SeekerController/SeekerResume");
+const {
+  jobApplication,
+  totalJobsApplied,
+  myOfferLetter,
+  acceptOrRejectOffer,
+  getApplicationsBySeeker,
+} = require("../controllers/SeekerController/JobApplication");
+const {
+  getSeekerEarning,
+  getAllSeekerPaymentRequest,
+} = require("../controllers/SeekerController/Earning");
+const multer = require("multer");
+const {
+  getMyJobs,
+  getJobSeekerOngoingJobs,
+  getJobSeekerCompletedJobs,
+} = require("../controllers/SeekerController/myJobs");
+const {
+  getJobSeekerDashboardData,
+  getLastApprovedJobs,
+  uploadSeekerImage,
+} = require("../controllers/SeekerController/seekerDashboard");
+const getRecommendation = require("../controllers/SeekerController/SeekerLanding");
+const {
+  createService,
+  getMyServices,
+  getAService,
+  getAllServices,
+  servicesSearch,
+  editSeekerServices,
+  deleteSeekerService,
+  serviceByDepartment,
+} = require("../controllers/SeekerController/Service");
+const myContract = require("../controllers/SeekerController/Contract");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Specify the destination folder for uploads
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Use the original filename
+  },
+});
+
+const upload = multer({ storage: storage });
+
+const serviceStorage = multer.diskStorage({});
+const serviceUpload = multer({ storage: serviceStorage });
+
+const storageSeeker = multer.diskStorage({});
+
+const uploadSeeker = multer({ storage: storageSeeker });
+
+router.post(
+  "/seeker-resume",
+  upload.single("resume"),
+  updateOrCreateSeekerResume
+);
+router.post(
+  "/seeker-upload-image",
+  uploadSeeker.single("image"),
+  uploadSeekerImage
+);
+
+router.post("/apply-for-job", getUserResumeDetails);
+
+router.post("/submit-job-application", jobApplication);
+router.get("/get-a-resume/:filename", getAResume);
+router.get("/get-my-resume/:userId", getMyResume);
+
+router.get("/get-my-offers/:userId", myOfferLetter);
+router.get("/seeker-recommendation/:userId", getRecommendation);
+
+router.get("/total-jobs-applied/", totalJobsApplied);
+router.post("/accept-reject-offer", acceptOrRejectOffer);
+router.get(
+  "/seeker-monthly-applications/:seekerUserId",
+  getApplicationsBySeeker
+);
+
+//route to get my jobs
+router.get("/seeker-jobs/:userId", getMyJobs);
+router.get("/seeker-ongoing-jobs/:userId", getJobSeekerOngoingJobs);
+router.get("/seeker-completed-jobs/:userId", getJobSeekerCompletedJobs);
+
+//get job seeker dashbooard data
+router.get("/dashboard/:userId", getJobSeekerDashboardData);
+router.get("/last-approved-jobs/:userId", getLastApprovedJobs);
+
+// service
+router.post("/create-service", serviceUpload.single("image"), createService);
+router.get("/get-my-services/:userId", getMyServices);
+router.get("/get-a-service/:serviceId", getAService);
+router.get("/get-all-services", getAllServices);
+router.post("/search-services", servicesSearch);
+router.get("/get-my-contract/:userId", myContract);
+router.patch("/edit-service/:serviceId", editSeekerServices); //
+router.delete("/delete-service/:serviceId", deleteSeekerService);
+router.get("/sevices-by-department", serviceByDepartment);
+
+// seeker earning
+router.get("/get-my-earning/:userId", getSeekerEarning);
+router.get("/get-my-withdrawHistory/:userId", getAllSeekerPaymentRequest);
+
+module.exports = router;
