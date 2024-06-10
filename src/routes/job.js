@@ -6,6 +6,7 @@ const {
   getAllReviews,
   getReviewsByProvider,
   getReviewsBySeeker,
+  editReview,
 } = require("../controllers/JobController/RatingController");
 
 const router = express.Router();
@@ -29,6 +30,7 @@ router.get("/top-companies", getTopCompaniesHiring);
 //routes for review submission
 router.post("/submit-reviews", submitReview);
 router.get("/reviews", getAllReviews); //,
+router.put('/editReview', editReview);
 router.get("/get-company-reviews/:userId", getReviewsByProvider);
 router.get("/get-seeker-reviews/:userId", getReviewsBySeeker);
 
@@ -43,6 +45,9 @@ router.get("/jobs-by-department", jobController.getJobByCategory);
 router.post("/save-job/:jobId", jobController.saveJob);
 router.get("/get-my-saved-jobs/:userId", jobController.getSavedJobs);
 router.delete("/delete-save-job", jobController.deleteSavedJob);
+
+//total job created per month
+router.get("/jobs-per-month", jobController.totalJobsPerMonth);
 
 //routes for totalCompaniesAndJobs
 // router.get("/total-companies-and-jobs", jobController.totalCompaniesAndJobs);

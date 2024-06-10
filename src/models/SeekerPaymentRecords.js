@@ -132,6 +132,8 @@ const SeekerEarning = sequelize.define(
   }
 );
 
+
+
 SeekerEarning.belongsTo(User, { foreignKey: "userId", targetKey: "id" });
 
 const SeekerPendingAmount = sequelize.define(
@@ -154,23 +156,24 @@ const SeekerPendingAmount = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    jobAmount: {
+     jobAmount: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    paidAmount: {
+     paidAmount: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
     currency: {
-      type: DataTypes.STRING(3),
-      allowNull: false,
-    },
-
-    paidAmount: {
+    type: DataTypes.STRING(3),
+    allowNull: false
+    }, 
+    
+     paidAmount: {
       type: DataTypes.DECIMAL(10, 2),
-    },
-    status: {
+      
+  },
+     status: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "pending",
@@ -183,9 +186,4 @@ const SeekerPendingAmount = sequelize.define(
 );
 SeekerPendingAmount.belongsTo(User, { foreignKey: "userId", targetKey: "id" });
 
-module.exports = {
-  SeekerPaymentRecord,
-  PaymentRequest,
-  SeekerEarning,
-  SeekerPendingAmount,
-};
+module.exports = { SeekerPaymentRecord, PaymentRequest, SeekerEarning, SeekerPendingAmount };

@@ -4,7 +4,7 @@ const sendProviderOutSourcJobPaymentEmail = async ({
   username,
   email,
   num,
-  price,
+  price
 }) => {
   const message = `<!DOCTYPE html>
 <html lang="en">

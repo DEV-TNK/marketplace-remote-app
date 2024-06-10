@@ -83,143 +83,148 @@ const providerJobPayment = async (req, res) => {
     console.log("This is the amount", responseData)
 
     // CONVERT amount 
-   
-    
 
 
-    if(type === "JOB"){
-       const convertAmount = responseData.data.amount / 100;
 
-    const getJob = await Job.findOne({ _id: jobId }).populate({
-      path: "jobPoster",
-      select: "companyName companyLogo",
-    });
-    if (!getJob) {
-      return res.status(400).json({ message: `Job does not exist` });
-    }
 
-    const offerDetails = await offer.findOne({
-      where: {
-        jobId: jobId,
-        status: "accepted",
-      },
-    });
-    console.log("this is offer details", offerDetails);
-    const userSeeker = await User.findOne({
-      where: {
-        id: offerDetails.jobSeeker,
-      },
-    });
-    if (!userSeeker) {
-      return res
-        .status(400)
-        .json({ message: `No Job seeker associated with this job` });
-    }
-    const userTransaction = await ProviderTransaction.create({
-      email: email,
-      jobId: jobId,
-      amount: responseData.data.amount / 100,
-      paymentMethod: responseData.data.channel,
-      transactionDate: responseData.data.paid_at,
-      jobTitle: getJob.jobTitle,
-      userId: userId,
-      status: responseData.data.status,
-      type: type,
-      currency: currency
-    });
-    const amount = parseInt(getJob.jobSalary.replace(/,/g, ""));
-    console.log("this is amount", amount);
+    if (type === "JOB") {
+      // for paystack
+      // const convertAmount = responseData.data.amount / 100;
+      // for flutterwave
+      const convertAmount = responseData.data.amount;
 
-    
 
-    if (responseData.data.status === "success" && convertAmount === amount) {
-      const jobUpdate = await Job.findOneAndUpdate(
-        { _id: jobId },
-        { $set: { status: "Ongoing", paymentStatus: "paid" } },
-        { new: true } // Return the updated document
-      );
-      await sendSeekerJobPaymentEmail({
-        username: userSeeker.username,
-        email: userSeeker.email,
-        jobTitle: getJob.jobTitle,
-        price: getJob.jobSalary,
-        jobProvider: getJob.jobPoster.companyName,
-        description: getJob.jobDescription,
-        deliveryDate: getJob.deliveryDate,
-        type: getJob.jobType,
+      const getJob = await Job.findOne({ _id: jobId }).populate({
+        path: "jobPoster",
+        select: "companyName companyLogo",
       });
-      await sendProviderJobPaymentEmail({
-        username: getJob.jobPoster.companyName,
+      if (!getJob) {
+        return res.status(400).json({ message: `Job does not exist` });
+      }
+
+      const offerDetails = await offer.findOne({
+        where: {
+          jobId: jobId,
+          status: "accepted",
+        },
+      });
+      console.log("this is offer details", offerDetails);
+      const userSeeker = await User.findOne({
+        where: {
+          id: offerDetails.jobSeeker,
+        },
+      });
+      if (!userSeeker) {
+        return res
+          .status(400)
+          .json({ message: `No Job seeker associated with this job` });
+      }
+      const userTransaction = await ProviderTransaction.create({
         email: email,
+        jobId: jobId,
+        amount:  responseData.data.amount,
+        paymentMethod: responseData.data.payment_type,
+        transactionDate: responseData.data.created_at,
         jobTitle: getJob.jobTitle,
+        userId: userId,
+        status: "success",
+        type: type,
+        currency: currency
       });
-      return res.status(201).json({
-        message: "Job Payment Successful",
-        responseData,
-        jobUpdate,
-        userTransaction,
-      });
-    }
-    } else if (type === "Out-Source"){
+      const amount = parseInt(getJob.jobSalary.replace(/,/g, ""));
+      console.log("this is amount", amount);
+
+
+
+      if (responseData.data.status === "successful" && convertAmount === amount) {
+        const jobUpdate = await Job.findOneAndUpdate(
+          { _id: jobId },
+          { $set: { status: "Ongoing", paymentStatus: "paid" } },
+          { new: true } // Return the updated document
+        );
+        await sendSeekerJobPaymentEmail({
+          username: userSeeker.username,
+          email: userSeeker.email,
+          jobTitle: getJob.jobTitle,
+          price: getJob.jobSalary,
+          jobProvider: getJob.jobPoster.companyName,
+          description: getJob.jobDescription,
+          deliveryDate: getJob.deliveryDate,
+          type: getJob.jobType,
+          currency: currency 
+        });
+        await sendProviderJobPaymentEmail({
+          username: getJob.jobPoster.companyName,
+          email: email,
+          jobTitle: getJob.jobTitle,
+        });
+        return res.status(201).json({
+          message: "Job Payment Successful",
+          responseData,
+          jobUpdate,
+          userTransaction,
+        });
+      }
+    } else if (type === "Out-Source") {
       const flutterAmount = responseData.data.amount;
       const getOutSourceJob = await outSourceJobs.findOne({ _id: jobId }).populate({
-      path: "jobPoster",
-      select: "companyName companyLogo",
-    });
+        path: "jobPoster",
+        select: "companyName companyLogo",
+      });
 
-    if (!getOutSourceJob) {
-      return res.status(400).json({ message: `Job does not exist` });
-    }
+      if (!getOutSourceJob) {
+        return res.status(400).json({ message: `Job does not exist` });
+      }
 
-     const userTransaction = await ProviderTransaction.create({
-      email: email,
-      jobId: jobId,
-      amount: responseData.data.amount,
-      paymentMethod: responseData.data.payment_type,
-      transactionDate: responseData.data.created_at,
-      jobTitle: "Out-Source Job",
-      userId: userId,
-      status: "success",
-      type: type,
-      currency: currency
-    });
-
-        const totalAmount = getOutSourceJob.jobs.reduce((total, job) =>
-                            total + parseFloat(job.price) * job.numberOfPerson,
-                          0)
-        console.log("this is total amount", totalAmount)
-        console.log("this is flutterAmount", flutterAmount)
-        console.log("this is status", responseData.data.status)
-
-
-        if (responseData.data.status === "successful" && flutterAmount === totalAmount) {
-
-      const jobUpdate = await outSourceJobs.findOneAndUpdate(
-        { _id: jobId },
-        { $set: { paymentStatus: "paid" } },
-        { new: true } // Return the updated document
-      );
-      const totalNumber = getOutSourceJob.jobs.reduce((total, job) =>
-                            total + job.numberOfPerson,
-                          0)
-      await sendProviderOutSourcJobPaymentEmail({
-        username: getOutSourceJob.jobPoster.companyName,
+      const userTransaction = await ProviderTransaction.create({
         email: email,
-        num: totalNumber,
-        price: totalAmount
+        jobId: jobId,
+        amount: responseData.data.amount,
+        paymentMethod: responseData.data.payment_type,
+        transactionDate: responseData.data.created_at,
+        jobTitle: "Out-Source Job",
+        userId: userId,
+        status: "success",
+        type: type,
+        currency: currency
       });
-      return res.status(201).json({
-        message: "Job Payment Successful",
-        responseData,
-        jobUpdate,
-        userTransaction,
-      });
-    }
-     
+
+      const totalAmount = getOutSourceJob.jobs.reduce((total, job) =>
+        total + parseFloat(job.price) * job.numberOfPerson,
+        0)
+      console.log("this is total amount", totalAmount)
+      console.log("this is flutterAmount", flutterAmount)
+      console.log("this is status", responseData.data.status)
+
+
+      if (responseData.data.status === "successful" && flutterAmount === totalAmount) {
+
+        const jobUpdate = await outSourceJobs.findOneAndUpdate(
+          { _id: jobId },
+          { $set: { paymentStatus: "paid" } },
+          { new: true } // Return the updated document
+        );
+        const totalNumber = getOutSourceJob.jobs.reduce((total, job) =>
+          total + job.numberOfPerson,
+          0)
+        await sendProviderOutSourcJobPaymentEmail({
+          username: getOutSourceJob.jobPoster.companyName,
+          email: email,
+          num: totalNumber,
+          price: totalAmount
+        });
+        return res.status(201).json({
+          message: "Job Payment Successful",
+          responseData,
+          jobUpdate,
+          userTransaction,
+        });
+      }
+
     }
 
     // Send the parsed object as the response
-    return res.status(201).json({message: "Payment Successfull"})
+    return res.status(201).json({ message: "Payment Successfull" })
   } catch (error) {
     console.error(error);
     res
@@ -238,7 +243,12 @@ const allProviderTransaction = async (req, res) => {
     }
 
     const transactions = await ProviderTransaction.findAll({
-      where: { userId },
+      where: {
+        userId: userId,
+
+      },
+
+      order: [["transactionDate", "DESC"]],
     });
 
     // Return the transactions in the response
@@ -251,7 +261,7 @@ const allProviderTransaction = async (req, res) => {
 
 const getAllPayment = async (req, res) => {
   try {
-   
+
     const allPayment = await ProviderTransaction.findAll({
       order: [['createdAt', 'DESC']],
     });
@@ -284,7 +294,7 @@ const getAllPayment = async (req, res) => {
       status: payment.status,
       createdAt: payment.createdAt,
       updatedAt: payment.updatedAt,
-      jobPoster: jobPosterLookup[payment.userId], 
+      jobPoster: jobPosterLookup[payment.userId],
     }));
 
     return res.json({ records: paymentsWithDetails });
@@ -299,9 +309,9 @@ const getAllPayment = async (req, res) => {
 const paymentRequest = async (req, res) => {
   await PaymentRequest.sync();
   try {
-    const { userId, accountId, amount } = req.body;
+    const { userId, accountId, amount, currency } = req.body;
 
-    if (!userId || !accountId || !amount) {
+    if (!userId || !accountId || !amount || !currency) {
       return res
         .status(400)
         .json({ message: "Incomplete payment request data" });
@@ -311,31 +321,36 @@ const paymentRequest = async (req, res) => {
         userId: userId,
       },
     });
-    if(!getUserEarning){
+    if (!getUserEarning) {
       return res
         .status(404)
         .json({ message: "User have no earnings to widthdraw from" });
     }
     const convertedAmount = typeof amount === 'string' ? parseFloat(amount.replace(/,/g, '')) : parseFloat(amount);
-    if(getUserEarning.totalAmount < convertedAmount){
+    console.log("User earning:", getUserEarning.dataValues.NGN)
+    const currencyBalance = getUserEarning[currency];
+    if (!currencyBalance || currencyBalance < convertedAmount) {
+
       return res
         .status(400)
-        .json({ message: "You do not have sufficient amount to make this withdrawer request" });
+        .json({ message: "You do not have sufficient amount to make this withdrawal request" });
     }
-    getUserEarning.totalAmount -= convertedAmount
-    getUserEarning.save()
+
     const newPaymentRequest = await PaymentRequest.create({
       userId,
       accountId,
-      amount,
+      amount: convertedAmount,
+      currency,
       status: "pending",
     });
+    getUserEarning[currency] -= convertedAmount
+    await getUserEarning.save()
     const user = await User.findByPk(userId)
 
     await sendSeekerWithdrawalEmail({
       username: user.username,
       email: user.email,
-      amount: amount
+      amount: convertedAmount.toString()
     })
     res.status(201).json({
       message: "Payment request created successfully",
@@ -351,10 +366,10 @@ const allSeekerWithdrawRequest = async (req, res) => {
   try {
     const allPaymentRequests = await PaymentRequest.findAll({
       order: [['requestDate', 'DESC']],
-       include: [
-                { model: Account, attributes: ['accountName', 'accountNumber', 'bankName'] },
-                { model: User, attributes: ['email', 'username'] }
-            ]
+      include: [
+        { model: Account, attributes: ['accountName', 'accountNumber', 'bankName'] },
+        { model: User, attributes: ['email', 'username'] }
+      ]
     });
 
     return res.status(200).json({ paymentRequests: allPaymentRequests });
@@ -372,3 +387,4 @@ module.exports = {
   paymentRequest,
   allSeekerWithdrawRequest,
 };
+

@@ -4,7 +4,7 @@ const whiteList = [
   "http://localhost:5174",
   "https://unleashified.azurewebsites.net",
   "https://unleashified-staging.azurewebsites.net",
-  "https://unleashified.com",
+  "https://unleashified.com"
 ];
 
 const corsOptions = {

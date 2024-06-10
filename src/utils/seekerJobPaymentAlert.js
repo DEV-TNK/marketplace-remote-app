@@ -1,6 +1,16 @@
 const sendEmail = require("./sendEMail");
 
-const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
+const sendSeekerJobPaymentEmail = async ({
+  username,
+  email,
+  jobTitle,
+  price,
+  jobProvider,
+  description,
+  deliveryDate,
+  type,
+  currency
+}) => {
   const message = `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -72,7 +82,7 @@ const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
                   <div style="text-align: center; margin-bottom: 40px">
                     <a rel="noopener">
                       <img
-                         alt="Unleashified Logo"
+                        alt="Unleashified Logo"
                         src="https://res.cloudinary.com/djhnaee9k/image/upload/v1714038296/et5gicqtnuw4u1tqujjr.png"
                         style="height: 60px"
                       />
@@ -95,17 +105,29 @@ const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
                       Dear ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We are writing to inform you that payment has been
-                      received for the job titled <strong>${jobTitle}</strong>.
+                      We are pleased to inform you that payment has been
+                      received for the job titled <strong>${jobTitle}</strong> from ${jobProvider}.
+                      You can now proceed with starting the job.
                       <br />
-                      You can now consider the payment process complete
-                      <br />
+                      Please review the job details below:
+                    </p>
+                    <p style="margin-bottom: 2px; color: #333">
+                      Title: ${jobTitle}<br />
+                      Description: ${description}<br />
+                      Type: ${type}<br />
+                      Price: ${currency} ${price} <br />
+                      Delivery Date: ${deliveryDate}
                     </p>
                     <p>
-                      <strong>Note</strong> <br />
-                      Please always connect with your client about the job
-                      status and don't forget to hit the complete button only
-                      when the job have been completed
+                      To start the Job, Please go to your
+                      <a
+                        href="https://unleashified.com/authentication/signin"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <strong>Dashboard</strong>
+                      </a>
+                      .
                     </p>
                   </div>
 
@@ -162,10 +184,10 @@ const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
   return sendEmail({
     to: email,
     subject: "Payment Email!",
-    html: `<h4>Payment Receipt Alert</h4>
+    html: `<h4>Job Payment Alert</h4>
     ${message}
     `,
   });
 };
 
-module.exports = sendProviderJobPaymentEmail;
+module.exports = sendSeekerJobPaymentEmail;

@@ -9,8 +9,11 @@ const forgotPassword = require("../controllers/UserController/Authentication/for
 const resetPassword = require("../controllers/UserController/Authentication/resetPassword");
 const logout = require("../controllers/UserController/Authentication/logout");
 const saveInterest = require("../controllers/UserController/Authentication/userInterest");
+const {getFgnUsers, RegisterFgnUsers} = require("../controllers/UserController/Authentication/fgnUsers")
 
 router.post("/register", Register);
+router.get("/get-fgn-user-details/:userId", getFgnUsers);
+router.post("/register-fgnUser", RegisterFgnUsers);
 router.post("/verify-email", verifyEmail);
 router.post("/resend-email", resendEmail);
 router.post("/login", Login);

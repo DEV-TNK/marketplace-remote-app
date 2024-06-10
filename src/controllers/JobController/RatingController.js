@@ -5,9 +5,17 @@ const User = require("../../models/Users");
 const submitReview = async (req, res) => {
   try {
     await Rating.sync();
-    const { user_id, jobId, jobposterId, jobTitle, rating, review, jobseekerId } = req.body;
+    const {
+      user_id,
+      jobId,
+      jobposterId,
+      jobTitle,
+      rating,
+      review,
+      jobseekerId,
+    } = req.body;
 
-    const details = ["user_id", "jobId", "jobseekerId",  "rating", "review"];
+    const details = ["user_id", "jobId", "jobseekerId", "rating", "review"];
 
     for (const detail of details) {
       if (!req.body[detail]) {
@@ -95,9 +103,41 @@ const getReviewsBySeeker = async (req, res) => {
   }
 };
 
+const editReview = async (req, res) => {
+  const { id, userId, rating, review } = req.body;
+
+  if (!id || !userId || !rating || !review) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    const existingReview = await Rating.findOne({ where: { id, userId } });
+
+    if (!existingReview) {
+      return res
+        .status(404)
+        .json({
+          message: "Review not found or not authorized to edit this review",
+        });
+    }
+
+    existingReview.rating = rating;
+    existingReview.review = review;
+    await existingReview.save();
+
+    res
+      .status(200)
+      .json({ message: "Review updated successfully", review: existingReview });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error", error });
+  }
+};
+
 module.exports = {
   submitReview,
   getAllReviews,
   getReviewsByProvider,
   getReviewsBySeeker,
+  editReview,
 };

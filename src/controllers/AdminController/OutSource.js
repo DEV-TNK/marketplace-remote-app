@@ -2,9 +2,17 @@ const OutSourceJobs = require("../../models/OutSource");
 const outSourceJobs = require("../../models/OutSource");
 
 const getAllOutSource = async (req, res) => {
+  const status = req.query.status;
+  const paymentStatus = req.query.paymentStatus;
   try {
+    let body = {
+      JobType: "Out-Sourcing",
+      ...(status && { status }),
+      ...(paymentStatus && { paymentStatus }),
+    };
+
     const jobs = await outSourceJobs
-      .find()
+      .find(body)
       .populate({
         path: "jobPoster",
         select: "companyName companyLogo companyEmail companyContact",
@@ -40,21 +48,46 @@ const markOutSourcJobCompleted = async (req, res) => {
       { new: true }
     );
 
-    res
-      .status(200)
-      .json({
-        message: "Job marked as completed",
-        job: completedOutSourcedJob,
-      });
+    res.status(200).json({
+      message: "Job marked as completed",
+      job: completedOutSourcedJob,
+    });
   } catch (error) {
     console.error("Error marking job as completed:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
+const getAlleEmployeeOfRecordJobs = async (req, res) => {
+  const status = req.query.status;
+  const paymentStatus = req.query.paymentStatus;
+  try {
+    let body = {
+      JobType: "Employee of Record",
+      ...(status && { status }),
+      ...(paymentStatus && { paymentStatus }),
+    };
+
+    const jobs = await outSourceJobs
+      .find(body)
+      .populate({
+        path: "jobPoster",
+        select: "companyName companyLogo companyEmail companyContact",
+      })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ jobs });
+  } catch (error) {
+    console.error("Error retrieving providers with most jobs:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const allPendingJobs = async (req, res) => {
   try {
-    const pendingJobs = await OutSourceJobs.find({ status: "pending" })
+    const pendingJobs = await OutSourceJobs.find({
+      status: "pending",
+    })
       .populate({
         path: "jobPoster",
         select: "companyName companyLogo companyEmail companyContact",
@@ -69,7 +102,9 @@ const allPendingJobs = async (req, res) => {
 
 const allCompletedJobs = async (req, res) => {
   try {
-    const completedJobs = await OutSourceJobs.find({ status: "completed" })
+    const completedJobs = await OutSourceJobs.find({
+      status: "completed",
+    })
       .populate({
         path: "jobPoster",
         select: "companyName companyLogo companyEmail companyContact",
@@ -84,7 +119,9 @@ const allCompletedJobs = async (req, res) => {
 
 const allUnpaidJobs = async (req, res) => {
   try {
-    const unpaidJobs = await OutSourceJobs.find({ paymentStatus: "unpaid" })
+    const unpaidJobs = await OutSourceJobs.find({
+      paymentStatus: "unpaid",
+    })
       .populate({
         path: "jobPoster",
         select: "companyName companyLogo companyEmail companyContact",
@@ -96,10 +133,12 @@ const allUnpaidJobs = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 module.exports = {
   getAllOutSource,
   allPendingJobs,
   allCompletedJobs,
   allUnpaidJobs,
   markOutSourcJobCompleted,
+  getAlleEmployeeOfRecordJobs,
 };

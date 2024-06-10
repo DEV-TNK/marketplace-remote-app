@@ -11,6 +11,7 @@ const {
 const {
     saveJobSeekerAccount,
   getUserBankDetails,
+  editAccountDetails,
 } = require("../controllers/PaymentController/AccountController");
 const {
   savePaymentRecord,
@@ -19,9 +20,10 @@ const {
 
 router.post("/provider-payment", providerJobPayment);
 
-//accoun routes
+//account routes
 router.post("/save-bank-details", saveJobSeekerAccount);
 router.get("/bank-details/:userId", getUserBankDetails);
+router.put("/edit-account",editAccountDetails)
 
 //Seeker payment records routes
 router.post("/save-payment-records", savePaymentRecord);
