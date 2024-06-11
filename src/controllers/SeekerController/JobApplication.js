@@ -229,7 +229,7 @@ const getApplicationsBySeeker = async (req, res) => {
 
     res.json(allMonthsData);
   } catch (error) {
-    console.error(error);
+    console.error("Error Message:", error);
     res.status(500).json({ message: "Server Error" });
   }
 };
@@ -248,4 +248,10 @@ const getApplicationsBySeeker = async (req, res) => {
 //   }
 // }
 
-module.exports = { jobApplication, totalJobsApplied, myOfferLetter, acceptOrRejectOffer, getApplicationsBySeeker }
+module.exports = {
+  jobApplication,
+  totalJobsApplied,
+  myOfferLetter,
+  acceptOrRejectOffer,
+  getApplicationsBySeeker
+}

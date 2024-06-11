@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = process.env.PORT || 7070;
+const PORT = process.env.PORT || 8080;
 const { connectDB } = require("./src/config/dbConnect");
 const db = require("./src/config/db.js");
 const corsOptions = require("./src/config/corsOptions.js");
@@ -34,6 +34,8 @@ app.use("/api/v1", require("./src/routes/Payment"));
 app.use("/api/v1", require("./src/routes/conflictResolution"));
 app.use("/api/v1", require("./src/routes/customerCare"));
 app.use("/api/v1", require("./src/routes/Activities"));
+app.use("/api/v1", require("./src/routes/Notification.js"));
+app.use("/api/v1", require("./src/routes/procedure.js"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

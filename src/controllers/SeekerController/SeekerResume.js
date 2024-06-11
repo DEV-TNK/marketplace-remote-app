@@ -1,12 +1,12 @@
-const {SeekerResume, Employment } = require("../../models/SeekerResume");
+const { SeekerResume, Employment } = require("../../models/SeekerResume");
 const User = require("../../models/Users");
 const JobPosting = require("../../models/Job");
 const express = require('express');
 const path = require('path');
 
 const updateOrCreateSeekerResume = async (req, res) => {
-  await SeekerResume.sync();
-  await Employment.sync();
+    await SeekerResume.sync();
+    await Employment.sync();
     try {
         const {
             userId,
@@ -21,7 +21,7 @@ const updateOrCreateSeekerResume = async (req, res) => {
             degree,
             study,
             studyType,
-            startYear, 
+            startYear,
             endYear,
             workType,
             workLocation,
@@ -45,10 +45,10 @@ const updateOrCreateSeekerResume = async (req, res) => {
             "degree",
             "study",
             "studyType",
-            "startYear", 
+            "startYear",
             "endYear",
-                 "school"
-            
+            "school"
+
         ];
         for (const field of requiredFields) {
             if (!req.body[field]) {
@@ -81,11 +81,11 @@ const updateOrCreateSeekerResume = async (req, res) => {
                 workAvailability,
                 resumeUrl,
                 degree,
-                 school,
-            study,
-            studyType,
-            startYear, 
-            endYear,
+                school,
+                study,
+                studyType,
+                startYear,
+                endYear,
             });
         } else {
             await seekerResume.update({
@@ -100,12 +100,12 @@ const updateOrCreateSeekerResume = async (req, res) => {
                 workLocation,
                 workAvailability,
                 resumeUrl,
-                 school,
+                school,
                 degree,
-            study,
-            studyType,
-            startYear, 
-            endYear,
+                study,
+                studyType,
+                startYear,
+                endYear,
             });
         }
 
@@ -135,12 +135,12 @@ const updateOrCreateSeekerResume = async (req, res) => {
 
 const getUserResumeDetails = async (req, res) => {
     try {
-        const {userId, jobId} = req.body
+        const { userId, jobId } = req.body
         const details = [
             "userId",
             "jobId"
         ]
-         for (const detail of details) {
+        for (const detail of details) {
             if (!req.body[detail]) {
                 return res.status(400).json({ msg: `${detail} is required` });
             }
@@ -149,16 +149,16 @@ const getUserResumeDetails = async (req, res) => {
         if (!userDetails) {
             return res.status(404).json({ message: "User does not exist" });
         }
-        const getJobDetails = await JobPosting.findOne({_id: jobId}).populate({
-        path: "jobPoster",
-        select: "companyName companyLogo",
-      })
-      if (!getJobDetails) {
-            return res.status(404).json({message: "Job Not Found"   });
+        const getJobDetails = await JobPosting.findOne({ _id: jobId }).populate({
+            path: "jobPoster",
+            select: "companyName companyLogo",
+        })
+        if (!getJobDetails) {
+            return res.status(404).json({ message: "Job Not Found" });
         }
-        return res.status(200).json({ getJobDetails, userDetails});
+        return res.status(200).json({ getJobDetails, userDetails });
     } catch (error) {
-         console.error(error);
+        console.error(error);
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -166,27 +166,27 @@ const getUserResumeDetails = async (req, res) => {
 const getMyResume = async (req, res) => {
     try {
         const userId = req.params.userId;
-        if(!userId){
-             return res.status(400).json({ message: "User not found" });
+        if (!userId) {
+            return res.status(400).json({ message: "User not found" });
         }
 
         const userResume = await SeekerResume.findOne({
-        where: {
-          userId: userId,
-        },
-      });
-      if(!userResume){
-        return res.status(400).json({ message: "User resume does not exist" });
-      }
-      const employemntDetails = await Employment.findOne({
-        where: {
-          seekerResumeId: userResume.id,
-        },
-      });
-      if(employemntDetails){
-         return res.status(200).json({ userResume, employemntDetails});
-      }
-   return res.status(200).json({ userResume});
+            where: {
+                userId: userId,
+            },
+        });
+        if (!userResume) {
+            return res.status(400).json({ message: "User resume does not exist" });
+        }
+        const employemntDetails = await Employment.findOne({
+            where: {
+                seekerResumeId: userResume.id,
+            },
+        });
+        if (employemntDetails) {
+            return res.status(200).json({ userResume, employemntDetails });
+        }
+        return res.status(200).json({ userResume });
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: "Internal server error" });
@@ -196,8 +196,8 @@ const getMyResume = async (req, res) => {
 const getAResume = async (req, res) => {
     try {
         const filename = req.params.filename;
-  const filePath = path.join(__dirname, '..', '..', '..', 'uploads', filename);
-  res.sendFile(filePath);
+        const filePath = path.join(__dirname, '..', '..', '..', 'uploads', filename);
+        res.sendFile(filePath);
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: "Internal server error" });
@@ -205,5 +205,10 @@ const getAResume = async (req, res) => {
 }
 
 
-module.exports = {updateOrCreateSeekerResume, getUserResumeDetails, getAResume, getMyResume}
+module.exports = {
+    updateOrCreateSeekerResume,
+    getUserResumeDetails,
+    getAResume,
+    getMyResume
+}
 

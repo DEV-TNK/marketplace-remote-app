@@ -28,7 +28,12 @@ const {
   getLastApprovedJobs,
   uploadSeekerImage,
 } = require("../controllers/SeekerController/seekerDashboard");
-const getRecommendation = require("../controllers/SeekerController/SeekerLanding");
+
+const {
+  getRecommendation,
+  fgnAlatRecommendedJpbs,
+} = require("../controllers/SeekerController/SeekerLanding");
+
 const {
   createService,
   getMyServices,
@@ -38,6 +43,10 @@ const {
   editSeekerServices,
   deleteSeekerService,
   serviceByDepartment,
+  totalServicePerMonth,
+  getFgnAlatRecommendedServices,
+  providerCreateService,
+  likeService,
 } = require("../controllers/SeekerController/Service");
 const myContract = require("../controllers/SeekerController/Contract");
 
@@ -78,13 +87,22 @@ router.get("/get-my-resume/:userId", getMyResume);
 
 router.get("/get-my-offers/:userId", myOfferLetter);
 router.get("/seeker-recommendation/:userId", getRecommendation);
+router.get(
+  "/FGN-ALAT-seeker-job-recommendation/:userId",
+  fgnAlatRecommendedJpbs
+);
+router.get(
+  "/FGN-ALAT-seeker-recommended-services/:email",
+  getFgnAlatRecommendedServices
+);
 
 router.get("/total-jobs-applied/", totalJobsApplied);
 router.post("/accept-reject-offer", acceptOrRejectOffer);
-router.get(
-  "/seeker-monthly-applications/:seekerUserId",
-  getApplicationsBySeeker
-);
+router.get("/seeker-monthly-applications/:userId", getApplicationsBySeeker);
+// router.get(
+//   "/seeker-monthly-applications/:seekerUserId",
+//   getApplicationsBySeeker
+// );
 
 //route to get my jobs
 router.get("/seeker-jobs/:userId", getMyJobs);
@@ -97,14 +115,29 @@ router.get("/last-approved-jobs/:userId", getLastApprovedJobs);
 
 // service
 router.post("/create-service", serviceUpload.single("image"), createService);
+router.post(
+  "/provider-create-service",
+  serviceUpload.any("backgroundCover"),
+  providerCreateService
+);
 router.get("/get-my-services/:userId", getMyServices);
 router.get("/get-a-service/:serviceId", getAService);
 router.get("/get-all-services", getAllServices);
 router.post("/search-services", servicesSearch);
 router.get("/get-my-contract/:userId", myContract);
-router.patch("/edit-service/:serviceId", editSeekerServices); //
+router.patch(
+  "/edit-service/:serviceId",
+  serviceUpload.any("backgroundCover"),
+  editSeekerServices
+); //
+router.put("/like/service", likeService);
 router.delete("/delete-service/:serviceId", deleteSeekerService);
-router.get("/sevices-by-department", serviceByDepartment);
+router.get("/services-by-department", serviceByDepartment);
+router.get("/service-per-month", totalServicePerMonth);
+router.get(
+  "/FGN-ALAT-seeker-recommended-services/:userId",
+  getFgnAlatRecommendedServices
+);
 
 // seeker earning
 router.get("/get-my-earning/:userId", getSeekerEarning);

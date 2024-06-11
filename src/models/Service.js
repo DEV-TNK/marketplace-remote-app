@@ -45,4 +45,5 @@ const seekerServices = new mongoose.Schema(
   }
 );
 
+
 module.exports = JobPosting = mongoose.model("SeekerServices", seekerServices);

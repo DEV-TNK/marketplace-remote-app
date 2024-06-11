@@ -13,7 +13,7 @@ const sendVerificationEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "UNLEASHIFIED Email Confirmation",
+    subject: "MARKETPLACE Email Confirmation",
     html: `<h4> Hello, ${username}</h4>
     ${message}
     `,

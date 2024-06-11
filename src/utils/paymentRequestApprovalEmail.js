@@ -2,14 +2,14 @@ const { BeginTransactionEnvChangeToken } = require("tedious/lib/token/token");
 const sendEmail = require("./sendEMail");
 
 const sendPaymentRequestApprovalEmail = async ({
-  username,
-  email,
-  amount,
-  accountNumber,
-  bankName,
-  accountName,
+    username,
+    email,
+    amount,
+    accountNumber,
+    bankName,
+    accountName
 }) => {
-  const message = `<!DOCTYPE html>
+    const message = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -170,13 +170,13 @@ const sendPaymentRequestApprovalEmail = async ({
 </html>
 `;
 
-  return sendEmail({
-    to: email,
-    subject: "Payment Request Approved",
-    html: `<h4>Payment Request Approved</h4>
+    return sendEmail({
+        to: email,
+        subject: "Payment Request Approved",
+        html: `<h4>Payment Request Approved</h4>
     ${message}
     `,
-  });
+    });
 };
 
 module.exports = sendPaymentRequestApprovalEmail;
