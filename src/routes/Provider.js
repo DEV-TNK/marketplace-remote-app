@@ -1,23 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(__dirname, "../uploads");
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const upload = multer({ storage });
+const { imageUpload, upload, fileUpload } = require("../helper/multerUpload");
 
 const {
   createProvider,
@@ -48,20 +31,6 @@ const {
   onboardingServiceProvider,
 } = require("../controllers/ProviderController/serviceProvider");
 
-const imageStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, "../uploads/userImages");
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const imageUpload = multer({ storage: imageStorage });
 router.post(
   "/provider-logo-update",
   imageUpload.single("userimage"),
@@ -85,29 +54,6 @@ router.get("/company-single/:companyId", companySingle);
 
 router.post("/companies/company-list", searchCompanyList);
 router.post("/mark-job-completed", makeJobCompleted);
-
-// Set up multer for file uploads
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    let uploadPath = path.join(__dirname, "../uploads");
-    if (file.fieldname === "userImage") {
-      uploadPath = path.join(uploadPath, "userImages");
-    } else if (file.fieldname === "portfolioImages") {
-      uploadPath = path.join(uploadPath, "portfolioImages");
-    } else if (file.fieldname === "certificationImage") {
-      uploadPath = path.join(uploadPath, "certificationImages");
-    }
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const fileUpload = multer({ fileStorage });
 
 router.post(
   "/onboard-service-provider",
