@@ -6,7 +6,7 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = path.join(__dirname, "uploads");
+    const dir = path.join(__dirname, "../uploads");
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
@@ -48,15 +48,23 @@ const {
   onboardingServiceProvider,
 } = require("../controllers/ProviderController/serviceProvider");
 
-// Set up multer for handling multipart/form-data
-// const storage = multer.diskStorage({});
-// const upload = multer({ storage });
-// const storageSeeker = multer.diskStorage({});
-// const uploadSeeker = multer({ storage: storageSeeker });
+const imageStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, "../uploads/userImages");
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+    }
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
 
+const imageUpload = multer({ storage: imageStorage });
 router.post(
   "/provider-logo-update",
-  upload.single("image"),
+  imageUpload.single("userimage"),
   uploadProviderImage
 );
 
@@ -81,13 +89,13 @@ router.post("/mark-job-completed", makeJobCompleted);
 // Set up multer for file uploads
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let uploadPath = "uploads";
+    let uploadPath = path.join(__dirname, "../uploads");
     if (file.fieldname === "userImage") {
-      uploadPath = path.join(__dirname, "uploads/userImages");
+      uploadPath = path.join(uploadPath, "userImages");
     } else if (file.fieldname === "portfolioImages") {
-      uploadPath = path.join(__dirname, "uploads/portfolioImages");
+      uploadPath = path.join(uploadPath, "portfolioImages");
     } else if (file.fieldname === "certificationImage") {
-      uploadPath = path.join(__dirname, "uploads/certificationImages");
+      uploadPath = path.join(uploadPath, "certificationImages");
     }
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
