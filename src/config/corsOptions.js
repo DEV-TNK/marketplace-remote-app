@@ -2,9 +2,7 @@ const whiteList = [
   "http://localhost:2000",
   "http://localhost:5173",
   "http://localhost:5174",
-  "https://unleashified.azurewebsites.net",
-  "https://unleashified-staging.azurewebsites.net",
-  "https://unleashified.com",
+  "https://marketplacefrontendas-test.azurewebsites.net",
 ];
 
 const corsOptions = {

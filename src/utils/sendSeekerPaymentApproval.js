@@ -117,7 +117,7 @@ const sendSeekerJobPaymentEmail = async ({
                         <li>Follow the on-screen instructions to complete the withdrawal process.</li>
                       </ol>
                       If you encounter any issues or have any questions regarding your payment, 
-                      feel free to reach out to our support team at <a href="mailto:support@unleashified.com" style="text-decoration: none">support@unleashified.com</a> for assistance. 
+                      feel free to reach out to our support team at <a href="mailto:migration@gfa-tech.com" style="text-decoration: none">support</a> for assistance. 
                       We are here to help you every step of the way.
                     </p>
                   </div>

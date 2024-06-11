@@ -1,7 +1,8 @@
 const User = require("../../../models/Users");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-const sendVerificationEmail = require("../../../utils/sendEmailVerification");
+const sendVerificationEmail =
+  require("../../../utils/sendEmailVerification");
 
 const resendEmail = async (req, res) => {
   // to get user details from the request body

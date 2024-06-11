@@ -212,7 +212,7 @@ const sendWelcomeEmail = async ({ username, email }) => {
         </div>
         <div class="click">
           <a
-            href="https://unleashified-staging.azurewebsites.net/authentication/signin"
+            href="https://unleashified.com/authentication/signin"
             target="_blank"
             rel="noopener noreferrer"
           >

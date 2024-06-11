@@ -2,6 +2,7 @@ const Job = require("../../models/Job");
 const JobPoster = require("../../models/JobPoster");
 const SaveJob = require("../../models/saveJob");
 
+
 const createJob = async (req, res) => {
   const {
     jobPosterId,
@@ -92,6 +93,8 @@ const createJob = async (req, res) => {
 
 const getAllJobs = async (req, res) => {
   try {
+    const userCountry = req.body.country;
+  
     const jobs = await Job.find({ status: "Pending" })
       .populate({
         path: "jobPoster",
@@ -105,6 +108,9 @@ const getAllJobs = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+
 
 const getLandingPageJobs = async (req, res) => {
   try {
@@ -396,16 +402,48 @@ const getJobCreatedByProviderPerMonth = async (req, res) => {
   }
 };
 
+const totalJobsPerMonth = async (req, res) => {
+  try {
+    const jobs = await Job.find();
+
+    const jobsPerMonth = jobs.reduce((acc, job) => {
+      const jobDate = new Date(job.createdAt);
+      const monthName = jobDate.toLocaleString("default", { month: "long" });
+      acc[monthName] = (acc[monthName] || 0) + 1;
+      return acc;
+    }, {});
+
+    // Create an array containing all month names
+    const allMonths = Array.from({ length: 12 }, (_, index) => {
+      const date = new Date(0, index);
+      return date.toLocaleString("default", { month: "long" });
+    });
+
+    console.log(allMonths);
+
+    const allJobsPerMonths = allMonths.map((month) => ({
+      month,
+      totalJobs: jobsPerMonth[month] || 0,
+    }));
+
+    res.json(allJobsPerMonths);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
 const getJobByCategory = async (req, res) => {
   //Get department from query
   const department = req.query.department;
+  console.log(department)
   if (!department) {
     return res.status(400).json({ message: "Please input department" });
   }
   try {
-    //Find jobs (regex for stronger searching )
     const jobs = await Job.find({
-      department: { $regex: new RegExp(department, "i") },
+        department: { $regex: new RegExp(department, "i") },
+         status: "Pending"
     }).sort({ createdAt: -1 });
 
     if (jobs.length === 0) {
@@ -418,6 +456,7 @@ const getJobByCategory = async (req, res) => {
       jobs,
     });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -470,22 +509,23 @@ const getSavedJobs = async (req, res) => {
     if (!userId) {
       return res.status(404).json({ message: "userId is required." });
     }
-    
+
     // Find saved jobs for the user and populate the 'jobs' field
-    const savedJobs = await SaveJob.find({ user: userId }).populate({
-      path: "jobs",
-      populate: {
-        path: "jobPoster", // Populate the 'jobPoster' field
-        select: "companyName companyLogo", // Select the fields you want to include
-      },
-    }).sort({ createdAt: -1 });
+    const savedJobs = await SaveJob.find({ user: userId })
+      .populate({
+        path: "jobs",
+        populate: {
+          path: "jobPoster", // Populate the 'jobPoster' field
+          select: "companyName companyLogo", // Select the fields you want to include
+        },
+      })
+      .sort({ createdAt: -1 });
 
     if (!savedJobs || savedJobs.length === 0) {
       return res.status(400).json({ message: "You have no saved jobs" });
     }
-    console.log("this is save job", savedJobs)
+    console.log("this is save job", savedJobs);
     // Map savedJobs to include jobPoster's name and image
-    
 
     res.status(200).json({ message: "Saved Jobs", savedJobs });
   } catch (error) {
@@ -493,7 +533,6 @@ const getSavedJobs = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 const deleteSavedJob = async (req, res) => {
   try {
@@ -535,6 +574,7 @@ module.exports = {
   allJobsCategory,
   allJobs,
   getAJob,
+  totalJobsPerMonth,
   totalJobsAndNewestJob,
   searchJobList,
   getJobCreatedPerMonth,

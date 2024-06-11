@@ -5,8 +5,9 @@ const {
   generateAccessToken,
   generateRefreshToken,
 } = require("../../../utils/generateToken");
-const { SeekerResume } = require("../../../models/SeekerResume");
-const JobPoster = require("../../../models/JobPoster");
+const {SeekerResume} = require("../../../models/SeekerResume")
+const JobPoster = require("../../../models/JobPoster")
+
 
 const Login = async (req, res) => {
   try {
@@ -83,22 +84,22 @@ const Login = async (req, res) => {
 
       if (user.role === "provider") {
         const jobPoster = await JobPoster.findOne({
-          jobPosterId: user.id,
-        });
-        if (jobPoster) {
+          jobPosterId: user.id
+        })
+         if(jobPoster){
           setProfile = true;
-        } else {
+        }else {
           setProfile = false;
         }
-      } else if (user.role === "seeker") {
-        const userProfile = await SeekerResume.findOne({
+      } else if(user.role === "seeker"){
+         const userProfile = await SeekerResume.findOne({
           where: {
-            userId: user.id,
-          },
-        });
-        if (userProfile) {
+          userId: user.id,
+        },
+        })
+        if(userProfile){
           setProfile = true;
-        } else {
+        }else {
           setProfile = false;
         }
       }
@@ -113,12 +114,14 @@ const Login = async (req, res) => {
         profile: setProfile,
         // Add other properties you want to include
       };
-      return res.status(200).json({
-        message: "Login successfull",
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-        data: userSubset,
-      });
+      return res
+        .status(200)
+        .json({
+          message: "Login successfull",
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+          data: userSubset,
+        });
     }
   } catch (error) {
     console.error("Error during login:", error);

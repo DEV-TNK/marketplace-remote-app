@@ -8,7 +8,7 @@ const sendSeekerRejectOfferEmail = async ({
   jobProvider,
   description,
   deliveryDate,
-  type,
+  type
 }) => {
   const message = `<!DOCTYPE html>
 <html lang="en">

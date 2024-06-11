@@ -82,9 +82,6 @@ const sendSeekerWithdrawalEmail = async ({
                       />
                     </a>
                   </div>
-                  <!--end:Logo-->
-
-                  <!--begin:Text-->
                   <div
                     style="
                       font-size: 15px;
@@ -99,7 +96,8 @@ const sendSeekerWithdrawalEmail = async ({
                       Dear ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                       We wanted to inform you that a withdrawal request has been initiated from your account.
+                      We wanted to inform you that a withdrawal request has been
+                      initiated from your account.
                       <br />
                       Here are the details:
                     </p>
@@ -107,10 +105,23 @@ const sendSeekerWithdrawalEmail = async ({
                       Withdrawal Amount: ${amount}<br />
                     </p>
                     <p>
-                      If you initiated this withdrawal request, there is no further action required from your end. 
-                      However, if you did not authorize this withdrawal or have any concerns regarding it, 
-                      please reach out to our support team immediately at <a href="mailto:support@remsana.com" style="text-decoration: none">support@remsana.com</a>. 
-                      We take the security of your account very seriously and will assist you in resolving any issues promptly.
+                      If you initiated this withdrawal request, there is no
+                      further action required from your end. However, if you did
+                      not authorize this withdrawal or have any concerns
+                      regarding it, please reach out to our support team
+                      immediately at
+                      <a
+                        href="mailto:migration@gfa-tech.com"
+                        style="text-decoration: none"
+                        >support</a
+                      >. We take the security of your account very seriously and
+                      will assist you in resolving any issues promptly.
+                    </p>
+
+                    <p>
+                      <strong>Note</strong> <br />
+                      You will receive your money in your bank account after two
+                      business working days of making withdrawal request
                     </p>
                   </div>
 

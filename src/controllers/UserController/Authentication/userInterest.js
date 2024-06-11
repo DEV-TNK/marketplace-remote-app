@@ -23,7 +23,7 @@ const saveInterest = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const interestStringified = JSON.stringify(interests);
+    const interestStringified = JSON.stringify(interests)
     // Update user's interests
     await user.update({ interest: interestStringified });
 

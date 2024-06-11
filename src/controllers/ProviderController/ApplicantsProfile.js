@@ -18,8 +18,7 @@ const myJobApplication = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User does not exist" });
         }
-        console.log("this is user", user._id)
-        // const jobs = await Job.find({ jobPosterId: user._id });
+        
         const jobs = await Job.find({ jobPoster: user._id,  });
 
         // Extract job ids from the found jobs
@@ -27,8 +26,9 @@ const myJobApplication = async (req, res) => {
         
         // Find all applicants for the extracted job ids
        const applicants = await Applicant.findAll({
-            where: { jobId: { [Op.in]: jobIds } },
-            order: [['createdAt', 'DESC']]
+            where: { jobId: { [Op.in]: jobIds }, 
+            status: "pending" },
+            order: [['createdAt', 'DESC']],
         });
 
         // Eagerly load the seeker resume information for each applicant
@@ -73,6 +73,7 @@ const sendOffer = async (req, res) =>{
         if(duplicateOffer){
             return res.status(400).json({ message: `You have Previously Sent Offer to this User` });
         }
+       
         const findOffer = await Offer.findOne({
             where: {
                 jobId: jobId,
@@ -82,6 +83,15 @@ const sendOffer = async (req, res) =>{
         if(findOffer){
             return res.status(400).json({ message: `Job offer have been accepted by another user` });
         }
+
+         const applicants = await Applicant.findOne({
+            where: { 
+                jobId: jobId,
+                userId: jobSeeker,
+            },
+        });
+        applicants.status = "completed"
+        await applicants.save()
         
         const user = await User.findByPk(jobSeeker)
         if (!user) {

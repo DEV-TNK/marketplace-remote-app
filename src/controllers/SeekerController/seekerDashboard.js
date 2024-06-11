@@ -6,10 +6,10 @@ const User = require("../../models/Users")
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET,
-  secure: true,
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
+    secure: true,
 });
 
 const getJobSeekerDashboardData = async (req, res) => {
@@ -91,6 +91,7 @@ const getLastApprovedJobs = async (req, res) => {
         const jobDetails = await JobPosting.find({
             _id: { $in: jobIds }
         }, {
+            currency: 1,
             jobDescription: 1,
             jobType: 1,
             jobSalary: 1
@@ -99,13 +100,14 @@ const getLastApprovedJobs = async (req, res) => {
         const result = lastApprovedJobs.map(job => {
             const jobDetail = jobDetails.find(detail => detail._id.toString() === job.jobId.toString());
             return {
+                currency: jobDetail.currency,
                 jobDescription: jobDetail.jobDescription,
                 jobType: jobDetail.jobType,
                 jobSalary: jobDetail.jobSalary,
                 offerDate: job.offerDate
             };
         });
-        res.json(result);
+        return res.json(result);
     } catch (error) {
         console.error("Error fetching the last 4 approved jobs:", error);
         res.status(500).json({ error: "Internal server error" });
@@ -114,29 +116,36 @@ const getLastApprovedJobs = async (req, res) => {
 
 const uploadSeekerImage = async (req, res) => {
     try {
-        const {userId} = req.body
-        
+        const { userId } = req.body
+
         if (!userId) {
             return res.status(400).json({ message: `User ID is required` });
         }
         // Retrieve user's interests from MySQL
         let user = await User.findByPk(userId);
-        if(!user){
-             return res.status(400).json({ message: `User Does not exist` });
+        if (!user) {
+            return res.status(400).json({ message: `User Does not exist` });
         }
         const imageUpload = await cloudinary.uploader.upload(req.file.path, {
-      resource_type: "image",
-    });
+            resource_type: "image",
+        });
 
-    const imageLink = imageUpload.secure_url;
+        const imageLink = imageUpload.secure_url;
         user.imageUrl = imageLink
-         await user.save();
-        res.status(200).json({ message: "Image Uploaded Successfully", user});
+        await user.save();
+        res.status(200).json({ message: "Image Uploaded Successfully", user });
     } catch (error) {
         console.error("EError uploading:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 }
 
-module.exports = { getJobSeekerDashboardData, getLastApprovedJobs, uploadSeekerImage }
+
+
+
+module.exports = {
+    getJobSeekerDashboardData,
+    getLastApprovedJobs,
+    uploadSeekerImage
+}
 

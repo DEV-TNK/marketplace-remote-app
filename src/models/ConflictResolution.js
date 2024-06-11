@@ -39,4 +39,5 @@ const ConflictResolution = sequelize.define(
 
 ConflictResolution.belongsTo(User, { foreignKey: "userId", targetKey: "id" });
 
+
 module.exports = ConflictResolution;
