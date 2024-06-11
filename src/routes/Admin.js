@@ -51,11 +51,11 @@ router.get("/admin-all-job", adminAllJobs);
 router.get("/admin-all-pending-payment", seekerPendingPayment);
 router.post("/admin-acceptorreject-payment", acceptOrRejectPayment);
 router.post("/admin-mark-payment-request", markWithdrawalRequest);
-router.get("/admin-all-outSource-jobs", getAllOutSource);
-router.get("/admin-all-employee-of-records-jobs", getAlleEmployeeOfRecordJobs);
-router.get("/admin-all-unpaid-outsource-jobs", allUnpaidJobs);
-router.get("/admin-all-pending-outsource-jobs", allPendingJobs);
-router.get("/admin-all-completed-outsource-jobs", allCompletedJobs);
-router.put("/admin-mark-outsource-job/:jobId", markOutSourcJobCompleted);
+// router.get("/admin-all-outSource-jobs", getAllOutSource);
+// router.get("/admin-all-employee-of-records-jobs", getAlleEmployeeOfRecordJobs);
+// router.get("/admin-all-unpaid-outsource-jobs", allUnpaidJobs);
+// router.get("/admin-all-pending-outsource-jobs", allPendingJobs);
+// router.get("/admin-all-completed-outsource-jobs", allCompletedJobs);
+// router.put("/admin-mark-outsource-job/:jobId", markOutSourcJobCompleted);
 
 module.exports = router;

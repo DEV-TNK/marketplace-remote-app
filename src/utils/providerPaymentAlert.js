@@ -1,10 +1,6 @@
 const sendEmail = require("./sendEMail");
 
-const sendProviderJobPaymentEmail = async ({
-  username,
-  email,
-  jobTitle,
-}) => {
+const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
   const message = `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -151,7 +147,7 @@ const sendProviderJobPaymentEmail = async ({
                   Thank you for choosing Unleashified as your job platform.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Unleashified. All rights Reserved.
+                  &copy; 2024 Transnumerik. All rights Reserved.
                 </p>
               </td>
             </tr>

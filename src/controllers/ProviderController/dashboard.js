@@ -3,7 +3,7 @@ const User = require("../../models/Users");
 const cloudinary = require("cloudinary").v2;
 const ProviderTransaction = require("../../models/ProviderTransaction");
 const Job = require("../../models/Job");
-const OutSourceJob = require("../../models/OutSource")
+// const OutSourceJob = require("../../models/OutSource")
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -79,7 +79,6 @@ const getMydashboard = async (req, res) => {
       totalAmountSpent[transaction.currency] += parseFloat(transaction.amount);
     });
 
-  
     // Find provider
     const provider = await JobPoster.findOne({ jobPosterId: userId });
     if (!provider) {
@@ -167,7 +166,7 @@ const getMydashboard = async (req, res) => {
 //     );
 
 //     // Retrieve the job details for the last four paid jobs
-   
+
 //     const lastFourPaidJobs = await Job.find({
 //       _id: { $in: jobIds },
 //     }).sort({ createdAt: -1 });
@@ -195,7 +194,6 @@ const getMydashboard = async (req, res) => {
 //     res.status(500).json({ error: "Internal server error" });
 //   }
 // };
-
 
 const getlastFourPaidJobs = async (req, res) => {
   try {
@@ -247,7 +245,9 @@ const getlastFourPaidJobs = async (req, res) => {
     const allJobs = [...jobsFromJobModel, ...jobsFromOutSourceJobModel];
 
     // Sort combined results by createdAt and limit to the last 4
-    const sortedJobs = allJobs.sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
+    const sortedJobs = allJobs
+      .sort((a, b) => b.createdAt - a.createdAt)
+      .slice(0, 4);
 
     // Sanitize jobSalary values stored in MongoDB and compare them with transaction amounts
     // const matchingJobs = sortedJobs.filter((job) => {
@@ -266,9 +266,15 @@ const getlastFourPaidJobs = async (req, res) => {
       if (job.jobs) {
         // If it's an OutSourceJob, consolidate the job titles and prices
         const jobTitles = job.jobs.map((j) => j.title);
-        const totalJobPrice = job.jobs.reduce((sum, j) => sum + parseFloat(j.price), 0);
-         const currency = job.jobs[0]?.currency || "";
-         const number = job.jobs.reduce((sum, j) => sum + parseFloat(j.numberOfPerson), 0);
+        const totalJobPrice = job.jobs.reduce(
+          (sum, j) => sum + parseFloat(j.price),
+          0
+        );
+        const currency = job.jobs[0]?.currency || "";
+        const number = job.jobs.reduce(
+          (sum, j) => sum + parseFloat(j.numberOfPerson),
+          0
+        );
         return {
           _id: job._id,
           jobTitles: jobTitles,
@@ -276,7 +282,7 @@ const getlastFourPaidJobs = async (req, res) => {
           status: job.status,
           type: "Out-Source",
           currency: currency,
-          number: number
+          number: number,
         };
       } else {
         // If it's a regular Job, format as needed
@@ -287,7 +293,7 @@ const getlastFourPaidJobs = async (req, res) => {
           status: job.status,
           type: "Single Job",
           currency: job.currency,
-          number: 1
+          number: 1,
         };
       }
     });
@@ -298,6 +304,5 @@ const getlastFourPaidJobs = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 module.exports = { uploadProviderImage, getMydashboard, getlastFourPaidJobs };

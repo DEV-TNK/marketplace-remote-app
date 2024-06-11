@@ -8,7 +8,7 @@ const sendOfferLetterEmail = async ({
   jobProvider,
   description,
   deliveryDate,
-  type
+  type,
 }) => {
   const message = `<!DOCTYPE html>
 <html lang="en">
@@ -133,7 +133,7 @@ const sendOfferLetterEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The Unleashified Team
+                      Warm regards,<br />The Transnumerik Team
                     </p>
                   </div>
                 </div>
@@ -159,10 +159,10 @@ const sendOfferLetterEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing Unleashified as your Job platform.
+                  Thank you for choosing Marketplace as your Job platform.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Unleashified. All rights Reserved.
+                  &copy; 2024 Transnumerik. All rights Reserved.
                 </p>
               </td>
             </tr>
