@@ -131,7 +131,7 @@ const sendSeekerJobPaymentEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The Unleashified Team
+                      Warm regards,<br />The Transnumerik Team
                     </p>
                   </div>
                 </div>
@@ -160,7 +160,7 @@ const sendSeekerJobPaymentEmail = async ({
                   Thank you for choosing Unleashified as your job platform.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Unleashified. All rights Reserved.
+                  &copy; 2024 Transnumerik. All rights Reserved.
                 </p>
               </td>
             </tr>
