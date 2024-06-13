@@ -6,7 +6,7 @@ const sendWelcomeEmail = async ({ username, email }) => {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to Remsana</title>
+    <title>Welcome to PME Cote D'Ivoire Marketplace</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
 
@@ -179,31 +179,31 @@ const sendWelcomeEmail = async ({ username, email }) => {
       </header>
       <section class="section-content">
         <div class="experince">
-          <p>Welcome to UNLEASHIFIED!</p>
+          <p>Welcome to PME Cote D'Ivoire Marketplace!</p>
 
           <img src="./images/person.png" alt="person" />
         </div>
         <p>Hello ${username}</p>
         <p>
-          Welcome to <span>UNLEASHIFIED</span>, your premier platform for discovering exciting remote job opportunities! 
+          Welcome to <span>PME Cote D'Ivoire Marketplace</span>, your premier platform for discovering exciting remote job opportunities! 
           We're thrilled to have you join our community, where you'll find a plethora of remote positions tailored to match your skills and preferences.
         </p>
         <div class="gettingStarted">
           <ul>
             <li>
-              At Unleashified, we understand the evolving landscape of work, and we're dedicated to connecting talented individuals like yourself with top-notch remote roles from leading companies worldwide. 
+              At PME Cote D'Ivoire Marketplace, we understand the evolving landscape of work, and we're dedicated to connecting talented individuals like yourself with top-notch remote roles from leading companies worldwide. 
               Whether you're seeking flexibility, autonomy, or the chance to work from anywhere, we've got you covered.
             </li>
             <li>
-              As a member of Unleashified, you'll gain access to a curated selection of remote job listings spanning various industries, including tech, marketing, design, customer support, and more. 
+              As a member of PME Cote D'Ivoire Marketplace, you'll gain access to a curated selection of remote job listings spanning various industries, including tech, marketing, design, customer support, and more. 
               Our intuitive platform makes it easy to browse, apply, and track your job applications, ensuring a seamless experience from start to finish.
             </li>
             <li>
-              But that's not all - Unleashified is more than just a job board. It's a vibrant community of remote professionals, offering networking opportunities, career resources, and insightful content to support your professional growth and success.
+              But that's not all - PME Cote D'Ivoire Marketplace is more than just a job board. It's a vibrant community of remote professionals, offering networking opportunities, career resources, and insightful content to support your professional growth and success.
             </li>
           </ul>
           <p>
-           So, whether you're embarking on a new remote career journey or seeking your next remote adventure, Unleashified is here to empower you every step of the way.
+           So, whether you're embarking on a new remote career journey or seeking your next remote adventure, PME Cote D'Ivoire Marketplace is here to empower you every step of the way.
 
             Get started today by exploring our latest job listings and joining the conversation in our community forums. The remote career of your dreams awaits!
 
@@ -279,7 +279,7 @@ const sendWelcomeEmail = async ({ username, email }) => {
             </a>
           </div>
           <p class="copyright">
-            <span>&copy;</span> 2024 Unleashified. All rights reserved.
+            <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
           </p>
         </div>
       </footer>
@@ -290,7 +290,7 @@ const sendWelcomeEmail = async ({ username, email }) => {
 
   return sendEmail({
     to: email,
-    subject: "Welcome To UNLEASHIFIED",
+    subject: "Welcome To PME Cote D'Ivoire Marketplace",
     html: `<h4> Hello, ${username}</h4>
     ${message}
     `,
