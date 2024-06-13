@@ -35,7 +35,7 @@ const Register = async (req, res) => {
           verificationToken,
         });
 
-        // Send verification email
+        // Send verification email to users
         await sendVerificationEmail({
           username: updateUser.username,
           email: updateUser.email,
