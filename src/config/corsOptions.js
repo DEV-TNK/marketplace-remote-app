@@ -3,6 +3,7 @@ const whiteList = [
   "http://localhost:5173",
   "http://localhost:5174",
   "https://marketplacefrontendas-test.azurewebsites.net",
+  "https://marketplacefrontendas-test.azurewebsites.net"
 ];
 
 const corsOptions = {
