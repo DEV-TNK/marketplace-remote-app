@@ -75,8 +75,8 @@ const sendOutSourcingCreation = async ({
                   <div style="text-align: center; margin-bottom: 40px">
                     <a rel="noopener">
                       <img
-                        alt="Remsana Logo"
-                        src="https://res.cloudinary.com/djhnaee9k/image/upload/v1714038296/et5gicqtnuw4u1tqujjr.png"
+                        alt="PME Logo"
+                        src="https://i.ibb.co/RpQHhXF/Logo-CI-PME.png"
                         style="height: 60px"
                       />
                     </a>
