@@ -4,6 +4,9 @@ const { SeekerEarning, PaymentRequest } = require("../../models/SeekerPaymentRec
 const getSeekerEarning = async (req, res) => {
     try {
         const userId = req.params.userId
+        if (!userId) {
+            return res.status(400).json({ message: 'User ID is required' });
+        }
         const earning = await SeekerEarning.findOne({ where: { userId: userId } });
         let userEarning;
         if (earning) {
@@ -21,6 +24,9 @@ const getSeekerEarning = async (req, res) => {
 const getAllSeekerPaymentRequest = async (req, res) => {
     try {
         const userId = req.params.userId
+        if (!userId) {
+            return res.status(400).json({ message: 'User ID is required' });
+        }
         const history = await PaymentRequest.findAll({
             where: {
                 userId: userId,

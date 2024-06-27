@@ -175,12 +175,15 @@ const sendWelcomeEmail = async ({ username, email }) => {
   <body>
     <main class="container">
       <header class="header">
-        <img src="./images/remsana-logo.png" alt="logo" />
+       <img
+                        alt="PME Logo"
+                        src="https://i.ibb.co/RpQHhXF/Logo-CI-PME.png"
+                        style="height: 60px"
+                      />
       </header>
       <section class="section-content">
         <div class="experince">
           <p>Welcome to PME Cote D'Ivoire Marketplace!</p>
-
           <img src="./images/person.png" alt="person" />
         </div>
         <p>Hello ${username}</p>
@@ -212,7 +215,7 @@ const sendWelcomeEmail = async ({ username, email }) => {
         </div>
         <div class="click">
           <a
-            href="https://unleashified.com/authentication/signin"
+            href="https://marketplacefrontendas-test.azurewebsites.net/authentication/signin"
             target="_blank"
             rel="noopener noreferrer"
           >

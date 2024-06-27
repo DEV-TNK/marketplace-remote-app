@@ -115,8 +115,8 @@ const sendResetPasswordAlert = async ({ username, email, origin }) => {
   <body>
     <main class="container">
       <header class="header">
-        <img  alt="Unleashified Logo"
-                        src="https://res.cloudinary.com/djhnaee9k/image/upload/v1714038296/et5gicqtnuw4u1tqujjr.png"
+        <img  alt="PME"
+                        src="https://i.ibb.co/RpQHhXF/Logo-CI-PME.png"
                         style="height: 60px" />
       </header>
       <section class="section-content">
