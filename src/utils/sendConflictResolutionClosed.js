@@ -1,13 +1,13 @@
 const sendEmail = require("./sendEMail");
 
 const sendConflictResolutionClosedEmail = async ({
-    username,
-    email,
-    resolutionId,
-    reason,
-    message,
+  username,
+  email,
+  resolutionId,
+  reason,
+  message,
 }) => {
-    const Emailmessage = `<!DOCTYPE html>
+  const Emailmessage = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -129,7 +129,7 @@ const sendConflictResolutionClosedEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The Unleashified Team
+                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
                     </p>
                   </div>
                 </div>
@@ -155,10 +155,10 @@ const sendConflictResolutionClosedEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing Unleashified as your job platform.
+                  Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Unleashified. All rights Reserved.
+                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
                 </p>
               </td>
             </tr>
@@ -170,13 +170,13 @@ const sendConflictResolutionClosedEmail = async ({
 </html>
 `;
 
-    return sendEmail({
-        to: email,
-        subject: "Conflict Resolution Closed",
-        html: `<h4>Conflict Resolution Closed</h4>
+  return sendEmail({
+    to: email,
+    subject: "Conflict Resolution Closed",
+    html: `<h4>Conflict Resolution Closed</h4>
     ${Emailmessage}
     `,
-    });
+  });
 };
 
 module.exports = sendConflictResolutionClosedEmail;

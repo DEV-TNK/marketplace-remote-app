@@ -106,7 +106,7 @@ const sendOutSourcingCreation = async ({
                     Should you have any
                       questions or require assistance at any point during the
                       process, please don't hesitate to reach out to us. You can
-                      contact our support team at [info@unleashified.com]
+                      contact our support team at [info@PMECoteD'IvoireMarketplace.com]
                     </p>
                     
                     <p>Thank you for using our service.</p>
@@ -121,7 +121,7 @@ const sendOutSourcingCreation = async ({
                     "
                   >
                     <p style="color: #333">
-                      <strong>Warm regards </strong>,<br />The Unleashified Team
+                      <strong>Warm regards </strong>,<br />The PME Cote D'Ivoire Marketplace Team
                     </p>
                   </div>
                 </div>
@@ -147,10 +147,10 @@ const sendOutSourcingCreation = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing Unleashified as your job platform.
+                   Thank you for choosing PME Cote D'Ivoire Marketplace.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Unleashified. All rights Reserved.
+                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
                 </p>
               </td>
             </tr>
