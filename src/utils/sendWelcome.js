@@ -175,12 +175,15 @@ const sendWelcomeEmail = async ({ username, email }) => {
   <body>
     <main class="container">
       <header class="header">
-        <img src="./images/remsana-logo.png" alt="logo" />
+       <img
+                        alt="PME Logo"
+                        src="https://i.ibb.co/RpQHhXF/Logo-CI-PME.png"
+                        style="height: 60px"
+                      />
       </header>
       <section class="section-content">
         <div class="experince">
           <p>Welcome to PME Cote D'Ivoire Marketplace!</p>
-
           <img src="./images/person.png" alt="person" />
         </div>
         <p>Hello ${username}</p>
@@ -220,64 +223,9 @@ const sendWelcomeEmail = async ({ username, email }) => {
           </a>
         </div>
         <p class="last">Welcome aboard,</p>
-        <p>The <span>UNLEASHIFIED</span> Team.</p>
+        <p>The <span>PME Cote D'Ivoire Marketplace</span> Team.</p>
       </section>
       <footer>
-        <div class="wrapper">
-          <h2>Follow us</h2>
-          <div class="social-media">
-            <a
-              href="https://web.facebook.com/getfundedafricaoffical?_rdc=1&_rdr"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="./images/facebook.png"
-                alt="facebook"
-                style="cursor: pointer; height: 30px"
-              />
-            </a>
-            <a href="" target="_blank" rel="noopener noreferrer">
-              <img
-                src="./images/instagram.png"
-                alt="instagram"
-                style="cursor: pointer; height: 30px"
-              />
-            </a>
-            <a
-              href="https://twitter.com/gfunded_africa"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="./images/twitter.png"
-                alt="twitter"
-                style="cursor: pointer; height: 30px"
-              />
-            </a>
-            <a
-              href="https://www.linkedin.com/company/gfa-technologies/mycompany/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="./images/linkedlin.png"
-                alt="linkedil"
-                style="cursor: pointer; height: 30px"
-              />
-            </a>
-            <a
-              href="https://www.youtube.com/channel/UCADl1rDbt5BGQKkMfMBxsOQ"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="./images/youtube.png"
-                alt="linkedil"
-                style="cursor: pointer; height: 30px; margin-left: 15px"
-              />
-            </a>
-          </div>
           <p class="copyright">
             <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
           </p>

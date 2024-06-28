@@ -1,7 +1,7 @@
 {
   "name": "marketplace-remote-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "- [OVERVIEW](#overview)\r - [Technologies Used](#technology-used)\r <!-- - [Important Information](#Important-information) -->\r - [Security Measures](#security-measures)\r - [USER ENDPOINT](#user-endpoint)\r - [ADMIN ENDPOINTS](#admin-endpoint)\r - [JOB ENDPOINTS](#job-endpoints)\r - [PROVIDER ENDPOINTS](#provider-endpoints)\r - [PAYMENT ENDPOINTS](#payment-endpoints)\r - [JOB SEEKER ENDPOINTS](#job-seeker-endpoints)\r - [SETTING ENDPOINT](#setting-endpoint)\r - [RATING ENDPOINT](#rating-endpoint)",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
@@ -21,7 +21,7 @@
     "cloudinary": "^2.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.1",
+    "express": "^4.19.2",
     "flutterwave-node-v3": "^1.1.9",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.1",

@@ -2,14 +2,14 @@ const { BeginTransactionEnvChangeToken } = require("tedious/lib/token/token");
 const sendEmail = require("./sendEMail");
 
 const sendPaymentRequestApprovalEmail = async ({
-    username,
-    email,
-    amount,
-    accountNumber,
-    bankName,
-    accountName
+  username,
+  email,
+  amount,
+  accountNumber,
+  bankName,
+  accountName
 }) => {
-    const message = `<!DOCTYPE html>
+  const message = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -129,7 +129,7 @@ const sendPaymentRequestApprovalEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The Unleashified Team
+                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
                     </p>
                   </div>
                 </div>
@@ -155,10 +155,10 @@ const sendPaymentRequestApprovalEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing Unleashified as your job platform.
+                  Thank you for choosing PME Cote D'Ivoire Marketplace.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Unleashified. All rights Reserved.
+                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
                 </p>
               </td>
             </tr>
@@ -170,13 +170,13 @@ const sendPaymentRequestApprovalEmail = async ({
 </html>
 `;
 
-    return sendEmail({
-        to: email,
-        subject: "Payment Request Approved",
-        html: `<h4>Payment Request Approved</h4>
+  return sendEmail({
+    to: email,
+    subject: "Payment Request Approved",
+    html: `<h4>Payment Request Approved</h4>
     ${message}
     `,
-    });
+  });
 };
 
 module.exports = sendPaymentRequestApprovalEmail;
