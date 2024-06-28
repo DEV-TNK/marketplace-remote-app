@@ -1,5 +1,6 @@
 const ContactUs = require("../../models/ContactUs");
 const sendSupportRequestCompletedEmail = require("../../utils/supportRequestCompleted")
+const sendContactUsFeedbackEmail = require("../../utils/sendContactUsFeedbackEmail")
 
 const userContactUs = async (req, res) => {
   await ContactUs.sync();
@@ -65,23 +66,53 @@ const contactUsCompleted = async (req, res) => {
     await contactUsSubmission.update({ status: "completed" });
     await sendSupportRequestCompletedEmail({
       username: contactUsSubmission.firstName,
-    email: contactUsSubmission.email,
-    supportId: id,
-    supportReason: contactUsSubmission.reason,
+      email: contactUsSubmission.email,
+      supportId: id,
+      supportReason: contactUsSubmission.reason,
     })
 
     res
       .status(200)
-      .json({ message: "Contact Us form submission marked as completed",  });
+      .json({ message: "Contact Us form submission marked as completed", });
   } catch (error) {
     console.error("Error marking contact submission as completed:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
+const sendContactUsFeedback = async (req, res) => {
+  try {
+    const { id, subject, message } = req.body;
+
+    if (!id || !subject || !message) {
+      return res.status(400).send({ error: 'requestId, subject, and message are required' });
+    }
+
+    const contactUs = await ContactUs.findByPk(id
+    )
+
+
+    const { firstName: username, email, reason } = contactUs;
+
+    await sendContactUsFeedbackEmail({
+      username,
+      email,
+      subject,
+      reason,
+      message,
+    });
+
+    res.status(200).send({ message: 'Your Contact us feedback email was sent successfully' });
+  } catch (error) {
+    console.error('Error sending feedback email:', error);
+    res.status(500).send({ error: 'An error occurred while sending the feedback email' })
+  }
+}
+
 module.exports = {
   userContactUs,
   allContactUs,
   contactUsCompleted,
+  sendContactUsFeedback
 };
 

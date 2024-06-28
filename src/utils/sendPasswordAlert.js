@@ -122,74 +122,20 @@ const sendResetPasswordAlert = async ({ username, email, origin }) => {
       <section class="section-content">
         <p>Hello ${username}</p>
         <p>
-          Your <span>UNLEASHIFIED</span> Account was successfully changed. If
+          Your <span>PME Cote D'Ivoire Marketplace</span> Account password was successfully changed. If
           you did not initiate this process, please contact our  <a href="${resetURL}"><span>support</span></a></p> team in
           order to help you get you account back
         </p>
 
         <p class="last">Best regards,</p>
-        <p>The <span>UNLEASHIFIED</span> Team.</p>
+        <p>The <span>PME Cote D'Ivoire Marketplace</span> Team.</p>
       </section>
       <footer>
-        <div class="wrapper">
-          <h2>Follow us</h2>
-          <div class="social-media">
-            <a
-              href="https://web.facebook.com/getfundedafricaoffical?_rdc=1&_rdr"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="./images/facebook.png"
-                alt="facebook"
-                style="cursor: pointer; height: 30px"
-              />
-            </a>
-            <a href="" target="_blank" rel="noopener noreferrer">
-              <img
-                src="./images/instagram.png"
-                alt="instagram"
-                style="cursor: pointer; height: 30px"
-              />
-            </a>
-            <a
-              href="https://twitter.com/gfunded_africa"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="./images/twitter.png"
-                alt="twitter"
-                style="cursor: pointer; height: 30px"
-              />
-            </a>
-            <a
-              href="https://www.linkedin.com/company/gfa-technologies/mycompany/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="./images/linkedlin.png"
-                alt="linkedil"
-                style="cursor: pointer; height: 30px"
-              />
-            </a>
-            <a
-              href="https://www.youtube.com/channel/UCADl1rDbt5BGQKkMfMBxsOQ"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="./images/youtube.png"
-                alt="linkedil"
-                style="cursor: pointer; height: 30px; margin-left: 15px"
-              />
-            </a>
-          </div>
+       
           <p class="copyright">
-            <span>&copy;</span> 2024 Transnumerik. All rights reserved.
+           <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
           </p>
-        </div>
+
       </footer>
     </main>
   </body>
@@ -198,7 +144,7 @@ const sendResetPasswordAlert = async ({ username, email, origin }) => {
 
   return sendEmail({
     to: email,
-    subject: "UNLEASHIFIED Reset Password",
+    subject: "PME Cote D'Ivoire Marketplace Reset Password",
     html: `<h4> Hello, ${username}</h4>
     ${message}
     `,
