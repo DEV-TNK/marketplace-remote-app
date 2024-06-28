@@ -3,15 +3,11 @@ const path = require("path");
 const fs = require("fs");
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(__dirname, "../uploads");
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir);
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Specify the destination folder for uploads
   },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Use the original filename
   },
 });
 const upload = multer({ storage });
@@ -32,7 +28,7 @@ const imageUpload = multer({ storage: imageStorage });
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let uploadPath = path.join(__dirname, "../uploads");
+    let uploadPath = path.join(__dirname, "..~/uploads");
     if (file.fieldname === "userImage") {
       uploadPath = path.join(uploadPath, "userImages");
     } else if (file.fieldname === "portfolioImages") {

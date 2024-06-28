@@ -5,6 +5,7 @@ const {
   getUserResumeDetails,
   getAResume,
   getMyResume,
+  getImages,
 } = require("../controllers/SeekerController/SeekerResume");
 const {
   jobApplication,
@@ -84,6 +85,7 @@ router.post("/apply-for-job", getUserResumeDetails);
 router.post("/submit-job-application", jobApplication);
 router.get("/get-a-resume/:filename", getAResume);
 router.get("/get-my-resume/:userId", getMyResume);
+router.get("/get-images/:filename", getImages);
 
 router.get("/get-my-offers/:userId", myOfferLetter);
 router.get("/seeker-recommendation/:userId", getRecommendation);
