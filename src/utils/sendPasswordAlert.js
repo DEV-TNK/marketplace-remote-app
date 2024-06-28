@@ -8,7 +8,7 @@ const sendResetPasswordAlert = async ({ username, email, origin }) => {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UNLEASHIFIED RESET PASSWORD</title>
+    <title>MARKETPLACE RESET PASSWORD</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
 
@@ -187,7 +187,7 @@ const sendResetPasswordAlert = async ({ username, email, origin }) => {
             </a>
           </div>
           <p class="copyright">
-            <span>&copy;</span> 2024 Remsana. All rights reserved.
+            <span>&copy;</span> 2024 Transnumerik. All rights reserved.
           </p>
         </div>
       </footer>

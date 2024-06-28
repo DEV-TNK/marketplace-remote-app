@@ -1,14 +1,14 @@
 const sendEmail = require("./sendEMail");
 
 const sendSeekerJobPaymentEmail = async ({
-    username,
-    email,
-    jobTitle,
-    price,
-    jobProvider,
-    type
+  username,
+  email,
+  jobTitle,
+  price,
+  jobProvider,
+  type,
 }) => {
-    const message = `<!DOCTYPE html>
+  const message = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -127,7 +127,7 @@ const sendSeekerJobPaymentEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Thanks for your time,<br />The Unleashified Team
+                      Thanks for your time,<br />The Transnumerik Team
                     </p>
                   </div>
                 </div>
@@ -153,10 +153,10 @@ const sendSeekerJobPaymentEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing Unleashified as your job platform.
+                  Thank you for choosing Marketplace as your job platform.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Unleashified. All rights Reserved.
+                  &copy; 2024 Transumerik. All rights Reserved.
                 </p>
               </td>
             </tr>
@@ -168,13 +168,13 @@ const sendSeekerJobPaymentEmail = async ({
 </html>
 `;
 
-    return sendEmail({
-        to: email,
-        subject: ` Job Completion Notification: ${jobTitle} `,
-        html: `<h4>Job Completion Alert</h4>
+  return sendEmail({
+    to: email,
+    subject: ` Job Completion Notification: ${jobTitle} `,
+    html: `<h4>Job Completion Alert</h4>
     ${message}
     `,
-    });
+  });
 };
 
 module.exports = sendSeekerJobPaymentEmail;

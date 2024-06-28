@@ -38,25 +38,16 @@ const onboardingServiceProvider = async (req, res) => {
       return res.status(400).json({ message: "Required fields are missing" });
     }
 
-    // console.log("req.files:", req.files);
-    // console.log("req.body:", req.body);
-
     // Check if user exists
-    const user = await User.findByPk(serviceProviderId);
+    const user = await User.findByPk(serviceProviderId); // Adjust this to match your database setup
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Upload user image to Cloudinary
+    // Handle user image
     let userImage = "";
     if (req.files["userImage"]) {
-      const imageUpload = await cloudinary.uploader.upload(
-        req.files["userImage"][0].path,
-        {
-          resource_type: "image",
-        }
-      );
-      userImage = imageUpload.secure_url;
+      userImage = req.files["userImage"][0].path;
     }
 
     // Handle portfolio images
@@ -69,20 +60,9 @@ const onboardingServiceProvider = async (req, res) => {
       req.files["portfolioImages"] &&
       req.files["portfolioImages"].length > 0
     ) {
-      try {
-        const images = await Promise.all(
-          req.files["portfolioImages"].map(async (file) => {
-            const result = await cloudinary.uploader.upload(file.path, {
-              resource_type: "image",
-            });
-            return result.secure_url;
-          })
-        );
-
-        portfolioBody.images = images;
-      } catch (error) {
-        console.error("Portfolio image upload failed:", error);
-      }
+      portfolioBody.images = req.files["portfolioImages"].map(
+        (file) => file.path
+      );
     } else {
       console.log("Portfolio images are not provided correctly");
     }
@@ -90,21 +70,10 @@ const onboardingServiceProvider = async (req, res) => {
     // Handle certification image
     let certificationBody = {};
     if (certificationName && req.files["certificationImage"]) {
-      try {
-        const result = await cloudinary.uploader.upload(
-          req.files["certificationImage"][0].path,
-          {
-            resource_type: "image",
-          }
-        );
-
-        certificationBody = {
-          name: certificationName,
-          image: result.secure_url,
-        };
-      } catch (error) {
-        console.error("Certification image upload failed:", error);
-      }
+      certificationBody = {
+        name: certificationName,
+        image: req.files["certificationImage"][0].path,
+      };
     } else {
       console.log("Certification image is not provided correctly");
     }
