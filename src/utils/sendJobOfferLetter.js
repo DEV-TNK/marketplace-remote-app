@@ -14,7 +14,7 @@ const sendOfferLetterEmail = async ({
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>{{Offer Letter From Unleashified}}</title>
+    <title>{{Offer Letter From PME Cote D'Ivoire Marketplace}}</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -133,7 +133,7 @@ const sendOfferLetterEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The Transnumerik Team
+                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
                     </p>
                   </div>
                 </div>
@@ -159,10 +159,10 @@ const sendOfferLetterEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing Marketplace as your Job platform.
+                   Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Transnumerik. All rights Reserved.
+                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
                 </p>
               </td>
             </tr>

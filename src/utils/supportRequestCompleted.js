@@ -1,12 +1,12 @@
 const sendEmail = require("./sendEMail");
 
 const sendSupportRequestCompletedEmail = async ({
-    username,
-    email,
-    supportId,
-    supportReason,
+  username,
+  email,
+  supportId,
+  supportReason,
 }) => {
-    const message = `<!DOCTYPE html>
+  const message = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -125,7 +125,7 @@ const sendSupportRequestCompletedEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The Unleashified Team
+                      Warm regards,<br />The Transnumerik Team
                     </p>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ const sendSupportRequestCompletedEmail = async ({
                   Thank you for choosing Unleashified as your job platform.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Unleashified. All rights Reserved.
+                  &copy; 2024 Transnumerik. All rights Reserved.
                 </p>
               </td>
             </tr>
@@ -166,13 +166,13 @@ const sendSupportRequestCompletedEmail = async ({
 </html>
 `;
 
-    return sendEmail({
-        to: email,
-        subject: "Support Request Completed",
-        html: `<h4>Support Request Completed</h4>
+  return sendEmail({
+    to: email,
+    subject: "Support Request Completed",
+    html: `<h4>Support Request Completed</h4>
     ${message}
     `,
-    });
+  });
 };
 
 module.exports = sendSupportRequestCompletedEmail;

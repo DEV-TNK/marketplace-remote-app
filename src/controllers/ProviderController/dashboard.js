@@ -1,48 +1,48 @@
 const JobPoster = require("../../models/JobPoster");
 const User = require("../../models/Users");
-const cloudinary = require("cloudinary").v2;
 const ProviderTransaction = require("../../models/ProviderTransaction");
 const Job = require("../../models/Job");
-// const OutSourceJob = require("../../models/OutSource")
-
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET,
-  secure: true,
-});
+const path = require("path");
 
 const uploadProviderImage = async (req, res) => {
   try {
     const { userId } = req.body;
 
     if (!userId) {
-      return res.status(400).json({ message: `User ID is required` });
+      return res.status(400).json({ message: "User ID is required" });
     }
-    // Retrieve user's interests from MySQL
-    let user = await User.findByPk(userId);
-    let jobPoster = await JobPoster.findOne({ jobPosterId: userId });
+
+    const user = await User.findByPk(userId); // Adjust this to match your database setup
+    const jobPoster = await JobPoster.findOne({ jobPosterId: userId }); // Adjust this to match your database setup
+
     if (!user) {
-      return res.status(400).json({ message: `User Does not exist` });
+      return res.status(400).json({ message: "User Does not exist" });
     }
     if (!jobPoster) {
-      return res.status(400).json({ message: `Job Poster Does not exist` });
+      return res.status(400).json({ message: "Job Poster Does not exist" });
     }
-    const imageUpload = await cloudinary.uploader.upload(req.file.path, {
-      resource_type: "image",
-    });
 
-    const imageLink = imageUpload.secure_url;
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const imagePath = req.file.path;
+
+    const imageLink = path.resolve(__dirname, imagePath);
+
     user.imageUrl = imageLink;
     jobPoster.companyLogo = imageLink;
 
     await user.save();
     await jobPoster.save();
-    res
-      .status(200)
-      .json({ message: "Image Uploaded Successfully", user, jobPoster });
+
+    res.status(200).json({
+      message: "Image Uploaded Successfully",
+      user,
+      jobPoster,
+    });
   } catch (error) {
-    console.error("EError uploading:", error);
+    console.error("Error uploading:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

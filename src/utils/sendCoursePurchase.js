@@ -44,7 +44,7 @@ const sendCoursePurchaseEmail = async ({
                             <div>
                                 <div style="text-align:center; margin-bottom: 40px">
                                     <a rel="noopener">
-                                        <img alt="Remsana Logo" src="./images/remsana-logo.png" style="height: 60px" />
+                                        <img alt="PME Logo" src="https://i.ibb.co/RpQHhXF/Logo-CI-PME.png" style="height: 60px" />
                                     </a>
                                 </div>
                                 <!--end:Logo-->
@@ -73,14 +73,14 @@ const sendCoursePurchaseEmail = async ({
                                     <p style="margin-bottom:2px; color:#333">Thank you once again for choosing Remsana as your Online Learning Platform</p>
                                     <p style="margin-bottom:2px; color:#333">Should you have any questions or require
                                         further assistance, please do not hesitate to contact our dedicated support team
-                                        at <a href="mailto:support@remsana.com"
-                                            style="text-decoration: none">support@remsana.com</a>.</p>
+                                        at <a href="mailto:support@PMECoteD'IvoireMarketplace.com"
+                                            style="text-decoration: none">support@PMECoteD'IvoireMarketplace.com</a>.</p>
                                 </div>
                                 <!--end:Text-->
 
                                 <div
                                     style="font-size: 15px; font-weight: normal; line-height: 30px; margin: 40px 0px 0px 0px">
-                                    <p style="color:#333;">Warm regards,<br>The Remsana Team</p>
+                                    <p style="color:#333;">Warm regards,<br>The PME Cote D'Ivoire Marketplace Team</p>
                                 </div>
                             </div>
                         </td>
@@ -89,8 +89,8 @@ const sendCoursePurchaseEmail = async ({
                         style="display: flex; justify-content: center; margin:0 25px 35px 25px; border-top: 1px solid #e7e9ed;">
                         <td align="center" valign="center"
                             style="font-size: 13px; text-align:left; padding: 10px 0 0 0; font-weight: 500; color: #7E8299">
-                            <p style="margin-bottom:2px">Thank you for choosing Remsana as your e-learning platform.</p>
-                            <p style="margin-bottom:2px"> &copy; 2024 Remsana. All rights Reserved.</p>
+                            <p style="margin-bottom:2px">Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.</p>
+                            <p style="margin-bottom:2px"> <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.</p>
                         </td>
                     </tr>
                 </tbody>
@@ -104,7 +104,7 @@ const sendCoursePurchaseEmail = async ({
     return sendEmail({
         to: email,
         subject:
-            "Congratulations! Your New Purchased Course is Now Live on Remsana Platform",
+            "Congratulations! Your New Purchased Course is Now Live on PME Cote D'Ivoire Marketplace Platform",
         html: `<h4> Hello, ${username}</h4>
     ${message}
     `,
