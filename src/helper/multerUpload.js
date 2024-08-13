@@ -48,8 +48,46 @@ const fileStorage = multer.diskStorage({
 
 const fileUpload = multer({ storage: fileStorage });
 
+const UserStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join("uploads", "userImage");
+
+    // Check if the directory structure exists. If not, create it recursively.
+    fs.access(uploadPath, fs.constants.F_OK, (err) => {
+      if (err) {
+        fs.mkdirSync(uploadPath, { recursive: true });
+      }
+      cb(null, uploadPath);
+    });
+  },
+  filename: (req, file, cb) => {
+    // Generate a unique filename to prevent conflicts
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const seekerResume = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join("uploads", "resume");
+
+    // Check if the directory structure exists. If not, create it recursively.
+    fs.access(uploadPath, fs.constants.F_OK, (err) => {
+      if (err) {
+        fs.mkdirSync(uploadPath, { recursive: true });
+      }
+      cb(null, uploadPath);
+    });
+  },
+  filename: (req, file, cb) => {
+    // Generate a unique filename to prevent conflicts
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
 module.exports = {
   upload,
   imageUpload,
   fileUpload,
+  UserStorage,
+  seekerResume
 };

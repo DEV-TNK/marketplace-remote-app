@@ -51,6 +51,11 @@ const {
 } = require("../controllers/SeekerController/Service");
 const myContract = require("../controllers/SeekerController/Contract");
 
+const {
+  UserStorage,
+  seekerResume
+} = require("../helper/multerUpload")
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/"); // Specify the destination folder for uploads
@@ -69,14 +74,28 @@ const storageSeeker = multer.diskStorage({});
 
 const uploadSeeker = multer({ storage: storageSeeker });
 
+const uploadUserImage = multer({
+  storage: UserStorage,
+  limits: {
+    fileSize: 10485760, 
+  },
+});
+
+const uploadSeekerResume = multer({
+  storage: seekerResume,
+  limits: {
+    fileSize: 10485760, 
+  },
+});
+
 router.post(
   "/seeker-resume",
-  upload.single("resume"),
+  uploadSeekerResume.single("resume"),
   updateOrCreateSeekerResume
 );
 router.post(
   "/seeker-upload-image",
-  uploadSeeker.single("image"),
+  uploadUserImage.single("image"),
   uploadSeekerImage
 );
 
