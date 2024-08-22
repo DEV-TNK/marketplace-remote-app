@@ -1,6 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const { imageUpload, upload, fileUpload } = require("../helper/multerUpload");
+const {
+  imageUpload,
+  upload,
+  fileUpload,
+  providerStorage,
+} = require("../helper/multerUpload");
+const multer = require("multer");
+
+const providerUpload = multer({
+  storage: providerStorage,
+  limits: {
+    fileSize: 104857600, // 100MB
+  },
+});
 
 const {
   createProvider,
@@ -37,7 +50,11 @@ router.post(
   uploadProviderImage
 );
 
-router.post("/create-provider", upload.single("companyLogo"), createProvider);
+router.post(
+  "/create-provider",
+  providerUpload.single("companyLogo"),
+  createProvider
+);
 router.get("/get-provider-profile/:userId", getProviderProfile);
 router.get("/get-my-applicants/:userId", myJobApplication);
 router.post("/send-offer", sendOffer);
