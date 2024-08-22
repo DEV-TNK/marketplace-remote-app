@@ -5,111 +5,6 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.API_KEY,
-//   api_secret: process.env.API_SECRET,
-//   secure: true,
-// });
-
-// const createProvider = async (req, res) => {
-//   const {
-//     jobPosterId,
-//     firstName,
-//     lastName,
-//     companyEmail,
-//     companyContact,
-//     companyName,
-//     companyWebsite,
-//     companyLocation,
-//     companyDesignation,
-//     companyType,
-//     companyDescription,
-//     CompanyIndustry,
-//   } = req.body;
-
-//   const details = [
-//     "jobPosterId",
-//     "firstName",
-//     "lastName",
-//     "companyEmail",
-//     "companyContact",
-//     "companyName",
-//     "companyLocation",
-//     "companyDesignation",
-//     "companyType",
-//     "companyWebsite",
-//     "companyDescription",
-//     "CompanyIndustry",
-//   ];
-//   for (const detail of details) {
-//     if (!req.body[detail]) {
-//       return res.status(400).json({ msg: `${detail} is required` });
-//     }
-//   }
-//   try {
-//     const imageUpload = await cloudinary.uploader.upload(req.file.path, {
-//       resource_type: "image",
-//     });
-
-//     const imageLink = imageUpload.secure_url;
-//     // Check if the job poster already exists
-//     let jobposter = await JobPoster.findOne({ jobPosterId });
-
-//     if (jobposter) {
-//       const jobposter = await JobPoster.findOneAndUpdate(
-//         { jobPosterId },
-//         {
-//           $set: {
-//             firstName,
-//             lastName,
-//             companyEmail,
-//             companyContact,
-//             companyName,
-//             companyWebsite,
-//             companyLocation,
-//             companyType,
-//             companyDesignation,
-//             companyDescription,
-//             CompanyIndustry,
-//             companyLogo: imageLink,
-//           },
-//         },
-//         { upsert: true, new: true }
-//       );
-
-//       return res.status(200).json({
-//         message: "Job poster profile updated successfully",
-//         jobposter,
-//       });
-//     }
-
-//     // Create the job poster profile
-//     jobposter = await JobPoster.create({
-//       jobPosterId,
-//       firstName,
-//       lastName,
-//       companyEmail,
-//       companyContact,
-//       companyName,
-//       companyWebsite,
-//       companyLocation,
-//       companyType,
-//       companyDesignation,
-//       companyDescription,
-//       CompanyIndustry,
-//       companyLogo: imageLink,
-//     });
-
-//     res
-//       .status(201)
-//       .json({ message: "Job poster profile created successfully", jobposter });
-//   } catch (error) {
-//     console.error("Error creating job poster profile:", error);
-//     res.status(500).json({ error: "Internal server error", error });
-//   }
-// };
-
 const createProvider = async (req, res) => {
   const {
     jobPosterId,
@@ -126,7 +21,8 @@ const createProvider = async (req, res) => {
     CompanyIndustry,
   } = req.body;
 
-  const details = [
+  // Required fields validation
+  const requiredFields = [
     "jobPosterId",
     "firstName",
     "lastName",
@@ -136,25 +32,32 @@ const createProvider = async (req, res) => {
     "companyLocation",
     "companyDesignation",
     "companyType",
-    "companyWebsite",
     "companyDescription",
     "CompanyIndustry",
   ];
 
-  for (const detail of details) {
-    if (!req.body[detail]) {
-      return res.status(400).json({ msg: `${detail} is required` });
+  for (const field of requiredFields) {
+    if (!req.body[field]) {
+      return res.status(400).json({ msg: `${field} is required` });
     }
   }
 
   try {
     const imageFile = req.file;
-    const imageLink = path.join("uploads", imageFile.filename);
+    if (!imageFile) {
+      return res.status(400).json({ msg: "Company logo image is required" });
+    }
 
-    // Check if the job poster already exists
+    const imageLink = path.join(
+      "uploads",
+      "providerImages",
+      imageFile.filename
+    );
+
     let jobposter = await JobPoster.findOne({ jobPosterId });
 
     if (jobposter) {
+      // Update existing job poster
       jobposter = await JobPoster.findOneAndUpdate(
         { jobPosterId },
         {
@@ -173,7 +76,7 @@ const createProvider = async (req, res) => {
             companyLogo: imageLink,
           },
         },
-        { upsert: true, new: true }
+        { new: true } // Return the updated document
       );
 
       return res.status(200).json({
@@ -182,7 +85,6 @@ const createProvider = async (req, res) => {
       });
     }
 
-    // Create the job poster profile
     jobposter = await JobPoster.create({
       jobPosterId,
       firstName,
@@ -204,7 +106,7 @@ const createProvider = async (req, res) => {
       jobposter,
     });
   } catch (error) {
-    console.error("Error creating job poster profile:", error);
+    console.error("Error creating/updating job poster profile:", error);
     res
       .status(500)
       .json({ error: "Internal server error", details: error.message });

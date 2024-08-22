@@ -211,32 +211,30 @@ const getMyResume = async (req, res) => {
 
 const getAResume = async (req, res) => {
   try {
-    const filename = req.params.filename;
-    const filePath = path.join(
+    const filename = decodeURIComponent(req.params.filename);
+    const filePath = path.resolve(
       __dirname,
-      "..",
-      "..",
-      "..",
-      "uploads",
+      "../../../uploads/resume",
       filename
     );
-    res.sendFile(filePath);
-    console.log(filePath);
+
+    if (fs.existsSync(filePath)) {
+      return res.sendFile(filePath);
+    } else {
+      return res.status(404).json({ message: "File not found" });
+    }
   } catch (error) {
-    console.log(error);
+    console.log("Error serving the file:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
 
 const getImages = async (req, res) => {
   try {
-    const filename = req.params.filename;
-    const filePath = path.join(
+    const filename = path.basename(req.params.filename);
+    const filePath = path.resolve(
       __dirname,
-      "..",
-      "..",
-      "..",
-      "uploads",
+      "../../../uploads/userImage",
       filename
     );
     res.sendFile(filePath);

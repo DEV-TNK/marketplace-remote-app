@@ -29,8 +29,8 @@ router.get("/top-companies", getTopCompaniesHiring);
 
 //routes for review submission
 router.post("/submit-reviews", submitReview);
-router.get("/reviews", getAllReviews); //,
-router.put('/editReview', editReview);
+router.get("/reviews", getAllReviews);
+router.put("/editReview", editReview);
 router.get("/get-company-reviews/:userId", getReviewsByProvider);
 router.get("/get-seeker-reviews/:userId", getReviewsBySeeker);
 
