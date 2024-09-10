@@ -13,6 +13,7 @@ const {
   myOfferLetter,
   acceptOrRejectOffer,
   getApplicationsBySeeker,
+  userPendingApplications,
 } = require("../controllers/SeekerController/JobApplication");
 const {
   getSeekerEarning,
@@ -51,10 +52,7 @@ const {
 } = require("../controllers/SeekerController/Service");
 const myContract = require("../controllers/SeekerController/Contract");
 
-const {
-  UserStorage,
-  seekerResume
-} = require("../helper/multerUpload")
+const { UserStorage, seekerResume } = require("../helper/multerUpload");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -77,14 +75,14 @@ const uploadSeeker = multer({ storage: storageSeeker });
 const uploadUserImage = multer({
   storage: UserStorage,
   limits: {
-    fileSize: 10485760, 
+    fileSize: 10485760,
   },
 });
 
 const uploadSeekerResume = multer({
   storage: seekerResume,
   limits: {
-    fileSize: 10485760, 
+    fileSize: 10485760,
   },
 });
 
@@ -120,6 +118,7 @@ router.get(
 router.get("/total-jobs-applied/", totalJobsApplied);
 router.post("/accept-reject-offer", acceptOrRejectOffer);
 router.get("/seeker-monthly-applications/:userId", getApplicationsBySeeker);
+router.get("/user-pending-applications/:userId", userPendingApplications);
 // router.get(
 //   "/seeker-monthly-applications/:seekerUserId",
 //   getApplicationsBySeeker
