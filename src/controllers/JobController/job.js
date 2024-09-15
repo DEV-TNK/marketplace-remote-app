@@ -1,5 +1,6 @@
 const Job = require("../../models/Job");
 const JobPoster = require("../../models/JobPoster");
+const ProviderService = require("../../models/ProvidersServices");
 const SaveJob = require("../../models/saveJob");
 
 
@@ -94,7 +95,7 @@ const createJob = async (req, res) => {
 const getAllJobs = async (req, res) => {
   try {
     const userCountry = req.body.country;
-  
+
     const jobs = await Job.find({ status: "Pending" })
       .populate({
         path: "jobPoster",
@@ -419,7 +420,7 @@ const totalJobsPerMonth = async (req, res) => {
       return date.toLocaleString("default", { month: "long" });
     });
 
-    console.log(allMonths);
+    //console.log(allMonths);
 
     const allJobsPerMonths = allMonths.map((month) => ({
       month,
@@ -442,8 +443,8 @@ const getJobByCategory = async (req, res) => {
   }
   try {
     const jobs = await Job.find({
-        department: { $regex: new RegExp(department, "i") },
-         status: "Pending"
+      department: { $regex: new RegExp(department, "i") },
+      status: "Pending"
     }).sort({ createdAt: -1 });
 
     if (jobs.length === 0) {
@@ -502,6 +503,8 @@ const saveJob = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 
 const getSavedJobs = async (req, res) => {
   try {
