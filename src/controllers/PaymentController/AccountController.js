@@ -17,14 +17,14 @@ const saveJobSeekerAccount = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found." });
         }
-         const newAccount = await Account.create({
-                userId,
-                accountName,
-                accountNumber,
-                bankName,
-                currency
-            });
-            return res.status(201).json({ message: "Bank details saved successfully", newAccount });
+        const newAccount = await Account.create({
+            userId,
+            accountName,
+            accountNumber,
+            bankName,
+            currency
+        });
+        return res.status(201).json({ message: "Bank details saved successfully", newAccount });
     } catch (error) {
         return res.status(500).json({ message: "Error saving bank details", error: error.message });
     }
@@ -65,8 +65,8 @@ const editAccountDetails = async (req, res) => {
         const updateObject = {};
 
         // Add accountNumber and bankName to the updateObject if provided
-        if(accountName !== undefined){
-            updateObject.accountName= accountName
+        if (accountName !== undefined) {
+            updateObject.accountName = accountName
         }
         if (accountNumber !== undefined) {
             updateObject.accountNumber = accountNumber;
@@ -85,5 +85,4 @@ const editAccountDetails = async (req, res) => {
     }
 }
 
-
-module.exports = { saveJobSeekerAccount, getUserBankDetails,editAccountDetails };
+module.exports = { saveJobSeekerAccount, getUserBankDetails, editAccountDetails };
