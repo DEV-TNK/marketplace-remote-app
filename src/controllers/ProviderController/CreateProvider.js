@@ -1,114 +1,13 @@
-// const cloudinary = require("cloudinary").v2;
+const cloudinary = require("cloudinary").v2;
 const JobPosting = require("../../models/Job");
 const JobPoster = require("../../models/JobPoster");
-const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.API_KEY,
-//   api_secret: process.env.API_SECRET,
-//   secure: true,
-// });
-
-// const createProvider = async (req, res) => {
-//   const {
-//     jobPosterId,
-//     firstName,
-//     lastName,
-//     companyEmail,
-//     companyContact,
-//     companyName,
-//     companyWebsite,
-//     companyLocation,
-//     companyDesignation,
-//     companyType,
-//     companyDescription,
-//     CompanyIndustry,
-//   } = req.body;
-
-//   const details = [
-//     "jobPosterId",
-//     "firstName",
-//     "lastName",
-//     "companyEmail",
-//     "companyContact",
-//     "companyName",
-//     "companyLocation",
-//     "companyDesignation",
-//     "companyType",
-//     "companyWebsite",
-//     "companyDescription",
-//     "CompanyIndustry",
-//   ];
-//   for (const detail of details) {
-//     if (!req.body[detail]) {
-//       return res.status(400).json({ msg: `${detail} is required` });
-//     }
-//   }
-//   try {
-//     const imageUpload = await cloudinary.uploader.upload(req.file.path, {
-//       resource_type: "image",
-//     });
-
-//     const imageLink = imageUpload.secure_url;
-//     // Check if the job poster already exists
-//     let jobposter = await JobPoster.findOne({ jobPosterId });
-
-//     if (jobposter) {
-//       const jobposter = await JobPoster.findOneAndUpdate(
-//         { jobPosterId },
-//         {
-//           $set: {
-//             firstName,
-//             lastName,
-//             companyEmail,
-//             companyContact,
-//             companyName,
-//             companyWebsite,
-//             companyLocation,
-//             companyType,
-//             companyDesignation,
-//             companyDescription,
-//             CompanyIndustry,
-//             companyLogo: imageLink,
-//           },
-//         },
-//         { upsert: true, new: true }
-//       );
-
-//       return res.status(200).json({
-//         message: "Job poster profile updated successfully",
-//         jobposter,
-//       });
-//     }
-
-//     // Create the job poster profile
-//     jobposter = await JobPoster.create({
-//       jobPosterId,
-//       firstName,
-//       lastName,
-//       companyEmail,
-//       companyContact,
-//       companyName,
-//       companyWebsite,
-//       companyLocation,
-//       companyType,
-//       companyDesignation,
-//       companyDescription,
-//       CompanyIndustry,
-//       companyLogo: imageLink,
-//     });
-
-//     res
-//       .status(201)
-//       .json({ message: "Job poster profile created successfully", jobposter });
-//   } catch (error) {
-//     console.error("Error creating job poster profile:", error);
-//     res.status(500).json({ error: "Internal server error", error });
-//   }
-// };
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  secure: true,
+});
 
 const createProvider = async (req, res) => {
   const {
@@ -140,22 +39,22 @@ const createProvider = async (req, res) => {
     "companyDescription",
     "CompanyIndustry",
   ];
-
   for (const detail of details) {
     if (!req.body[detail]) {
       return res.status(400).json({ msg: `${detail} is required` });
     }
   }
-
   try {
-    const imageFile = req.file;
-    const imageLink = path.join("uploads", imageFile.filename);
+    const imageUpload = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: "image",
+    });
 
+    const imageLink = imageUpload.secure_url;
     // Check if the job poster already exists
     let jobposter = await JobPoster.findOne({ jobPosterId });
 
     if (jobposter) {
-      jobposter = await JobPoster.findOneAndUpdate(
+      const jobposter = await JobPoster.findOneAndUpdate(
         { jobPosterId },
         {
           $set: {
@@ -199,15 +98,12 @@ const createProvider = async (req, res) => {
       companyLogo: imageLink,
     });
 
-    res.status(201).json({
-      message: "Job poster profile created successfully",
-      jobposter,
-    });
+    res
+      .status(201)
+      .json({ message: "Job poster profile created successfully", jobposter });
   } catch (error) {
     console.error("Error creating job poster profile:", error);
-    res
-      .status(500)
-      .json({ error: "Internal server error", details: error.message });
+    res.status(500).json({ error: "Internal server error", error });
   }
 };
 
