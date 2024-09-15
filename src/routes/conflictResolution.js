@@ -8,12 +8,14 @@ const {
   sendConflictResolutionFeedback
 } = require("../controllers/ConflictResolutionController/conflictResolution");
 
-router.post("/create-conflicts", conflictResolution);
-router.get("/all-conflicts", getConflictResolution);
+const authenticatedUser = require("../middleware/authentication")
 
-router.put("/conflicts/:conflictResolutionId", completedConflict);
-router.get("/get-my-conflict/:userId", getMyConflictResolution);
-router.post("/send-conflict-resolution-feedback", sendConflictResolutionFeedback)
+router.post("/create-conflicts", authenticatedUser, conflictResolution);
+router.get("/all-conflicts", authenticatedUser, getConflictResolution);
+
+router.put("/conflicts/:conflictResolutionId", authenticatedUser, completedConflict);
+router.get("/get-my-conflict/:userId", authenticatedUser, getMyConflictResolution);
+router.post("/send-conflict-resolution-feedback", authenticatedUser, sendConflictResolutionFeedback)
 
 
 module.exports = router;
