@@ -25,7 +25,6 @@ const UserActivity = sequelize.define('UserActivity', {
   UserIp: {
     type: DataTypes.STRING,
     allowNull: false,
-
   },
   DateCreated: {
     type: DataTypes.DATE,
@@ -38,7 +37,6 @@ const UserActivity = sequelize.define('UserActivity', {
 }, {
   tableName: 'UserActivity',
   timestamps: false, // If you don't have createdAt and updatedAt fields
-
 });
 
 module.exports = UserActivity;

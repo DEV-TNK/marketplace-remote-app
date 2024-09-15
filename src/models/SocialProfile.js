@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require("../config/dbConnect");
-const User = require('./Users'); 
+const User = require('./Users');
 
 const SocialProfile = sequelize.define('SocialProfile', {
   id: {
@@ -20,7 +20,7 @@ const SocialProfile = sequelize.define('SocialProfile', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-    youtube: {
+  youtube: {
     type: DataTypes.STRING,
     allowNull: true,
   },
@@ -35,7 +35,7 @@ const SocialProfile = sequelize.define('SocialProfile', {
   LinkedIn: {
     type: DataTypes.STRING,
     allowNull: true,
-  }, 
+  },
 }, {
   tableName: 'SocialProfiles',
 });
