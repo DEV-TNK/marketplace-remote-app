@@ -16,10 +16,10 @@ const getMyJobs = async (req, res) => {
 
         const jobIds = offers.map(offer => offer.jobId);
         const jobs = await JobPosting.find({ _id: { $in: jobIds } }).populate({
-                path: 'jobPoster',
-                select: 'companyName companyLogo' 
-            }).sort({ createdAt: -1 });
-            
+            path: 'jobPoster',
+            select: 'companyName companyLogo'
+        }).sort({ createdAt: -1 });
+
         return res.json(jobs);
     } catch (error) {
         console.error('Error fetching jobs for job seeker:', error);
