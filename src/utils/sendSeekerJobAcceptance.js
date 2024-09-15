@@ -103,7 +103,7 @@ const sendSeekerAcceptanceEmail = async ({ username, email, jobTitle }) => {
                       processed successfully by the job provider.
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      It's essential to understand that Unleashified is not
+                      It's essential to understand that PME Cote D'Ivoire Marketplace is not
                       liable if the job provider fails to pay after job
                       completion. Please refer to our
                       <a href="link_to_terms_and_conditions_page"

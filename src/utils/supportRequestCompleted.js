@@ -125,7 +125,7 @@ const sendSupportRequestCompletedEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The Transnumerik Team
+                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
                     </p>
                   </div>
                 </div>
@@ -151,10 +151,10 @@ const sendSupportRequestCompletedEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing Unleashified as your job platform.
+                  Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 Transnumerik. All rights Reserved.
+                  &copy; 2024 PME Cote D'Ivoire Marketplace. All rights Reserved.
                 </p>
               </td>
             </tr>

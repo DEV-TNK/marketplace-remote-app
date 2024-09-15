@@ -12,7 +12,7 @@ const sendVerificationEmail = async ({
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Payment Withdrawal Request</title>
+    <title>Email Verification</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
