@@ -26,13 +26,13 @@ const AdminPercentage = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [['NGN', 'USD', 'EUR', 'GBP']] 
+        isIn: [['NGN', 'USD', 'EUR', 'GBP']]
       }
     },
     transactionDate: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: DataTypes.NOW, 
+      defaultValue: DataTypes.NOW,
     },
   },
   {
