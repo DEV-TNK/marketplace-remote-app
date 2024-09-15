@@ -37,7 +37,7 @@ const ProviderTransaction = sequelize.define('ProviderTransaction', {
   jobTitle: {
     type: DataTypes.STRING,
     allowNull: false
-  }, 
+  },
   status: {
     type: DataTypes.STRING,
     allowNull: false,

@@ -1,8 +1,8 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConnect");
-const User = require('./Users'); 
+const User = require("./Users");
 
-const Employment = sequelize.define('Employment', {
+const Employment = sequelize.define("Employment", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -51,100 +51,103 @@ const Employment = sequelize.define('Employment', {
 });
 
 // SeekerResume model
-const SeekerResume = sequelize.define('SeekerResume', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'User',
-      key: 'id'
-    }
-  },
-  firstName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  lastName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  middleName:  {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: true,
-      notEmpty: true,
+const SeekerResume = sequelize.define(
+  "SeekerResume",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "User",
+        key: "id",
+      },
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    middleName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+        notEmpty: true,
+      },
+    },
+    contact: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    resumeUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    school: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    degree: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    study: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    studyType: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    startYear: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    endYear: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    headline: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    workType: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    workLocation: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    workAvailability: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   },
-  contact: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  gender: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  }, 
-  resumeUrl: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  }, 
-  school: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  degree: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  study: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  studyType: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  startYear:  {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  endYear:  {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  headline:  {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  workType:  {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  workLocation:  {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  workAvailability:  {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-}, {
-  tableName: 'SeekerResume',
-});
+  {
+    tableName: "SeekerResume",
+  }
+);
 
 // Define associations
-SeekerResume.belongsTo(User, { foreignKey: 'userId' });
-SeekerResume.hasOne(Employment, { foreignKey: 'seekerResumeId' });
+SeekerResume.belongsTo(User, { foreignKey: "userId" });
+SeekerResume.hasOne(Employment, { foreignKey: "seekerResumeId" });
 
 module.exports = { SeekerResume, Employment };
-

@@ -10,7 +10,7 @@ const certificateSchema = new mongoose.Schema({
 });
 
 const serviceProviderSchema = new mongoose.Schema({
-  serviceProviderId: { type: String, required: true, unique: true },
+  userId: { type: Number, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   middleName: { type: String },
@@ -26,6 +26,7 @@ const serviceProviderSchema = new mongoose.Schema({
   skills: [{ type: String }],
   certification: [certificateSchema],
   portfolio: [PortfolioSchema],
+  serviceRequests: [{ type: Number }],
 });
 
 const ServiceProvider = mongoose.model(
