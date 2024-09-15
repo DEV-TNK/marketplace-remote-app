@@ -18,6 +18,7 @@ const Register = async (req, res) => {
     const duplicateUser = await User.findOne({
       where: {
         email: email,
+        role: userType,
       },
     });
 
@@ -35,7 +36,7 @@ const Register = async (req, res) => {
           verificationToken,
         });
 
-        // Send verification email to users
+        // Send verification email
         await sendVerificationEmail({
           username: updateUser.username,
           email: updateUser.email,

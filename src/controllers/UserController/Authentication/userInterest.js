@@ -28,7 +28,7 @@ const saveInterest = async (req, res) => {
     await user.update({ interest: interestStringified });
 
     res.status(200).json({ message: "Interests saved successfully", user });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 module.exports = saveInterest;

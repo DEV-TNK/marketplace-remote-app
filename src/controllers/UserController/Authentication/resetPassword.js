@@ -5,9 +5,9 @@ const bcrypt = require("bcryptjs");
 
 const resetPassword = async (req, res) => {
   try {
-    const { email, resetToken, newPassword } = req.body;
+    const { email, resetToken, newPassword, userType } = req.body;
 
-    const details = ["resetToken", "newPassword", "email"];
+    const details = ["resetToken", "newPassword", "email", "userType"];
 
     for (const detail of details) {
       if (!req.body[detail]) {
@@ -18,7 +18,7 @@ const resetPassword = async (req, res) => {
       .createHash("sha256")
       .update(resetToken)
       .digest("hex");
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({ where: { email: email, role: userType } });
     if (!user) {
       return res.status(400).json({ message: "user not found" });
     }
