@@ -15,7 +15,7 @@ const socialProfile = async (req, res) => {
             LinkedIn
         } = req.body
 
-       if (!(twitter || youtube || instagram || facebook || LinkedIn)) {
+        if (!(twitter || youtube || instagram || facebook || LinkedIn)) {
             return res.status(400).json({ message: "At least one social profile is required" });
         }
         const userExist = await User.findOne({
