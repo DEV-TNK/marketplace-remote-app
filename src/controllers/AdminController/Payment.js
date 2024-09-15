@@ -79,20 +79,20 @@ const acceptOrRejectPayment = async (req, res) => {
             if (!findUser) {
                 // Calculate 95% of the amount
                 const adjustedAmount = amountConvert * 0.95;
-               
+
                 const showEarning = await SeekerEarning.create({
                     userId: findPending.userId,
                     [currency]: adjustedAmount,
                 })
                 // get user
                 const getUser = await SeekerEarning.findOne({
-                where: {
-                    userId: findPending.userId,
-                },
-                include: [
-                    { model: User, attributes: ['email', "username"] }
-                ]
-            });
+                    where: {
+                        userId: findPending.userId,
+                    },
+                    include: [
+                        { model: User, attributes: ['email', "username"] }
+                    ]
+                });
                 findPending.status = "completed"
                 await findPending.save()
                 await sendSeekerJobPaymentEmail({
@@ -166,7 +166,6 @@ const markWithdrawalRequest = async (req, res) => {
         return res.status(500).json({ error: 'Internal Server Error.' });
     }
 }
-
 
 module.exports = {
     seekerPendingPayment,
