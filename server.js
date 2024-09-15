@@ -2,11 +2,14 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 const { connectDB } = require("./src/config/dbConnect");
 const db = require("./src/config/db.js");
 const corsOptions = require("./src/config/corsOptions.js");
 const path = require("path");
+const {
+  limiter
+} = require("./src/middleware/RateLimiter")
 
 connectDB();
 db();
@@ -22,6 +25,8 @@ app.use(express.json());
 
 // Set the static folder for serving HTML, CSS, JS, etc.
 app.use(express.static(path.join(__dirname, "src")));
+
+app.use(limiter);
 
 //user routes
 app.use("/api/v1", require("./src/routes/authentication"));
