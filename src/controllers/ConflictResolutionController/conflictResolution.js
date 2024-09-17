@@ -3,7 +3,6 @@ const User = require("../../models/Users");
 const sendConflictResolutionClosedEmail = require("../../utils/sendConflictResolutionClosed");
 const sendConflictResolutionFeedbackEmail = require("../../utils/sendConflictResolutionFeedbackEmail");
 
-
 const conflictResolution = async (req, res) => {
   await ConflictResolution.sync();
   try {
@@ -40,8 +39,8 @@ const conflictResolution = async (req, res) => {
 const getConflictResolution = async (req, res) => {
   try {
     const conflicts = await ConflictResolution.findAll({
-      order: [['createdAt', 'DESC']],
-      include: [{ model: User, attributes: ['username', "email"] }]
+      order: [["createdAt", "DESC"]],
+      include: [{ model: User, attributes: ["username", "email"] }],
     });
 
     res.status(200).json({ conflicts });
@@ -59,8 +58,7 @@ const getMyConflictResolution = async (req, res) => {
       where: {
         userId: userId,
       },
-      order: [['createdAt', 'DESC']],
-
+      order: [["createdAt", "DESC"]],
     });
 
     res.status(200).json({ conflicts });
@@ -78,7 +76,7 @@ const completedConflict = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['username', 'email'],
+          attributes: ["username", "email"],
         },
       ],
     });
@@ -96,7 +94,7 @@ const completedConflict = async (req, res) => {
       resolutionId: conflictResolutionId,
       reason: conflict.reason,
       message: conflict.message,
-    })
+    });
     res
       .status(200)
       .json({ message: "Conflict resolution marked as completed" });
@@ -112,23 +110,32 @@ const sendConflictResolutionFeedback = async (req, res) => {
     const { id, subject, message } = req.body;
 
     if (!id || !subject || !message) {
-      return res.status(400).send({ error: 'id, subject, and message are required' });
+      return res
+        .status(400)
+        .send({ error: "id, subject, and message are required" });
     }
 
     const conflictResolution = await ConflictResolution.findByPk(id, {
       include: [
         {
           model: User,
-          attributes: ['username', 'email']
-        }
-      ]
-    })
-    if (!conflictResolution || !conflictResolution.User || !conflictResolution.User.email || !conflictResolution.User.username) {
-      return res.status(404).send({ error: 'Valid conflict report with username and email not found' });
+          attributes: ["username", "email"],
+        },
+      ],
+    });
+    if (
+      !conflictResolution ||
+      !conflictResolution.User ||
+      !conflictResolution.User.email ||
+      !conflictResolution.User.username
+    ) {
+      return res.status(404).send({
+        error: "Valid conflict report with username and email not found",
+      });
     }
 
     const email = conflictResolution.User.email;
-    const username = conflictResolution.User.username
+    const username = conflictResolution.User.username;
     const { reason } = conflictResolution;
 
     await sendConflictResolutionFeedbackEmail({
@@ -139,10 +146,14 @@ const sendConflictResolutionFeedback = async (req, res) => {
       message,
     });
 
-    res.status(200).send({ message: 'Conflict Resolution Feedback email sent successfully' });
+    res.status(200).send({
+      message: "Conflict Resolution Feedback email sent successfully",
+    });
   } catch (error) {
-    console.error('Error sending feedback email:', error);
-    res.status(500).send({ error: 'An error occurred while sending the feedback email' })
+    console.error("Error sending feedback email:", error);
+    res
+      .status(500)
+      .send({ error: "An error occurred while sending the feedback email" });
   }
 }
 
@@ -151,5 +162,5 @@ module.exports = {
   getConflictResolution,
   completedConflict,
   getMyConflictResolution,
-  sendConflictResolutionFeedback
+  sendConflictResolutionFeedback,
 };

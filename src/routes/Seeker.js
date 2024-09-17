@@ -8,6 +8,7 @@ const {
   getUserResumeDetails,
   getAResume,
   getMyResume,
+  getImages,
 } = require("../controllers/SeekerController/SeekerResume");
 const {
   jobApplication,
@@ -15,6 +16,7 @@ const {
   myOfferLetter,
   acceptOrRejectOffer,
   getApplicationsBySeeker,
+  userPendingApplications,
 } = require("../controllers/SeekerController/JobApplication");
 const {
   getSeekerEarning,
@@ -65,6 +67,8 @@ const {
   getOngoingServiceRequest,
   getCompletedServiceRequest } = require("../controllers/ServiceSeekerController/Dashboard");
 const authenticatedUser = require("../middleware/authentication");
+
+const { UserStorage, seekerResume } = require("../helper/multerUpload");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

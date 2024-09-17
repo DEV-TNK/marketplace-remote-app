@@ -25,7 +25,8 @@ const createProvider = async (req, res) => {
     CompanyIndustry,
   } = req.body;
 
-  const details = [
+  // Required fields validation
+  const requiredFields = [
     "jobPosterId",
     "firstName",
     "lastName",
@@ -35,7 +36,6 @@ const createProvider = async (req, res) => {
     "companyLocation",
     "companyDesignation",
     "companyType",
-    "companyWebsite",
     "companyDescription",
     "CompanyIndustry",
   ];
@@ -72,7 +72,7 @@ const createProvider = async (req, res) => {
             companyLogo: imageLink,
           },
         },
-        { upsert: true, new: true }
+        { new: true } // Return the updated document
       );
 
       return res.status(200).json({
@@ -81,7 +81,6 @@ const createProvider = async (req, res) => {
       });
     }
 
-    // Create the job poster profile
     jobposter = await JobPoster.create({
       jobPosterId,
       firstName,
