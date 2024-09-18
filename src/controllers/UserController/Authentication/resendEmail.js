@@ -6,9 +6,9 @@ const sendVerificationEmail =
 
 const resendEmail = async (req, res) => {
   // to get user details from the request body
-  const { email } = req.body;
+  const { email, userType } = req.body;
 
-  const details = ["email"];
+  const details = ["email", "userType"];
 
   for (const detail of details) {
     if (!req.body[detail]) {
@@ -18,7 +18,12 @@ const resendEmail = async (req, res) => {
 
   try {
     // check for user by there email address and firstName
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({
+      where: {
+        email: email,
+        role: userType,
+      },
+    });
     if (!user) {
       return res
         .status(404)

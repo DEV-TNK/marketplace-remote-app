@@ -3,13 +3,18 @@ const sendForgotPasswordEmail = require("../../../utils/sendForgottenPassword");
 const crypto = require("crypto");
 const forgotPassword = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, userType } = req.body;
 
-    if (!email) {
-      return res.status(400).json({ message: `email is required` });
+    if (!email || !userType) {
+      return res.status(400).json({ message: `email and usertype is required` });
     }
 
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({
+      where: {
+        email: email,
+        role: userType,
+      },
+    });
 
     if (!user) {
       return res.status(404).json({ message: "User does not exist" });

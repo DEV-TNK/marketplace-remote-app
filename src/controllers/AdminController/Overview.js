@@ -1,8 +1,8 @@
 const Job = require("../../models/Job");
 const JobPoster = require("../../models/JobPoster");
 const Users = require("../../models/Users");
-const Service = require("../../models/Service")
 const { Op } = require("sequelize");
+const ProviderService = require("../../models/ProvidersServices");
 
 const overview = async (req, res) => {
   try {
@@ -47,10 +47,10 @@ const overview = async (req, res) => {
 
     const totalJob = await Job.countDocuments()
 
-    const monthlyService = await Service.find({
+    const monthlyService = await ProviderService.find({
       createdAt: { $gte: startOfMonth, $lte: endOfMonth }
     }).exec()
-    const totalService = await Service.countDocuments()
+    const totalService = await ProviderService.countDocuments()
 
 
     const dashboardData = {
@@ -160,7 +160,7 @@ const jobStatus = async (req, res) => {
 
     // Find ongoing jobs
     const ongoingJobs = await Job.find({ status: "Ongoing" });
-    console.log(ongoingJobs, pendingJobs, completedJobs);
+    //console.log(ongoingJobs, pendingJobs, completedJobs);
     // Return all jobs, pending jobs, completed jobs, and ongoing jobs separately
     res.status(200).json({
       allJobs,

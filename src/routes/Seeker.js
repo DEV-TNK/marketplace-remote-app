@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+
+
+
 const {
   updateOrCreateSeekerResume,
   getUserResumeDetails,
@@ -36,21 +39,34 @@ const {
   fgnAlatRecommendedJpbs,
 } = require("../controllers/SeekerController/SeekerLanding");
 
+
 const {
-  createService,
-  getMyServices,
-  getAService,
-  getAllServices,
-  servicesSearch,
-  editSeekerServices,
-  deleteSeekerService,
-  serviceByDepartment,
-  totalServicePerMonth,
+  // createService,
   getFgnAlatRecommendedServices,
-  providerCreateService,
-  likeService,
 } = require("../controllers/SeekerController/Service");
 const myContract = require("../controllers/SeekerController/Contract");
+const {
+  requestService,
+  //saveOrderSummary,
+  getOrderSummary,
+  //updateServiceRequestStatus,
+  updateServiceRequestStatusCompleted,
+  likeService,
+  getAProvidserService,
+  getAllServices,
+  serviceByDepartment,
+  totalServicePerMonth,
+  servicesSearch } = require("../controllers/ServiceSeekerController/serviceSeeker");
+
+
+//Seeker Service Controller
+const {
+  getSeekerServiceDashboardData,
+  getLastFourCompletedServices,
+  getAllServicesRequest,
+  getOngoingServiceRequest,
+  getCompletedServiceRequest } = require("../controllers/ServiceSeekerController/Dashboard");
+const authenticatedUser = require("../middleware/authentication");
 
 const { UserStorage, seekerResume } = require("../helper/multerUpload");
 
@@ -72,95 +88,69 @@ const storageSeeker = multer.diskStorage({});
 
 const uploadSeeker = multer({ storage: storageSeeker });
 
-const uploadUserImage = multer({
-  storage: UserStorage,
-  limits: {
-    fileSize: 10485760,
-  },
-});
+router.post("/seeker-resume", authenticatedUser, upload.single("resume"), updateOrCreateSeekerResume);
+router.post("/seeker-upload-image", uploadSeeker.single("image"), uploadSeekerImage);
 
-const uploadSeekerResume = multer({
-  storage: seekerResume,
-  limits: {
-    fileSize: 10485760,
-  },
-});
+router.post("/apply-for-job", authenticatedUser, getUserResumeDetails);
 
-router.post(
-  "/seeker-resume",
-  uploadSeekerResume.single("resume"),
-  updateOrCreateSeekerResume
-);
-router.post(
-  "/seeker-upload-image",
-  uploadUserImage.single("image"),
-  uploadSeekerImage
-);
+router.post("/submit-job-application", authenticatedUser, jobApplication);
+router.get("/get-a-resume/:filename", authenticatedUser, getAResume);
+router.get("/get-my-resume/:userId", authenticatedUser, getMyResume);
 
-router.post("/apply-for-job", getUserResumeDetails);
-
-router.post("/submit-job-application", jobApplication);
-router.get("/get-a-resume/:filename", getAResume);
-router.get("/get-my-resume/:userId", getMyResume);
-router.get("/get-an-images/:filename", getImages);
-
-router.get("/get-my-offers/:userId", myOfferLetter);
-router.get("/seeker-recommendation/:userId", getRecommendation);
-router.get(
-  "/FGN-ALAT-seeker-job-recommendation/:userId",
-  fgnAlatRecommendedJpbs
-);
-router.get(
-  "/FGN-ALAT-seeker-recommended-services/:email",
-  getFgnAlatRecommendedServices
-);
+router.get("/get-my-offers/:userId", authenticatedUser, myOfferLetter);
+router.get("/seeker-recommendation/:userId", authenticatedUser, getRecommendation);
+router.get("/FGN-ALAT-seeker-job-recommendation/:userId", fgnAlatRecommendedJpbs);
+//router.get("/FGN-ALAT-seeker-recommended-services/:email", getFgnAlatRecommendedServices);
 
 router.get("/total-jobs-applied/", totalJobsApplied);
-router.post("/accept-reject-offer", acceptOrRejectOffer);
-router.get("/seeker-monthly-applications/:userId", getApplicationsBySeeker);
-router.get("/user-pending-applications/:userId", userPendingApplications);
+router.post("/accept-reject-offer", authenticatedUser, acceptOrRejectOffer);
+router.get("/seeker-monthly-applications/:userId", authenticatedUser, getApplicationsBySeeker);
 // router.get(
 //   "/seeker-monthly-applications/:seekerUserId",
 //   getApplicationsBySeeker
 // );
 
 //route to get my jobs
-router.get("/seeker-jobs/:userId", getMyJobs);
-router.get("/seeker-ongoing-jobs/:userId", getJobSeekerOngoingJobs);
-router.get("/seeker-completed-jobs/:userId", getJobSeekerCompletedJobs);
+router.get("/seeker-jobs/:userId", authenticatedUser, getMyJobs);
+router.get("/seeker-ongoing-jobs/:userId", authenticatedUser, getJobSeekerOngoingJobs);
+router.get("/seeker-completed-jobs/:userId", authenticatedUser, getJobSeekerCompletedJobs);
 
 //get job seeker dashbooard data
-router.get("/dashboard/:userId", getJobSeekerDashboardData);
-router.get("/last-approved-jobs/:userId", getLastApprovedJobs);
+router.get("/dashboard/:userId", authenticatedUser, getJobSeekerDashboardData);
+router.get("/last-approved-jobs/:userId", authenticatedUser, getLastApprovedJobs);
 
 // service
-router.post("/create-service", serviceUpload.single("image"), createService);
-router.post(
-  "/provider-create-service",
-  serviceUpload.any("backgroundCover"),
-  providerCreateService
-);
-router.get("/get-my-services/:userId", getMyServices);
-router.get("/get-a-service/:serviceId", getAService);
+// router.post("/create-service", serviceUpload.single("image"), createService);
+
+
+
 router.get("/get-all-services", getAllServices);
 router.post("/search-services", servicesSearch);
-router.get("/get-my-contract/:userId", myContract);
-router.patch(
-  "/edit-service/:serviceId",
-  serviceUpload.any("backgroundCover"),
-  editSeekerServices
-); //
+router.get("/get-my-contract/:userId", authenticatedUser, myContract);
+router.get("/get-provider-service/:serviceId", authenticatedUser, getAProvidserService)
 router.put("/like/service", likeService);
-router.delete("/delete-service/:serviceId", deleteSeekerService);
 router.get("/services-by-department", serviceByDepartment);
 router.get("/service-per-month", totalServicePerMonth);
-router.get(
-  "/FGN-ALAT-seeker-recommended-services/:userId",
-  getFgnAlatRecommendedServices
-);
+
+
+//router.get("/FGN-ALAT-seeker-recommended-services/:userId", getFgnAlatRecommendedServices);
 
 // seeker earning
-router.get("/get-my-earning/:userId", getSeekerEarning);
-router.get("/get-my-withdrawHistory/:userId", getAllSeekerPaymentRequest);
+router.get("/get-my-earning/:userId", authenticatedUser, getSeekerEarning);
+router.get("/get-my-withdrawHistory/:userId", authenticatedUser, getAllSeekerPaymentRequest);
+
+router.post("/request-service", authenticatedUser, requestService)
+router.get("/get-order-summary/:userId", authenticatedUser, getOrderSummary)
+//router.put("/ongoing-service-request", updateServiceRequestStatus);
+router.put("/complete-service-request", authenticatedUser, updateServiceRequestStatusCompleted)
+//router.post("/save-order-summary", saveOrderSummary)
+
+//Service seeker Dashboard Data Routes
+router.get("/service-seeker-dashboard/:userId", authenticatedUser, getSeekerServiceDashboardData)
+router.get("/last-four-completed-services/:userId", authenticatedUser, getLastFourCompletedServices)
+router.get("/all-services-request/:userId", authenticatedUser, getAllServicesRequest)
+router.get("/ongoing-services-request/:userId", authenticatedUser, getOngoingServiceRequest)
+router.get("/completed-services-request/:userId", authenticatedUser, getCompletedServiceRequest)
+
 
 module.exports = router;

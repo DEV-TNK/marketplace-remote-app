@@ -10,7 +10,8 @@ const sendRejectLetterEmail = async ({
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Offer Rejection Letter from Unleashified</title>
+    <title>Offer Rejection Letter from PME Cote D'Ivoire Marketplace</title>
+    
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 

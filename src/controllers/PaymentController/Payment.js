@@ -1,19 +1,17 @@
 const https = require("https");
 const ProviderTransaction = require("../../models/ProviderTransaction");
-const {
-  PaymentRequest,
-  SeekerEarning,
-} = require("../../models/SeekerPaymentRecords");
+const { PaymentRequest, SeekerEarning } = require("../../models/SeekerPaymentRecords");
 const Job = require("../../models/Job");
 const sendSeekerJobPaymentEmail = require("../../utils/seekerJobPaymentAlert");
 const User = require("../../models/Users");
 const sendProviderJobPaymentEmail = require("../../utils/providerPaymentAlert");
 const offer = require("../../models/Offer");
 const JobPoster = require("../../models/JobPoster");
-const sendSeekerWithdrawalEmail = require("../../utils/sendSeekerWithdrawalRequest");
-const Account = require("../../models/Accounts");
-// const outSourceJobs = require("../../models/OutSource")
-const sendProviderOutSourcJobPaymentEmail = require("../../utils/OutSourceJobPaymentAlert");
+const sendSeekerWithdrawalEmail = require("../../utils/sendSeekerWithdrawalRequest")
+const Account = require("../../models/Accounts")
+//const outSourceJobs = require("../../models/OutSource")
+const sendProviderOutSourcJobPaymentEmail = require("../../utils/OutSourceJobPaymentAlert")
+
 
 // payment helper function
 
@@ -71,17 +69,8 @@ const verifyPayment = async (reference, provider) => {
 const providerJobPayment = async (req, res) => {
   await ProviderTransaction.sync();
 
-  const { reference, email, jobId, userId, type, currency, provider } =
-    req.body;
-  const details = [
-    "reference",
-    "email",
-    "jobId",
-    "userId",
-    "type",
-    "currency",
-    "provider",
-  ];
+  const { reference, email, jobId, userId, type, currency, provider } = req.body;
+  const details = ["reference", "email", "jobId", "userId", "type", "currency", "provider"];
   // Check if userId is provided
   for (const detail of details) {
     if (!req.body[detail]) {
@@ -91,15 +80,19 @@ const providerJobPayment = async (req, res) => {
   try {
     const responseData = await verifyPayment(reference, provider);
 
-    console.log("This is the amount", responseData);
+    console.log("This is the amount", responseData)
 
-    // CONVERT amount
+    // CONVERT amount 
+
+
+
 
     if (type === "JOB") {
       // for paystack
       // const convertAmount = responseData.data.amount / 100;
       // for flutterwave
       const convertAmount = responseData.data.amount;
+
 
       const getJob = await Job.findOne({ _id: jobId }).populate({
         path: "jobPoster",
@@ -136,15 +129,14 @@ const providerJobPayment = async (req, res) => {
         userId: userId,
         status: "success",
         type: type,
-        currency: currency,
+        currency: currency
       });
       const amount = parseInt(getJob.jobSalary.replace(/,/g, ""));
       console.log("this is amount", amount);
 
-      if (
-        responseData.data.status === "successful" &&
-        convertAmount === amount
-      ) {
+
+
+      if (responseData.data.status === "successful" && convertAmount === amount) {
         const jobUpdate = await Job.findOneAndUpdate(
           { _id: jobId },
           { $set: { status: "Ongoing", paymentStatus: "paid" } },
@@ -159,7 +151,7 @@ const providerJobPayment = async (req, res) => {
           description: getJob.jobDescription,
           deliveryDate: getJob.deliveryDate,
           type: getJob.jobType,
-          currency: currency,
+          currency: currency
         });
         await sendProviderJobPaymentEmail({
           username: getJob.jobPoster.companyName,
@@ -175,12 +167,10 @@ const providerJobPayment = async (req, res) => {
       }
     } else if (type === "Out-Source") {
       const flutterAmount = responseData.data.amount;
-      const getOutSourceJob = await outSourceJobs
-        .findOne({ _id: jobId })
-        .populate({
-          path: "jobPoster",
-          select: "companyName companyLogo",
-        });
+      const getOutSourceJob = await outSourceJobs.findOne({ _id: jobId }).populate({
+        path: "jobPoster",
+        select: "companyName companyLogo",
+      });
 
       if (!getOutSourceJob) {
         return res.status(400).json({ message: `Job does not exist` });
@@ -196,35 +186,32 @@ const providerJobPayment = async (req, res) => {
         userId: userId,
         status: "success",
         type: type,
-        currency: currency,
+        currency: currency
       });
 
-      const totalAmount = getOutSourceJob.jobs.reduce(
-        (total, job) => total + parseFloat(job.price) * job.numberOfPerson,
-        0
-      );
-      console.log("this is total amount", totalAmount);
-      console.log("this is flutterAmount", flutterAmount);
-      console.log("this is status", responseData.data.status);
+      const totalAmount = getOutSourceJob.jobs.reduce((total, job) =>
+        total + parseFloat(job.price) * job.numberOfPerson,
+        0)
+      console.log("this is total amount", totalAmount)
+      console.log("this is flutterAmount", flutterAmount)
+      console.log("this is status", responseData.data.status)
 
-      if (
-        responseData.data.status === "successful" &&
-        flutterAmount === totalAmount
-      ) {
+
+      if (responseData.data.status === "successful" && flutterAmount === totalAmount) {
+
         const jobUpdate = await outSourceJobs.findOneAndUpdate(
           { _id: jobId },
           { $set: { paymentStatus: "paid" } },
           { new: true } // Return the updated document
         );
-        const totalNumber = getOutSourceJob.jobs.reduce(
-          (total, job) => total + job.numberOfPerson,
-          0
-        );
+        const totalNumber = getOutSourceJob.jobs.reduce((total, job) =>
+          total + job.numberOfPerson,
+          0)
         await sendProviderOutSourcJobPaymentEmail({
           username: getOutSourceJob.jobPoster.companyName,
           email: email,
           num: totalNumber,
-          price: totalAmount,
+          price: totalAmount
         });
         return res.status(201).json({
           message: "Job Payment Successful",
@@ -233,10 +220,11 @@ const providerJobPayment = async (req, res) => {
           userTransaction,
         });
       }
+
     }
 
     // Send the parsed object as the response
-    return res.status(201).json({ message: "Payment Successfull" });
+    return res.status(201).json({ message: "Payment Successfull" })
   } catch (error) {
     console.error(error);
     res
@@ -244,6 +232,7 @@ const providerJobPayment = async (req, res) => {
       .json({ message: "An error occurred during payment verification" });
   }
 };
+
 
 const allProviderTransaction = async (req, res) => {
   try {
@@ -256,6 +245,7 @@ const allProviderTransaction = async (req, res) => {
     const transactions = await ProviderTransaction.findAll({
       where: {
         userId: userId,
+
       },
 
       order: [["transactionDate", "DESC"]],
@@ -271,8 +261,9 @@ const allProviderTransaction = async (req, res) => {
 
 const getAllPayment = async (req, res) => {
   try {
+
     const allPayment = await ProviderTransaction.findAll({
-      order: [["createdAt", "DESC"]],
+      order: [['createdAt', 'DESC']],
     });
 
     // Extract unique user IDs from these payment transactions
@@ -335,19 +326,14 @@ const paymentRequest = async (req, res) => {
         .status(404)
         .json({ message: "User have no earnings to widthdraw from" });
     }
-    const convertedAmount =
-      typeof amount === "string"
-        ? parseFloat(amount.replace(/,/g, ""))
-        : parseFloat(amount);
-    console.log("User earning:", getUserEarning.dataValues.NGN);
+    const convertedAmount = typeof amount === 'string' ? parseFloat(amount.replace(/,/g, '')) : parseFloat(amount);
+    console.log("User earning:", getUserEarning.dataValues.NGN)
     const currencyBalance = getUserEarning[currency];
     if (!currencyBalance || currencyBalance < convertedAmount) {
+
       return res
         .status(400)
-        .json({
-          message:
-            "You do not have sufficient amount to make this withdrawal request",
-        });
+        .json({ message: "You do not have sufficient amount to make this withdrawal request" });
     }
 
     const newPaymentRequest = await PaymentRequest.create({
@@ -357,15 +343,15 @@ const paymentRequest = async (req, res) => {
       currency,
       status: "pending",
     });
-    getUserEarning[currency] -= convertedAmount;
-    await getUserEarning.save();
-    const user = await User.findByPk(userId);
+    getUserEarning[currency] -= convertedAmount
+    await getUserEarning.save()
+    const user = await User.findByPk(userId)
 
     await sendSeekerWithdrawalEmail({
       username: user.username,
       email: user.email,
-      amount: convertedAmount.toString(),
-    });
+      amount: convertedAmount.toString()
+    })
     res.status(201).json({
       message: "Payment request created successfully",
       paymentRequest: newPaymentRequest,
@@ -379,14 +365,11 @@ const paymentRequest = async (req, res) => {
 const allSeekerWithdrawRequest = async (req, res) => {
   try {
     const allPaymentRequests = await PaymentRequest.findAll({
-      order: [["requestDate", "DESC"]],
+      order: [['requestDate', 'DESC']],
       include: [
-        {
-          model: Account,
-          attributes: ["accountName", "accountNumber", "bankName"],
-        },
-        { model: User, attributes: ["email", "username"] },
-      ],
+        { model: Account, attributes: ['accountName', 'accountNumber', 'bankName'] },
+        { model: User, attributes: ['email', 'username'] }
+      ]
     });
 
     return res.status(200).json({ paymentRequests: allPaymentRequests });
@@ -395,6 +378,7 @@ const allSeekerWithdrawRequest = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 module.exports = {
   providerJobPayment,

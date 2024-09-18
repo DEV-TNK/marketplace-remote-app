@@ -104,6 +104,7 @@ const completedConflict = async (req, res) => {
   }
 };
 
+
 const sendConflictResolutionFeedback = async (req, res) => {
   try {
     const { id, subject, message } = req.body;
@@ -154,7 +155,7 @@ const sendConflictResolutionFeedback = async (req, res) => {
       .status(500)
       .send({ error: "An error occurred while sending the feedback email" });
   }
-};
+}
 
 module.exports = {
   conflictResolution,

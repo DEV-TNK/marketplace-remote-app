@@ -1,9 +1,13 @@
-// const cloudinary = require("cloudinary").v2;
+const cloudinary = require("cloudinary").v2;
 const JobPosting = require("../../models/Job");
 const JobPoster = require("../../models/JobPoster");
-const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  secure: true,
+});
 
 const createProvider = async (req, res) => {
   const {
@@ -35,30 +39,22 @@ const createProvider = async (req, res) => {
     "companyDescription",
     "CompanyIndustry",
   ];
-
-  for (const field of requiredFields) {
-    if (!req.body[field]) {
-      return res.status(400).json({ msg: `${field} is required` });
+  for (const detail of details) {
+    if (!req.body[detail]) {
+      return res.status(400).json({ msg: `${detail} is required` });
     }
   }
-
   try {
-    const imageFile = req.file;
-    if (!imageFile) {
-      return res.status(400).json({ msg: "Company logo image is required" });
-    }
+    const imageUpload = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: "image",
+    });
 
-    const imageLink = path.join(
-      "uploads",
-      "providerImages",
-      imageFile.filename
-    );
-
+    const imageLink = imageUpload.secure_url;
+    // Check if the job poster already exists
     let jobposter = await JobPoster.findOne({ jobPosterId });
 
     if (jobposter) {
-      // Update existing job poster
-      jobposter = await JobPoster.findOneAndUpdate(
+      const jobposter = await JobPoster.findOneAndUpdate(
         { jobPosterId },
         {
           $set: {
@@ -101,15 +97,12 @@ const createProvider = async (req, res) => {
       companyLogo: imageLink,
     });
 
-    res.status(201).json({
-      message: "Job poster profile created successfully",
-      jobposter,
-    });
-  } catch (error) {
-    console.error("Error creating/updating job poster profile:", error);
     res
-      .status(500)
-      .json({ error: "Internal server error", details: error.message });
+      .status(201)
+      .json({ message: "Job poster profile created successfully", jobposter });
+  } catch (error) {
+    console.error("Error creating job poster profile:", error);
+    res.status(500).json({ error: "Internal server error", error });
   }
 };
 

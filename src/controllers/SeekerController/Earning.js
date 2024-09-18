@@ -5,16 +5,24 @@ const getSeekerEarning = async (req, res) => {
     try {
         const userId = req.params.userId
         if (!userId) {
-            return res.status(400).json({ message: 'User ID is required' });
+            return res.status(400).json({ message: `User ID is required` });
         }
-        const earning = await SeekerEarning.findOne({ where: { userId: userId } });
-        let userEarning;
-        if (earning) {
-            userEarning = earning
-        } else {
-            userEarning = "0"
+        const userEarning = await SeekerEarning.findOne({
+            where: {
+                userId: userId
+            }
+        });
+
+        if (!userEarning) {
+            return res.status(404).json({ message: "Earnings not found for this user" })
         }
-        return res.status(200).json({ userEarning });
+        return res.status(200).json({
+            NGN: userEarning.NGN,
+            USD: userEarning.USD,
+            GBP: userEarning.GBP,
+            EUR: userEarning.EUR
+
+        });
     } catch (error) {
         console.error('Error fetching jobs for job seeker:', error);
         return res.status(500).json({ message: 'Server error' });
@@ -24,9 +32,6 @@ const getSeekerEarning = async (req, res) => {
 const getAllSeekerPaymentRequest = async (req, res) => {
     try {
         const userId = req.params.userId
-        if (!userId) {
-            return res.status(400).json({ message: 'User ID is required' });
-        }
         const history = await PaymentRequest.findAll({
             where: {
                 userId: userId,

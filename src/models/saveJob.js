@@ -9,6 +9,13 @@ const saveJobSchema = new mongoose.Schema({
       timestamp: true,
     },
   ],
+  services: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ProviderService",
+      timestamp: true,
+    },
+  ],
 });
 
 const SaveJob = mongoose.model("SaveJob", saveJobSchema);

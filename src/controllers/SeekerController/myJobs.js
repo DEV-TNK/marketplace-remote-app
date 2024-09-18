@@ -6,29 +6,28 @@ const Offer = require("../../models/Offer");
 
 const getMyJobs = async (req, res) => {
   try {
-    const userId = req.params.userId;
+
+    const userId = req.params.userId
     if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
+      return res.status(400).json({ message: 'User ID is required' });
     }
 
-    const offers = await Offer.findAll({
-      where: { jobSeeker: userId, status: "accepted" },
-    });
+    const offers = await Offer.findAll({ where: { jobSeeker: userId, status: "accepted" } });
 
-    const jobIds = offers.map((offer) => offer.jobId);
-    const jobs = await JobPosting.find({ _id: { $in: jobIds } })
-      .populate({
-        path: "jobPoster",
-        select: "companyName companyLogo",
-      })
-      .sort({ createdAt: -1 });
+    const jobIds = offers.map(offer => offer.jobId);
+    const jobs = await JobPosting.find({ _id: { $in: jobIds } }).populate({
+      path: 'jobPoster',
+      select: 'companyName companyLogo'
+    }).sort({ createdAt: -1 });
 
     return res.json(jobs);
   } catch (error) {
-    console.error("Error fetching jobs for job seeker:", error);
-    return res.status(500).json({ message: "Server error" });
+    console.error('Error fetching jobs for job seeker:', error);
+    return res.status(500).json({ message: 'Server error' });
   }
-};
+
+
+}
 
 const getJobSeekerOngoingJobs = async (req, res) => {
   try {

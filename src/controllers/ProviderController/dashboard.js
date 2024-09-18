@@ -1,48 +1,48 @@
 const JobPoster = require("../../models/JobPoster");
 const User = require("../../models/Users");
+const cloudinary = require("cloudinary").v2;
 const ProviderTransaction = require("../../models/ProviderTransaction");
 const Job = require("../../models/Job");
-const path = require("path");
+//const OutSourceJob = require("../../models/OutSource")
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  secure: true,
+});
 
 const uploadProviderImage = async (req, res) => {
   try {
     const { userId } = req.body;
 
     if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
+      return res.status(400).json({ message: `User ID is required` });
     }
-
-    const user = await User.findByPk(userId); // Adjust this to match your database setup
-    const jobPoster = await JobPoster.findOne({ jobPosterId: userId }); // Adjust this to match your database setup
-
+    // Retrieve user's interests from MySQL
+    let user = await User.findByPk(userId);
+    let jobPoster = await JobPoster.findOne({ jobPosterId: userId });
     if (!user) {
-      return res.status(400).json({ message: "User Does not exist" });
+      return res.status(400).json({ message: `User Does not exist` });
     }
     if (!jobPoster) {
-      return res.status(400).json({ message: "Job Poster Does not exist" });
+      return res.status(400).json({ message: `Job Poster Does not exist` });
     }
+    const imageUpload = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: "image",
+    });
 
-    if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded" });
-    }
-
-    const imagePath = req.file.path;
-
-    const imageLink = path.resolve(__dirname, imagePath);
-
+    const imageLink = imageUpload.secure_url;
     user.imageUrl = imageLink;
     jobPoster.companyLogo = imageLink;
 
     await user.save();
     await jobPoster.save();
-
-    res.status(200).json({
-      message: "Image Uploaded Successfully",
-      user,
-      jobPoster,
-    });
+    res
+      .status(200)
+      .json({ message: "Image Uploaded Successfully", user, jobPoster });
   } catch (error) {
-    console.error("Error uploading:", error);
+    console.error("EError uploading:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -78,6 +78,7 @@ const getMydashboard = async (req, res) => {
     transactions.forEach((transaction) => {
       totalAmountSpent[transaction.currency] += parseFloat(transaction.amount);
     });
+
 
     // Find provider
     const provider = await JobPoster.findOne({ jobPosterId: userId });
@@ -195,6 +196,7 @@ const getMydashboard = async (req, res) => {
 //   }
 // };
 
+
 const getlastFourPaidJobs = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -245,9 +247,7 @@ const getlastFourPaidJobs = async (req, res) => {
     const allJobs = [...jobsFromJobModel, ...jobsFromOutSourceJobModel];
 
     // Sort combined results by createdAt and limit to the last 4
-    const sortedJobs = allJobs
-      .sort((a, b) => b.createdAt - a.createdAt)
-      .slice(0, 4);
+    const sortedJobs = allJobs.sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
 
     // Sanitize jobSalary values stored in MongoDB and compare them with transaction amounts
     // const matchingJobs = sortedJobs.filter((job) => {
@@ -266,15 +266,9 @@ const getlastFourPaidJobs = async (req, res) => {
       if (job.jobs) {
         // If it's an OutSourceJob, consolidate the job titles and prices
         const jobTitles = job.jobs.map((j) => j.title);
-        const totalJobPrice = job.jobs.reduce(
-          (sum, j) => sum + parseFloat(j.price),
-          0
-        );
+        const totalJobPrice = job.jobs.reduce((sum, j) => sum + parseFloat(j.price), 0);
         const currency = job.jobs[0]?.currency || "";
-        const number = job.jobs.reduce(
-          (sum, j) => sum + parseFloat(j.numberOfPerson),
-          0
-        );
+        const number = job.jobs.reduce((sum, j) => sum + parseFloat(j.numberOfPerson), 0);
         return {
           _id: job._id,
           jobTitles: jobTitles,
@@ -282,7 +276,7 @@ const getlastFourPaidJobs = async (req, res) => {
           status: job.status,
           type: "Out-Source",
           currency: currency,
-          number: number,
+          number: number
         };
       } else {
         // If it's a regular Job, format as needed
@@ -293,7 +287,7 @@ const getlastFourPaidJobs = async (req, res) => {
           status: job.status,
           type: "Single Job",
           currency: job.currency,
-          number: 1,
+          number: 1
         };
       }
     });
@@ -304,5 +298,6 @@ const getlastFourPaidJobs = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 module.exports = { uploadProviderImage, getMydashboard, getlastFourPaidJobs };

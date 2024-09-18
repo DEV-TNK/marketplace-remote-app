@@ -1,6 +1,6 @@
 const User = require("../../../models/Users");
 const bcrypt = require("bcryptjs");
-const {SeekerResume} = require("../../../models/SeekerResume")
+const { SeekerResume } = require("../../../models/SeekerResume")
 const JobPoster = require("../../../models/JobPoster")
 const Token = require("../../../models/Token");
 const {
@@ -28,45 +28,45 @@ const RegisterFgnUsers = async (req, res) => {
     });
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36';
     let accessToken;
-    let refreshToken; 
-    
+    let refreshToken;
+
     if (duplicateUser) {
-         accessToken = generateAccessToken(duplicateUser.id, duplicateUser.role);
-        refreshToken = generateRefreshToken(duplicateUser.id, duplicateUser.role);
-        const accessTokenExpiration = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
-        const refreshTokenExpiration = new Date(
-          Date.now() + 15 * 24 * 60 * 60 * 1000
-        ); // 15 days from now
-        await Token.create({
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          userId: duplicateUser.id,
-          userAgent: userAgent,
-          accessTokenExpiration: accessTokenExpiration,
-          refreshTokenExpiration: refreshTokenExpiration,
-        });
-        let setProfile = false;
-         const hasInterests =
+      accessToken = generateAccessToken(duplicateUser.id, duplicateUser.role);
+      refreshToken = generateRefreshToken(duplicateUser.id, duplicateUser.role);
+      const accessTokenExpiration = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
+      const refreshTokenExpiration = new Date(
+        Date.now() + 15 * 24 * 60 * 60 * 1000
+      ); // 15 days from now
+      await Token.create({
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        userId: duplicateUser.id,
+        userAgent: userAgent,
+        accessTokenExpiration: accessTokenExpiration,
+        refreshTokenExpiration: refreshTokenExpiration,
+      });
+      let setProfile = false;
+      const hasInterests =
         duplicateUser.interest && duplicateUser.interest !== null ? "yes" : "no";
 
       if (duplicateUser.role === "provider") {
         const jobPoster = await JobPoster.findOne({
           jobPosterId: duplicateUser.id
         })
-         if(jobPoster){
+        if (jobPoster) {
           setProfile = true;
-        }else {
+        } else {
           setProfile = false;
         }
-      } else if(duplicateUser.role === "seeker"){
-         const userProfile = await SeekerResume.findOne({
+      } else if (duplicateUser.role === "seeker") {
+        const userProfile = await SeekerResume.findOne({
           where: {
-          userId: duplicateUser.id,
-        },
+            userId: duplicateUser.id,
+          },
         })
-        if(userProfile){
+        if (userProfile) {
           setProfile = true;
-        }else {
+        } else {
           setProfile = false;
         }
       }
@@ -90,7 +90,7 @@ const RegisterFgnUsers = async (req, res) => {
           data: userSubset,
           duplicateUser
         });
-      
+
 
     } else {
       // If the user doesn't exist, create a new user
@@ -108,42 +108,42 @@ const RegisterFgnUsers = async (req, res) => {
       accessToken = generateAccessToken(newUser.id, newUser.role);
       refreshToken = generateRefreshToken(newUser.id, newUser.role);
 
-        const accessTokenExpiration = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
-        const refreshTokenExpiration = new Date(
-          Date.now() + 15 * 24 * 60 * 60 * 1000
-        ); // 15 days from now
-        // Save the new tokens to the database
-        await Token.create({
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          userId: newUser.id,
-          userAgent: userAgent,
-          accessTokenExpiration: accessTokenExpiration,
-          refreshTokenExpiration: refreshTokenExpiration,
-        });
+      const accessTokenExpiration = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
+      const refreshTokenExpiration = new Date(
+        Date.now() + 15 * 24 * 60 * 60 * 1000
+      ); // 15 days from now
+      // Save the new tokens to the database
+      await Token.create({
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        userId: newUser.id,
+        userAgent: userAgent,
+        accessTokenExpiration: accessTokenExpiration,
+        refreshTokenExpiration: refreshTokenExpiration,
+      });
 
-        let setProfile = false;
-         const hasInterests =
+      let setProfile = false;
+      const hasInterests =
         newUser.interest && user.interest !== null ? "yes" : "no";
 
       if (newUser.role === "provider") {
         const jobPoster = await JobPoster.findOne({
           jobPosterId: newUser.id
         })
-         if(jobPoster){
+        if (jobPoster) {
           setProfile = true;
-        }else {
+        } else {
           setProfile = false;
         }
-      } else if(newUser.role === "seeker"){
-         const userProfile = await SeekerResume.findOne({
+      } else if (newUser.role === "seeker") {
+        const userProfile = await SeekerResume.findOne({
           where: {
-          userId: newUser.id,
-        },
+            userId: newUser.id,
+          },
         })
-        if(userProfile){
+        if (userProfile) {
           setProfile = true;
-        }else {
+        } else {
           setProfile = false;
         }
       }
@@ -165,7 +165,7 @@ const RegisterFgnUsers = async (req, res) => {
           accessToken: accessToken,
           refreshToken: refreshToken,
           data: userSubset,
-          
+
         });
 
     }
@@ -178,31 +178,31 @@ const RegisterFgnUsers = async (req, res) => {
 
 const getFgnUsers = async (req, res) => {
   const userId = req.params.userId
-  if(!userId){
-     return res.status(400).json({ message: `User Id is required` });
+  if (!userId) {
+    return res.status(400).json({ message: `User Id is required` });
   }
   const user = await User.findByPk(userId)
   const token = await Token.findOne({
     where: {
-     userId: userId 
+      userId: userId
     }
   })
   console.log("this is token", token)
-   const userSubset = {
-        UserId:user.id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-        image: user.imageUrl,
-   }
-   return res
-        .status(200)
-        .json({
-          accessToken: token.accessToken,
-          refreshToken: token.refreshToken,
-          data: userSubset,
-          
-        }); 
+  const userSubset = {
+    UserId: user.id,
+    username: user.username,
+    email: user.email,
+    role: user.role,
+    image: user.imageUrl,
+  }
+  return res
+    .status(200)
+    .json({
+      accessToken: token.accessToken,
+      refreshToken: token.refreshToken,
+      data: userSubset,
+
+    });
 }
 
-module.exports = {RegisterFgnUsers, getFgnUsers};
+module.exports = { RegisterFgnUsers, getFgnUsers };

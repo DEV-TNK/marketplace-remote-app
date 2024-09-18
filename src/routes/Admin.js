@@ -25,14 +25,16 @@ const {
   markWithdrawalRequest,
 } = require("../controllers/AdminController/Payment");
 
-const {
-  getAllOutSource,
-  allCompletedJobs,
-  allPendingJobs,
-  allUnpaidJobs,
-  markOutSourcJobCompleted,
-  getAlleEmployeeOfRecordJobs,
-} = require("../controllers/AdminController/OutSource");
+// const {
+//   getAllOutSource,
+//   allCompletedJobs,
+//   allPendingJobs,
+//   allUnpaidJobs,
+//   markOutSourcJobCompleted,
+//   getAllEmployeeOfRecordJobs,
+// } = require("../controllers/AdminController/OutSource");
+
+//const getAdminEmployeeOfRecordJobs = require("../controllers/AdminController/EmployeeOfRecord")
 
 //Routes to get all job posters and all jobseekers
 router.get("/get-job-posters", getAllJobPoster);
@@ -51,11 +53,13 @@ router.get("/admin-all-job", adminAllJobs);
 router.get("/admin-all-pending-payment", seekerPendingPayment);
 router.post("/admin-acceptorreject-payment", acceptOrRejectPayment);
 router.post("/admin-mark-payment-request", markWithdrawalRequest);
-// router.get("/admin-all-outSource-jobs", getAllOutSource);
-// router.get("/admin-all-employee-of-records-jobs", getAlleEmployeeOfRecordJobs);
+//router.get("/admin-all-outSource-jobs", getAllOutSource);
+// router.get("/admin-all-employee-of-records-jobs", getAllEmployeeOfRecordJobs);
 // router.get("/admin-all-unpaid-outsource-jobs", allUnpaidJobs);
 // router.get("/admin-all-pending-outsource-jobs", allPendingJobs);
 // router.get("/admin-all-completed-outsource-jobs", allCompletedJobs);
 // router.put("/admin-mark-outsource-job/:jobId", markOutSourcJobCompleted);
+
+//router.get("/admin-employee-of-record", getAdminEmployeeOfRecordJobs)
 
 module.exports = router;

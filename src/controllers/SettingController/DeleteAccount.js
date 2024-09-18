@@ -9,24 +9,24 @@ const DeleteAccount = async (req, res) => {
         const userId = req.params.userId;
         console.log("this is user", userId)
 
-        if(!userId){
+        if (!userId) {
             return res.status(404).json({ message: "User id not sent" });
         }
 
         const user = await User.findByPk(userId);
-        
-        if (user){
+
+        if (user) {
             await SocialProfile.destroy({
                 where: {
-                  userId: userId,
-          },
-          });
-           await Token.destroy({
+                    userId: userId,
+                },
+            });
+            await Token.destroy({
                 where: {
-                  userId: userId,
-          },
-          });
-             
+                    userId: userId,
+                },
+            });
+
             await user.destroy();
             return res.status(200).json({ message: "User account deleted successfully" });
         }
