@@ -119,14 +119,14 @@ const sendAcceptanceJobEmail = async ({
                     <p>
                       Please Note that the Job seeker won't start the Job until
                       you make payment for the Job that will be hold by
-                      unleashified to guarantee safe Client and Job Seeker
+                      PME Cote D'Ivoire Marketplace to guarantee safe Client and Job Seeker
                       relation and only release when you give permission that
                       the Job seeker has fulfilled all Job requirement.
                     </p>
                     <p>
                       To start the Job, Please go to your
                       <a
-                        href="https://unleashified-staging.azurewebsites.net/authentication/signin"
+                        href="https://marketplacefrontendas-test.azurewebsites.net/authentication/signin"
                         target="_blank"
                         rel="noopener noreferrer"
                       >

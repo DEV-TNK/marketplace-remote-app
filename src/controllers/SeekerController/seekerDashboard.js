@@ -155,5 +155,5 @@ const uploadSeekerImage = async (req, res) => {
 module.exports = {
   getJobSeekerDashboardData,
   getLastApprovedJobs,
-  uploadSeekerImage,
-};
+  uploadSeekerImage
+}

@@ -156,24 +156,24 @@ const SeekerPendingAmount = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-     jobAmount: {
+    jobAmount: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-     paidAmount: {
+    paidAmount: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
     currency: {
-    type: DataTypes.STRING(3),
-    allowNull: false
-    }, 
-    
-     paidAmount: {
+      type: DataTypes.STRING(3),
+      allowNull: false
+    },
+
+    paidAmount: {
       type: DataTypes.DECIMAL(10, 2),
-      
-  },
-     status: {
+
+    },
+    status: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "pending",

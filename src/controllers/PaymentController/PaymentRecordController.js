@@ -1,5 +1,6 @@
 const JobPosting = require("../../models/Job");
-const SeekerPaymentRecord = require("../../models/SeekerPaymentRecords");
+const { SeekerPaymentRecord } = require("../../models/SeekerPaymentRecords");
+
 
 const User = require("../../models/Users")
 
@@ -49,5 +50,3 @@ const getPaymentRecords = async (req, res) => {
 };
 
 module.exports = { savePaymentRecord, getPaymentRecords };
-
-

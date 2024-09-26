@@ -6,9 +6,23 @@ const pricingSchema = new mongoose.Schema({
   packages: [
     {
       header: String,
+      packagePlan: String,
       shortDescription: String,
       price: Number,
       deliveryTime: String,
+      extraFastDelivery: {
+        price: Number,
+        description: String,
+      },
+      additionalRevision: {
+        price: Number,
+        additionalDays: Number,
+      },
+      copyrights: {
+        price: Number,
+        additionalDays: Number,
+      },
+      incentives: [{ type: String }],
     },
   ],
 });
@@ -18,6 +32,11 @@ const providerServicesSchema = new mongoose.Schema(
     header: { type: String, required: true },
     userId: { type: Number, required: true },
     description: { type: String, required: true },
+    serviceProviderId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ServiceProvider",
+      required: true,
+    },
     backgroundCover: [{ type: String, required: true }],
     likes: { type: Number, default: 0 },
     format: String,
@@ -31,7 +50,7 @@ const providerServicesSchema = new mongoose.Schema(
       default: "active",
     },
     totalJobDone: { type: Number, default: 0 },
-    pricing: [pricingSchema],
+    pricing: pricingSchema,
   },
   {
     timestamps: true,

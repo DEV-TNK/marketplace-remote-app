@@ -17,7 +17,7 @@ const sendConflictResolutionFeedbackEmail = async ({
 
 <head>
     <meta charset="UTF-8" />
-    <title>{{Help Request Feedback}}</title>
+    <title>{{Conflict Resolution Feedback}}</title>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 

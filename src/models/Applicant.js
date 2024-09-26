@@ -16,14 +16,14 @@ const Applicant = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false
     },
-   userId: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     status: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'pending', 
+      defaultValue: 'pending',
     },
   },
   {

@@ -7,16 +7,24 @@ const {
   getReviewsByProvider,
   getReviewsBySeeker,
   editReview,
+  reviewService,
+  getReviewsByService,
 } = require("../controllers/JobController/RatingController");
+
+const {
+  saveService,
+  getSavedServices,
+} = require("../controllers/ServiceSeekerController/serviceSeeker");
+const authenticatedUser = require("../middleware/authentication")
 
 const router = express.Router();
 
-router.post("/post-job", jobController.createJob);
+router.post("/post-job", authenticatedUser, jobController.createJob);
 router.get("/all-jobs", jobController.getAllJobs);
 router.get("/get-Landing-jobs", jobController.getLandingPageJobs);
 router.get("/jobs-created-per-month", jobController.getJobCreatedPerMonth);
 router.get(
-  "/jobs-created-by-provider/:jobPosterId",
+  "/jobs-created-by-provider/:jobPosterId", authenticatedUser,
   jobController.getJobCreatedByProviderPerMonth
 );
 
@@ -28,12 +36,13 @@ router.get("/get-a-job/:jobId", jobController.getAJob);
 router.get("/top-companies", getTopCompaniesHiring);
 
 //routes for review submission
-router.post("/submit-reviews", submitReview);
-router.get("/reviews", getAllReviews);
-router.put("/editReview", editReview);
-router.get("/get-company-reviews/:userId", getReviewsByProvider);
-router.get("/get-seeker-reviews/:userId", getReviewsBySeeker);
-
+router.post("/submit-reviews", authenticatedUser, submitReview);
+router.get("/reviews", getAllReviews); //,
+router.put("/editReview", authenticatedUser, editReview);
+router.get("/get-company-reviews/:userId", authenticatedUser, getReviewsByProvider);
+router.get("/get-seeker-reviews/:userId", authenticatedUser, getReviewsBySeeker);
+router.post("/review-service", authenticatedUser, reviewService);
+router.get("/review-by-service/:serviceId", getReviewsByService);
 //routes for totalJobsandNewest
 router.get("/jobposter/:providerId", jobController.totalJobsAndNewestJob);
 
@@ -45,6 +54,8 @@ router.get("/jobs-by-department", jobController.getJobByCategory);
 router.post("/save-job/:jobId", jobController.saveJob);
 router.get("/get-my-saved-jobs/:userId", jobController.getSavedJobs);
 router.delete("/delete-save-job", jobController.deleteSavedJob);
+router.post("/save-service/:serviceId", saveService);
+router.get("/get-my-saved-services/:userId", getSavedServices);
 
 //total job created per month
 router.get("/jobs-per-month", jobController.totalJobsPerMonth);

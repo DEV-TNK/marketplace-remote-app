@@ -84,14 +84,14 @@ const fgnAlatRecommendedJpbs = async (req, res) => {
         let userInterests;
         let recommendedJobs = [];
 
-        if(user){
+        if (user) {
             userInterests = user.interest && user.interest.length > 0 ? user.interest : [];
             recommendedJobs = await Job.find({ department: { $in: userInterests }, status: "Pending" })
-            .limit(10)
-            .populate({
-                path: 'jobPoster',
-                select: 'companyName companyLogo'
-            });
+                .limit(10)
+                .populate({
+                    path: 'jobPoster',
+                    select: 'companyName companyLogo'
+                });
         }
 
         if (!recommendedJobs || recommendedJobs.length === 0) {
@@ -100,10 +100,10 @@ const fgnAlatRecommendedJpbs = async (req, res) => {
                 { $sample: { size: 10 } }, // Get random 10 jobs
                 {
                     $lookup: {
-                        from: "jobposters", 
-                        localField: "jobPoster", 
-                        foreignField: "_id", 
-                        as: "jobPoster" 
+                        from: "jobposters",
+                        localField: "jobPoster",
+                        foreignField: "_id",
+                        as: "jobPoster"
                     }
                 },
                 { $unwind: "$jobPoster" },
@@ -141,4 +141,4 @@ const fgnAlatRecommendedJpbs = async (req, res) => {
 };
 
 
-module.exports = {getRecommendation, fgnAlatRecommendedJpbs}
+module.exports = { getRecommendation, fgnAlatRecommendedJpbs }

@@ -114,11 +114,9 @@ const editReview = async (req, res) => {
     const existingReview = await Rating.findOne({ where: { id, userId } });
 
     if (!existingReview) {
-      return res
-        .status(404)
-        .json({
-          message: "Review not found or not authorized to edit this review",
-        });
+      return res.status(404).json({
+        message: "Review not found or not authorized to edit this review",
+      });
     }
 
     existingReview.rating = rating;
@@ -134,10 +132,70 @@ const editReview = async (req, res) => {
   }
 };
 
+const reviewService = async (req, res) => {
+  try {
+    await Rating.sync();
+    const {
+      user_id,
+      serviceId,
+      serviceproviderId,
+      serviceTitle,
+      rating,
+      review,
+      serviceSeekerId,
+    } = req.body;
+
+    const details = [
+      "user_id",
+      "serviceId",
+      "serviceSeekerId",
+      "rating",
+      "review",
+    ];
+
+    for (const detail of details) {
+      if (!req.body[detail]) {
+        return res.status(400).json({ message: `${detail} is required` });
+      }
+    }
+    const newRating = await Rating.create({
+      userId: user_id,
+      jobId: serviceId,
+      jobposterId: serviceproviderId,
+      jobseekerId: serviceSeekerId,
+      jobTitle: serviceTitle,
+      rating,
+      review,
+    });
+
+    res.status(200).json({
+      message: "Thank you for your feedback",
+      newRating,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error });
+  }
+};
+
+const getReviewsByService = async (req, res) => {
+  const serviceId = req.params.serviceId;
+  try {
+    const reviews = await Rating.findAll({ where: { jobId: serviceId } });
+    if (reviews.length == 0) {
+      return res.status(404).json({ message: "No reviews found for this service" });
+    }
+    res.status(200).json({ reviews });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error });
+  }
+};
+
 module.exports = {
   submitReview,
   getAllReviews,
   getReviewsByProvider,
   getReviewsBySeeker,
   editReview,
+  reviewService,
+  getReviewsByService,
 };

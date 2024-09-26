@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConnect");
 const User = require("./Users")
- 
+
 const Account = sequelize.define("Account", {
     id: {
         type: DataTypes.INTEGER,
@@ -25,14 +25,14 @@ const Account = sequelize.define("Account", {
         allowNull: false,
     },
     currency: {
-      type: DataTypes.ENUM('USD', 'EUR', 'GBP', 'NGN'),
-      allowNull: false,
-      defaultValue: 'NGN',
+        type: DataTypes.ENUM('USD', 'EUR', 'GBP', 'NGN'),
+        allowNull: false,
+        defaultValue: 'NGN',
     },
 }, {
     tableName: "Account",
 }
 )
 Account.belongsTo(User, { foreignKey: 'userId', targetKey: 'id' });
- 
+
 module.exports = Account;

@@ -1,6 +1,7 @@
 const ContactUs = require("../../models/ContactUs");
+const sendContactUsFeedbackEmail = require("../../utils/sendContactUsFeedbackEmail");
 const sendSupportRequestCompletedEmail = require("../../utils/supportRequestCompleted")
-const sendContactUsFeedbackEmail = require("../../utils/sendContactUsFeedbackEmail")
+
 
 const userContactUs = async (req, res) => {
   await ContactUs.sync();
@@ -108,6 +109,7 @@ const sendContactUsFeedback = async (req, res) => {
     res.status(500).send({ error: 'An error occurred while sending the feedback email' })
   }
 }
+
 
 module.exports = {
   userContactUs,

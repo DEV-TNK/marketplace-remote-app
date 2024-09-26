@@ -59,7 +59,7 @@ const getAllJobSeekersInfo = async (req, res) => {
         // Fetch all users who are jobseeker
         const jobSeekers = await User.findAll({
             where: { role: 'seeker' },
-            attributes: { exclude: ['email'] }, // Exclude email field
+            attributes: { exclude: ['email', 'password', 'passwordToken', 'passwordTokenExpirationDate', 'verificationToken'] }, // Exclude email field
             order: [['createdAt', 'DESC']]
         });
 

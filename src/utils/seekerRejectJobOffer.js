@@ -120,7 +120,7 @@ const sendSeekerRejectOfferEmail = async ({
                     <p>
                       You can always reach out to
                       <a
-                        href="https://unleashified-staging.azurewebsites.net/authentication/signin"
+                        href="https://marketplacefrontendas-test.azurewebsites.net/authentication/signin"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
