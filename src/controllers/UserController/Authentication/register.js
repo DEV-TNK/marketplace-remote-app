@@ -41,6 +41,7 @@ const Register = async (req, res) => {
           username: updateUser.username,
           email: updateUser.email,
           verificationToken: updateUser.verificationToken,
+          userType: updateUser.role,
           origin: process.env.ORIGIN,
         });
 
@@ -70,6 +71,7 @@ const Register = async (req, res) => {
         username: newUser.username,
         email: newUser.email,
         verificationToken: newUser.verificationToken,
+        userType: newUser.role,
         origin: process.env.ORIGIN,
       });
 

@@ -1,5 +1,6 @@
 const User = require("../../../models/Users");
-const sendWelcomeEmail = require("../../../utils/sendWelcome")
+const sendVerificationEmail = require("../../../utils/sendEmailVerification")
+
 
 const verifyEmail = async (req, res) => {
   const { email, verificationToken, userType } = req.body;
@@ -14,6 +15,7 @@ const verifyEmail = async (req, res) => {
 
   try {
     const user = await User.findOne({ where: { email: email, role: userType } });
+    console.log('User Found:', user);
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
@@ -27,7 +29,7 @@ const verifyEmail = async (req, res) => {
     user.isVerified = true;
     user.verificationToken = "";
     await user.save();
-    await sendWelcomeEmail({
+    await sendVerificationEmail({
       username: user.username,
       email: email,
       userType: user.role,

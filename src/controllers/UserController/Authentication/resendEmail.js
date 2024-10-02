@@ -44,6 +44,7 @@ const resendEmail = async (req, res) => {
       username: user.username,
       email: user.email,
       verificationToken: NewverificationToken,
+      userType: user.role,
       origin,
     });
     // console.log(user)
