@@ -4,9 +4,10 @@ const sendVerificationEmail = async ({
   username,
   email,
   verificationToken,
+  userType,
   origin,
 }) => {
-  const verifyEmail = `${origin}/user/verify-email?token=${verificationToken}&email=${email}`;
+  const verifyEmail = `${origin}/user/verify-email?token=${verificationToken}&email=${email}&userType=${userType}`;
 
   const message = `<!DOCTYPE html>
 <html lang="en">
