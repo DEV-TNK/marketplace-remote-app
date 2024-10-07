@@ -26,7 +26,7 @@ const createProvider = async (req, res) => {
   } = req.body;
 
   // Required fields validation
-  const requiredFields = [
+  const details = [
     "jobPosterId",
     "firstName",
     "lastName",

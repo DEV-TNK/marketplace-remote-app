@@ -29,6 +29,7 @@ const conflictResolution = async (req, res) => {
 
     return res.status(201).json({
       message: "Conflict resolution created successfully",
+      conflictResolution
     });
   } catch (error) {
     console.error("Error creating conflict resolution:", error);

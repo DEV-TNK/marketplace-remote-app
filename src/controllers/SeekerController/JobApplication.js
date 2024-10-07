@@ -102,7 +102,7 @@ const myOfferLetter = async (req, res) => {
 
 const totalJobsApplied = async (req, res) => {
   try {
-    const userId = req.body.userId;
+    const userId = req.params.userId;
 
     // Query the database to count the number of distinct jobs applied for by the user
     const jobsAppliedCount = await Applicant.count({

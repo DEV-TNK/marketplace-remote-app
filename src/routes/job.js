@@ -44,7 +44,7 @@ router.get("/get-seeker-reviews/:userId", authenticatedUser, getReviewsBySeeker)
 router.post("/review-service", authenticatedUser, reviewService);
 router.get("/review-by-service/:serviceId", getReviewsByService);
 //routes for totalJobsandNewest
-router.get("/jobposter/:providerId", jobController.totalJobsAndNewestJob);
+router.get("/jobposter/:jobPosterId", jobController.totalJobsAndNewestJob);
 
 // routes to serach for a jobs
 router.post("/seeker-serch-job", jobController.searchJobList);

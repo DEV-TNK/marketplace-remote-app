@@ -220,11 +220,16 @@ const getAJob = async (req, res) => {
 };
 
 const totalJobsAndNewestJob = async (req, res) => {
-  const { providerId } = req.params;
+  const { jobPosterId } = req.params;
+
+
+  if (!jobPosterId) {
+    return res.status(400).json({ message: "Job provider ID is required" });
+  }
 
   try {
     // Find the job provider by ID
-    const jobProvider = await JobPoster.findById(providerId);
+    const jobProvider = await JobPoster.findById(jobPosterId);
 
     if (!jobProvider) {
       return res.status(404).json({ message: "Job provider not found" });
@@ -370,6 +375,10 @@ const getJobCreatedByProviderPerMonth = async (req, res) => {
   const jobPosterId = req.params.jobPosterId;
   try {
     const jobPostings = await JobPoster.findOne({ jobPosterId: jobPosterId });
+    if (!jobPostings) {
+      console.error(`Job Poster not found for id: ${jobPosterId}`);
+      return res.status(404).json({ message: "Job Poster not found" });
+    }
     const jobs = await Job.find({
       _id: {
         $in: jobPostings.created_jobs,

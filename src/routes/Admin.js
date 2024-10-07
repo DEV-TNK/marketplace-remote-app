@@ -24,6 +24,7 @@ const {
   acceptOrRejectPayment,
   markWithdrawalRequest,
 } = require("../controllers/AdminController/Payment");
+const verifyAdmin = require("../middleware/authenticatedAdmin");
 
 // const {
 //   getAllOutSource,
@@ -37,22 +38,22 @@ const {
 //const getAdminEmployeeOfRecordJobs = require("../controllers/AdminController/EmployeeOfRecord")
 
 //Routes to get all job posters and all jobseekers
-router.get("/get-job-posters", getAllJobPoster);
-router.get("/get-job-seekers", getAllJobSeekersInfo);
+router.get("/get-job-posters", verifyAdmin, getAllJobPoster);
+router.get("/get-job-seekers", verifyAdmin, getAllJobSeekersInfo);
 
-router.get("/admin-overview", overview);
-router.get("/admin-overview-last-four-jobs", last4JobsCreated);
-router.get("/admin-overview-most-popular", mostPopular);
-router.get("/admin-jobCategory", jobCategory);
-router.get("/admin-categorySingle/:category", categorySingle);
-router.get("/admin-jobs-ongoing", OngoingJobs);
-router.get("/admin-jobs-completed", CompletedJobs);
-router.get("/admin-overview-total-jobs-by-department", totalJobsByDepartment);
-router.get("/admin-overview-job-status", jobStatus);
-router.get("/admin-all-job", adminAllJobs);
-router.get("/admin-all-pending-payment", seekerPendingPayment);
-router.post("/admin-acceptorreject-payment", acceptOrRejectPayment);
-router.post("/admin-mark-payment-request", markWithdrawalRequest);
+router.get("/admin-overview", verifyAdmin, overview);
+router.get("/admin-overview-last-four-jobs", verifyAdmin, last4JobsCreated);
+router.get("/admin-overview-most-popular", verifyAdmin, mostPopular);
+router.get("/admin-jobCategory", verifyAdmin, jobCategory);
+router.get("/admin-categorySingle/:category", verifyAdmin, categorySingle);
+router.get("/admin-jobs-ongoing", verifyAdmin, OngoingJobs);
+router.get("/admin-jobs-completed", verifyAdmin, CompletedJobs);
+router.get("/admin-overview-total-jobs-by-department", verifyAdmin, totalJobsByDepartment);
+router.get("/admin-overview-job-status", verifyAdmin, jobStatus);
+router.get("/admin-all-job", verifyAdmin, adminAllJobs);
+router.get("/admin-all-pending-payment", verifyAdmin, seekerPendingPayment);
+router.post("/admin-acceptorreject-payment", verifyAdmin, acceptOrRejectPayment);
+router.post("/admin-mark-payment-request", verifyAdmin, markWithdrawalRequest);
 //router.get("/admin-all-outSource-jobs", getAllOutSource);
 // router.get("/admin-all-employee-of-records-jobs", getAllEmployeeOfRecordJobs);
 // router.get("/admin-all-unpaid-outsource-jobs", allUnpaidJobs);
