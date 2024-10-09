@@ -38,7 +38,11 @@ const OrderSummary = sequelize.define(
             type: DataTypes.DECIMAL(10, 3),
             allowNull: true,
         },
-    });
+    },
+    {
+        tableName: "OrderSummary",  // Add this to ensure table name consistency
+    }
+);
 
 const ServiceRequest = sequelize.define(
 
@@ -116,21 +120,21 @@ const ServiceRequest = sequelize.define(
 
 );
 
-ServiceRequest.belongsTo(User, { foreignKey: "userId", targetKey: "id" });
-ServiceRequest.hasOne(OrderSummary, { foreignKey: "serviceRequestsId", targetKey: "id" })
+ServiceRequest.belongsTo(User, { foreignKey: "userId" });
+ServiceRequest.belongsTo(OrderSummary, { foreignKey: "orderSummaryId" });
 
 // Move the sync call outside of the model definition
 // OrderSummary.sync({ alter: true })
-//   .then(() => {
-//     console.log("OrderSummary table has been synchronized");
-//     return ServiceRequest.sync({ alter: true });
-//   })
-//   .then(() => {
-//     console.log("ServiceRequest table has been synchronized");
-//   })
-//   .catch((error) => {
-//     console.error("Error synchronizing tables:", error);
-//   });
+//     .then(() => {
+//         console.log("OrderSummary table has been synchronized");
+//         return ServiceRequest.sync({ alter: true });
+//     })
+//     .then(() => {
+//         console.log("ServiceRequest table has been synchronized");
+//     })
+//     .catch((error) => {
+//         console.error("Error synchronizing tables:", error);
+//     });
 
 
 module.exports = { ServiceRequest, OrderSummary };

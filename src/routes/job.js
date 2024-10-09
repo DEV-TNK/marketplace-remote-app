@@ -19,7 +19,7 @@ const authenticatedUser = require("../middleware/authentication")
 
 const router = express.Router();
 
-router.post("/post-job", authenticatedUser, jobController.createJob);
+router.post("/post-job", jobController.createJob);
 router.get("/all-jobs", jobController.getAllJobs);
 router.get("/get-Landing-jobs", jobController.getLandingPageJobs);
 router.get("/jobs-created-per-month", jobController.getJobCreatedPerMonth);
@@ -44,7 +44,7 @@ router.get("/get-seeker-reviews/:userId", authenticatedUser, getReviewsBySeeker)
 router.post("/review-service", authenticatedUser, reviewService);
 router.get("/review-by-service/:serviceId", getReviewsByService);
 //routes for totalJobsandNewest
-router.get("/jobposter/:providerId", jobController.totalJobsAndNewestJob);
+router.get("/jobposter/:jobPosterId", jobController.totalJobsAndNewestJob);
 
 // routes to serach for a jobs
 router.post("/seeker-serch-job", jobController.searchJobList);

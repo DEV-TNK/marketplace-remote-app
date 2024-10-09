@@ -92,6 +92,10 @@ const sendOffer = async (req, res) => {
                 userId: jobSeeker,
             },
         });
+
+        if (!applicants) {
+            return res.status(404).json({ message: "Applicant not found" });
+        }
         applicants.status = "completed"
         await applicants.save()
 

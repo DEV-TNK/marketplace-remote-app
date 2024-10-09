@@ -102,7 +102,7 @@ router.get("/seeker-recommendation/:userId", authenticatedUser, getRecommendatio
 router.get("/FGN-ALAT-seeker-job-recommendation/:userId", fgnAlatRecommendedJpbs);
 //router.get("/FGN-ALAT-seeker-recommended-services/:email", getFgnAlatRecommendedServices);
 
-router.get("/total-jobs-applied/", totalJobsApplied);
+router.get("/total-jobs-applied/:userId", totalJobsApplied);
 router.post("/accept-reject-offer", authenticatedUser, acceptOrRejectOffer);
 router.get("/seeker-monthly-applications/:userId", authenticatedUser, getApplicationsBySeeker);
 // router.get(

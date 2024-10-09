@@ -1,6 +1,7 @@
 const ProviderService = require("../../models/ProvidersServices");
 const User = require("../../models/Users");
 const { ServiceRequest, OrderSummary } = require("../../models/serviceRequest");
+//const { ServiceRequest, OrderSummary } = require("../../models/serviceRequest");
 const ServiceProvider = require("../../models/serviceprovider");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
@@ -12,6 +13,102 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
   secure: true,
 });
+
+// const onboardingServiceProvider = async (req, res) => {
+//   const {
+//     userId,
+//     firstName,
+//     lastName,
+//     middleName,
+//     emailAddress,
+//     phoneNumber,
+//     userImage,
+//     title,
+//     gender,
+//     country,
+//     language,
+//     responseTime,
+//     skills,
+//     certification,
+//     portfolio,
+//   } = req.body;
+
+//   try {
+
+//     if (!userId || !firstName || !lastName || !emailAddress || !phoneNumber) {
+//       return res.status(400).json({ message: "Required fields are missing" });
+//     }
+
+//     const providerExists = await ServiceProvider.findOne({ userId });
+//     if (providerExists) {
+//       return res.status(400).json({ message: "User is already a service provider" });
+//     }
+
+//     const processedCertification = [];
+//     const processedPortfolio = [];
+
+//     if (certification && certification.length > 0) {
+//       certification.forEach((cert, index) => {
+//         const certImage = req.certifications.find(certImage => certImage.index === index.toString())?.image || null;
+//         console.log("image:", certImage.index, index)
+//         processedCertification.push({
+//           name: cert.name,
+//           image: certImage,
+//         });
+//       });
+//     }
+
+//     console.log('Processed certification:', certification);
+//     if (req.body.portfolio && Array.isArray(req.body.portfolio)) {
+//       req.body.portfolio.forEach((port, index) => {
+//         processedPortfolio.push({
+//           name: port.name,
+//           images: req.portfolios[index] ? req.portfolios[index].images : [],
+//         });
+//       });
+//     }
+
+//     const newServiceProvider = new ServiceProvider({
+//       userId,
+//       firstName,
+//       lastName,
+//       middleName,
+//       emailAddress,
+//       phoneNumber,
+//       userImage,
+//       title,
+//       gender,
+//       country,
+//       language,
+//       responseTime,
+//       skills,
+//       certification: processedCertification,
+//       portfolio: processedPortfolio,
+//     });
+
+//     const user = await User.findOne({
+//       where: {
+//         id: userId
+//       }
+//     })
+
+//     if (!user) {
+//       return res
+//         .status(404)
+//         .json({ message: "user does not exist" });
+//     }
+
+
+
+//     const savedServiceProvider = await newServiceProvider.save();
+//     res.status(201).json({ msg: "User Onboarded Successfully", savedServiceProvider });
+//   } catch (error) {
+//     console.error("Error:", error);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// }
+
+
 
 const onboardingServiceProvider = async (req, res) => {
   const {
@@ -33,7 +130,6 @@ const onboardingServiceProvider = async (req, res) => {
   } = req.body;
 
   try {
-
     if (!userId || !firstName || !lastName || !emailAddress || !phoneNumber) {
       return res.status(400).json({ message: "Required fields are missing" });
     }
@@ -46,24 +142,37 @@ const onboardingServiceProvider = async (req, res) => {
     const processedCertification = [];
     const processedPortfolio = [];
 
-    if (certification && certification.length > 0) {
+    // Check if certification is an array or object
+    if (certification && Array.isArray(certification)) {
       certification.forEach((cert, index) => {
         const certImage = req.certifications.find(certImage => certImage.index === index.toString())?.image || null;
-        console.log("image:", certImage.index, index)
         processedCertification.push({
           name: cert.name,
           image: certImage,
         });
       });
+    } else if (certification && typeof certification === 'object') {
+      // Handle object case
+      const certImage = req.certifications.find(certImage => certImage.index === '0')?.image || null;
+      processedCertification.push({
+        name: certification.name,
+        image: certImage,
+      });
     }
 
-    console.log('Processed certification:', certification);
-    if (req.body.portfolio && Array.isArray(req.body.portfolio)) {
-      req.body.portfolio.forEach((port, index) => {
+    // Check if portfolio is an array
+    if (portfolio && Array.isArray(portfolio)) {
+      portfolio.forEach((port, index) => {
         processedPortfolio.push({
           name: port.name,
           images: req.portfolios[index] ? req.portfolios[index].images : [],
         });
+      });
+    } else if (portfolio && typeof portfolio === 'object') {
+      // Handle object case
+      processedPortfolio.push({
+        name: portfolio['0'].name,
+        images: portfolio['0'].images || [],
       });
     }
 
@@ -89,15 +198,11 @@ const onboardingServiceProvider = async (req, res) => {
       where: {
         id: userId
       }
-    })
+    });
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ message: "user does not exist" });
+      return res.status(404).json({ message: "User does not exist" });
     }
-
-
 
     const savedServiceProvider = await newServiceProvider.save();
     res.status(201).json({ msg: "User Onboarded Successfully", savedServiceProvider });
@@ -105,7 +210,8 @@ const onboardingServiceProvider = async (req, res) => {
     console.error("Error:", error);
     res.status(500).json({ error: "Server error" });
   }
-}
+};
+
 
 const providerCreateService = async (req, res) => {
   try {

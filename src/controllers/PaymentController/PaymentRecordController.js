@@ -34,7 +34,7 @@ const getPaymentRecords = async (req, res) => {
     try {
         // Find all payment records, ordered by payment date in descending order
         const paymentRecords = await SeekerPaymentRecord.findAll({
-            order: [['paymentDate', 'DESC']],
+            order: [['requestDate', 'DESC']],
             include: [
                 { model: User, attributes: ['id', 'username', 'imageUrl'] }
             ]
