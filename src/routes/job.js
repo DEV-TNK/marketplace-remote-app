@@ -19,7 +19,7 @@ const authenticatedUser = require("../middleware/authentication")
 
 const router = express.Router();
 
-router.post("/post-job", authenticatedUser, jobController.createJob);
+router.post("/post-job", jobController.createJob);
 router.get("/all-jobs", jobController.getAllJobs);
 router.get("/get-Landing-jobs", jobController.getLandingPageJobs);
 router.get("/jobs-created-per-month", jobController.getJobCreatedPerMonth);

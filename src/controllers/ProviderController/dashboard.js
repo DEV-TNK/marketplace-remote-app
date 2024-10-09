@@ -197,6 +197,109 @@ const getMydashboard = async (req, res) => {
 // };
 
 
+// const getlastFourPaidJobs = async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     if (!userId) {
+//       return res.status(400).json({ message: `User ID is required` });
+//     }
+
+//     // Retrieve the last four successful transactions for the user
+//     const transactions = await ProviderTransaction.findAll({
+//       where: {
+//         userId: userId,
+//         status: "success",
+//       },
+//       order: [["createdAt", "DESC"]],
+//       limit: 4,
+//     });
+//     console.log("this is transactions", transactions);
+
+//     // Get the job IDs from the transactions
+//     const jobIds = transactions.map((transaction) => transaction.jobId);
+//     console.log("this is jobs", jobIds);
+
+//     // Sanitize transaction amounts
+//     const sanitizedTransactionAmounts = transactions.map((transaction) =>
+//       parseFloat(
+//         transaction.amount
+//           .toString()
+//           .replace(/,/g, "")
+//           .replace(/\.[0-9]*0+$/, "")
+//           .replace(/[,.]$/, "")
+//       )
+//     );
+//     console.log(
+//       "this is sanitizedTransactionAmounts",
+//       sanitizedTransactionAmounts
+//     );
+
+//     // Retrieve the job details from both Job and OutSourceJob models
+//     const jobsFromJobModel = await Job.find({
+//       _id: { $in: jobIds },
+//     }).sort({ createdAt: -1 });
+
+//     const jobsFromOutSourceJobModel = await OutSourceJob.find({
+//       _id: { $in: jobIds },
+//     }).sort({ createdAt: -1 });
+
+//     // Combine the results from both models
+//     const allJobs = [...jobsFromJobModel, ...jobsFromOutSourceJobModel];
+
+//     // Sort combined results by createdAt and limit to the last 4
+//     const sortedJobs = allJobs.sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
+
+//     // Sanitize jobSalary values stored in MongoDB and compare them with transaction amounts
+//     // const matchingJobs = sortedJobs.filter((job) => {
+//     //   const sanitizedJobSalary = parseFloat(
+//     //     job.jobSalary
+//     //       // .toString()
+//     //       .replace(/,/g, "")
+//     //       .replace(/\.[0-9]*0+$/, "")
+//     //       .replace(/[,.]$/, "")
+//     //   );
+//     //   return sanitizedTransactionAmounts.includes(sanitizedJobSalary);
+//     // });
+
+//     // Format the response
+//     const formattedJobs = sortedJobs.map((job) => {
+//       if (job.jobs) {
+//         // If it's an OutSourceJob, consolidate the job titles and prices
+//         const jobTitles = job.jobs.map((j) => j.title);
+//         const totalJobPrice = job.jobs.reduce((sum, j) => sum + parseFloat(j.price), 0);
+//         const currency = job.jobs[0]?.currency || "";
+//         const number = job.jobs.reduce((sum, j) => sum + parseFloat(j.numberOfPerson), 0);
+//         return {
+//           _id: job._id,
+//           jobTitles: jobTitles,
+//           totalPrice: totalJobPrice,
+//           status: job.status,
+//           type: "Out-Source",
+//           currency: currency,
+//           number: number
+//         };
+//       } else {
+//         // If it's a regular Job, format as needed
+//         return {
+//           _id: job._id,
+//           jobTitles: [job.jobTitle],
+//           jobSalary: parseInt(job.jobSalary),
+//           status: job.status,
+//           type: "Single Job",
+//           currency: job.currency,
+//           number: 1
+//         };
+//       }
+//     });
+
+//     res.status(200).json({ jobs: formattedJobs });
+//   } catch (error) {
+//     console.error("Error getting last four paid jobs:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+
 const getlastFourPaidJobs = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -213,11 +316,9 @@ const getlastFourPaidJobs = async (req, res) => {
       order: [["createdAt", "DESC"]],
       limit: 4,
     });
-    console.log("this is transactions", transactions);
 
     // Get the job IDs from the transactions
     const jobIds = transactions.map((transaction) => transaction.jobId);
-    console.log("this is jobs", jobIds);
 
     // Sanitize transaction amounts
     const sanitizedTransactionAmounts = transactions.map((transaction) =>
@@ -229,67 +330,26 @@ const getlastFourPaidJobs = async (req, res) => {
           .replace(/[,.]$/, "")
       )
     );
-    console.log(
-      "this is sanitizedTransactionAmounts",
-      sanitizedTransactionAmounts
-    );
 
-    // Retrieve the job details from both Job and OutSourceJob models
+    // Retrieve the job details from the Job model only
     const jobsFromJobModel = await Job.find({
       _id: { $in: jobIds },
     }).sort({ createdAt: -1 });
 
-    const jobsFromOutSourceJobModel = await OutSourceJob.find({
-      _id: { $in: jobIds },
-    }).sort({ createdAt: -1 });
+    // Sort the results by createdAt and limit to the last 4
+    const sortedJobs = jobsFromJobModel.sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
 
-    // Combine the results from both models
-    const allJobs = [...jobsFromJobModel, ...jobsFromOutSourceJobModel];
-
-    // Sort combined results by createdAt and limit to the last 4
-    const sortedJobs = allJobs.sort((a, b) => b.createdAt - a.createdAt).slice(0, 4);
-
-    // Sanitize jobSalary values stored in MongoDB and compare them with transaction amounts
-    // const matchingJobs = sortedJobs.filter((job) => {
-    //   const sanitizedJobSalary = parseFloat(
-    //     job.jobSalary
-    //       // .toString()
-    //       .replace(/,/g, "")
-    //       .replace(/\.[0-9]*0+$/, "")
-    //       .replace(/[,.]$/, "")
-    //   );
-    //   return sanitizedTransactionAmounts.includes(sanitizedJobSalary);
-    // });
-
-    // Format the response
+    // Format the response for regular jobs
     const formattedJobs = sortedJobs.map((job) => {
-      if (job.jobs) {
-        // If it's an OutSourceJob, consolidate the job titles and prices
-        const jobTitles = job.jobs.map((j) => j.title);
-        const totalJobPrice = job.jobs.reduce((sum, j) => sum + parseFloat(j.price), 0);
-        const currency = job.jobs[0]?.currency || "";
-        const number = job.jobs.reduce((sum, j) => sum + parseFloat(j.numberOfPerson), 0);
-        return {
-          _id: job._id,
-          jobTitles: jobTitles,
-          totalPrice: totalJobPrice,
-          status: job.status,
-          type: "Out-Source",
-          currency: currency,
-          number: number
-        };
-      } else {
-        // If it's a regular Job, format as needed
-        return {
-          _id: job._id,
-          jobTitles: [job.jobTitle],
-          jobSalary: parseInt(job.jobSalary),
-          status: job.status,
-          type: "Single Job",
-          currency: job.currency,
-          number: 1
-        };
-      }
+      return {
+        _id: job._id,
+        jobTitles: [job.jobTitle],
+        jobSalary: parseInt(job.jobSalary),
+        status: job.status,
+        type: "Single Job",
+        currency: job.currency,
+        number: 1, // Assuming single jobs have only one person
+      };
     });
 
     res.status(200).json({ jobs: formattedJobs });
@@ -298,6 +358,7 @@ const getlastFourPaidJobs = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 
 module.exports = { uploadProviderImage, getMydashboard, getlastFourPaidJobs };
