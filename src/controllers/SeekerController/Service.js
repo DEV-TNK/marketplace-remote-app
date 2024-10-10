@@ -260,7 +260,7 @@ const providerCreateService = async (req, res) => {
     });
 
     const savedService = await newService.save();
-    res.status(201).json(savedService);
+    res.status(201).json({ message: "Service Created Successfully", savedService });
   } catch (error) {
     console.log("error:", error);
     res.status(500).json({ error: error.message });
