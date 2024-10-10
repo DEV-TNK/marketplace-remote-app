@@ -75,28 +75,32 @@ const organizeFiles = (req, res, next) => {
 
   console.log('Files received:', req.files);
 
-  req.files.forEach(file => {
-    if (file.fieldname.startsWith('portfolio')) {
-      const match = file.fieldname.match(/portfolio\[(\d+)\]\[images\]/);
-      if (match) {
-        const index = match[1];
-        if (!req.portfolios[index]) {
-          req.portfolios[index] = { images: [] };
+  if (req.files && Array.isArray(req.files)) {
+    req.files.forEach(file => {
+      if (file.fieldname.startsWith('portfolio')) {
+        const match = file.fieldname.match(/portfolio\[(\d+)\]\[images\]/);
+        if (match) {
+          const index = match[1];
+          if (!req.portfolios[index]) {
+            req.portfolios[index] = { images: [] };
+          }
+          req.portfolios[index].images.push(path.join('uploads/images/service-portfolio', file.filename));
         }
-        req.portfolios[index].images.push(path.join('uploads/images/service-portfolio', file.filename));
+      } else if (file.fieldname.startsWith('certification')) {
+        const match = file.fieldname.match(/certification\[(\d+)\]\[image\]/);
+        if (match) {
+          const index = match[1];
+          req.certifications.push({
+            index,
+            name: file.originalname,
+            image: path.join('uploads/images/service-certificates', file.filename),
+          });
+        }
       }
-    } else if (file.fieldname.startsWith('certification')) {
-      const match = file.fieldname.match(/certification\[(\d+)\]\[image\]/);
-      if (match) {
-        const index = match[1];
-        req.certifications.push({
-          index,
-          name: file.originalname,
-          image: path.join('uploads/images/service-certificates', file.filename),
-        });
-      }
-    }
-  });
+    });
+  } else {
+    console.error('No files were uploaded.');
+  }
 
   console.log('Certifications:', req.certifications);
   console.log('Portfolios:', req.portfolios);
