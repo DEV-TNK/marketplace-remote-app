@@ -105,15 +105,12 @@ const Login = async (req, res) => {
         setProfile = false;
       }
     } else if (user.role === "service provider") {
-      const userProfile = await ServiceProvider.findOne({
-        where: {
-          userId: user.id,
-        },
-      })
-      if (userProfile) {
+      // Modify only this section for service providers
+      const onboardingDocument = await ServiceProvider.findOne({ userId: user.id });
+      if (onboardingDocument) {
         setProfile = true;
       } else {
-        setProfile = false;
+        setProfile = false
       }
     }
 
