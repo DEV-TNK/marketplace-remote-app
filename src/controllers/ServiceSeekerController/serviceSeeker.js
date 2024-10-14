@@ -5,6 +5,8 @@ const User = require("../../models/Users");
 const SaveJob = require("../../models/saveJob");
 const { ServiceRequest, OrderSummary } = require("../../models/serviceRequest");
 const ServiceProvider = require("../../models/serviceprovider");
+const sendServiceRequestPaymentConfirmationEmail = require("../../utils/sendServiceRequestPaymentConfirmationEmail");
+const sendProviderServiceRequestEmail = require("../../utils/sendProviderServiceRequestEmail");
 
 const requestService = async (req, res) => {
 
@@ -36,11 +38,18 @@ const requestService = async (req, res) => {
         }
 
         // Find the service
-        const service = await ProviderService.findById(serviceId);
+        const service = await ProviderService.findById(serviceId).populate('serviceProviderId');
         if (!service) {
             console.error("Service not found:", serviceId);
             return res.status(404).json({ message: "Service not found" });
         }
+
+        // Validate email before sending
+        if (!user.email) {
+            console.error("User email is undefined or invalid");
+            return res.status(400).json({ error: "Invalid user email" });
+        }
+
 
 
         // Find the requested package
@@ -132,17 +141,41 @@ const requestService = async (req, res) => {
 
         // Update service provider with service request
         const serviceProviderId = service.serviceProviderId;
+
+        // Validate serviceProviderId
+        if (!serviceProviderId) {
+            console.error("Service provider ID not found in the service:", service);
+            return res.status(404).json({ message: "Service provider ID not found" });
+        }
+
         const serviceProvider = await ServiceProvider.findById(serviceProviderId);
 
-        if (serviceProvider) {
-            serviceProvider.serviceRequests.push(serviceRequest.id);
-            await serviceProvider.save();
-        } else {
+        if (!serviceProvider) {
             console.error("Service provider not found:", serviceProviderId);
+            return res.status(404).json({ message: `Service provider not found: ${serviceProviderId}` });
         }
 
         // Update the order summary with the created serviceRequest id
         await newOrderSummary.update({ serviceRequestsId: serviceRequest.id });
+        const providerFullName = `${serviceProvider.firstName} ${serviceProvider.lastName}`.trim();
+
+
+        // Send email to the person requesting the service (Payment confirmation)
+        await sendServiceRequestPaymentConfirmationEmail({
+            fullName,
+            email: user.email,
+            serviceTitle: service.header,
+            totalPrice,
+        });
+
+        // Send email to the service provider (Notification of the service request and payment)
+        await sendProviderServiceRequestEmail({
+            providerName: providerFullName,
+            email: serviceProvider.emailAddress,
+            serviceTitle: service.header,
+            requesterName: fullName,
+            totalPrice,
+        });
 
         // Fetch the updated order summary
         const updatedOrderSummary = await OrderSummary.findByPk(newOrderSummary.id);

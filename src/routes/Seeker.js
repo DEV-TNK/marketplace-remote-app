@@ -139,7 +139,7 @@ router.get("/service-per-month", totalServicePerMonth);
 router.get("/get-my-earning/:userId", authenticatedUser, getSeekerEarning);
 router.get("/get-my-withdrawHistory/:userId", authenticatedUser, getAllSeekerPaymentRequest);
 
-router.post("/request-service", authenticatedUser, requestService)
+router.post("/request-service", requestService)
 router.get("/get-order-summary/:userId", authenticatedUser, getOrderSummary)
 //router.put("/ongoing-service-request", updateServiceRequestStatus);
 router.put("/complete-service-request", authenticatedUser, updateServiceRequestStatusCompleted)
