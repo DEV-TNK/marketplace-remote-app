@@ -7,7 +7,7 @@ const sendServiceRequestPaymentConfirmationEmail = async ({ fullName, email, ser
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Payment Confirmation</title>
+      <title>Confirmation de Paiement</title>
       <style>
         body {
           font-family: Arial, sans-serif;
@@ -50,15 +50,15 @@ const sendServiceRequestPaymentConfirmationEmail = async ({ fullName, email, ser
           <img src="https://i.ibb.co/RpQHhXF/Logo-CI-PME.png" alt="Company Logo">
         </div>
         <div class="content">
-          <h2>Payment Confirmation</h2>
-          <p>Dear ${fullName},</p>
-          <p>Thank you for your payment. We have successfully received your payment for the service titled <strong>${serviceTitle}</strong>.</p>
-          <p><strong>Total Amount Paid:</strong> $${totalPrice}</p>
-          <p>If you have any questions or need further assistance, feel free to contact our support team.</p>
-          <p>Thank you for choosing our service!</p>
+          <h2>Confirmation de Paiement</h2>
+          <p>Cher/Chère ${fullName},</p>
+          <p>Merci pour votre paiement. Nous avons bien reçu votre paiement pour le service intitulé <strong>${serviceTitle}</strong>.</p>
+          <p><strong>Montant Total Payé :</strong> $${totalPrice}</p>
+          <p>Si vous avez des questions ou besoin d'assistance, n'hésitez pas à contacter notre équipe de support.</p>
+          <p>Merci d'avoir choisi notre service!</p>
         </div>
         <div class="footer">
-          <p>&copy; 2024 PME Cote D'Ivoire Marketplace. All rights reserved.</p>
+          <p>&copy; 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.</p>
         </div>
       </div>
     </body>
@@ -67,7 +67,7 @@ const sendServiceRequestPaymentConfirmationEmail = async ({ fullName, email, ser
 
   return sendEmail({
     to: email,
-    subject: `Payment Confirmation for ${serviceTitle}`,
+    subject: `Confirmation de Paiement pour ${serviceTitle}`,
     html: message,
   });
 };

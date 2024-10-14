@@ -6,7 +6,7 @@ const sendProviderServiceRequestEmail = async ({ providerName, email, serviceTit
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>New Service Request</title>
+      <title>Nouvelle Demande de Service</title>
       <style>
         body {
           font-family: Arial, sans-serif;
@@ -49,16 +49,16 @@ const sendProviderServiceRequestEmail = async ({ providerName, email, serviceTit
           <img src="https://i.ibb.co/RpQHhXF/Logo-CI-PME.png" alt="Company Logo">
         </div>
         <div class="content">
-          <h2>New Service Request and Payment</h2>
-          <p>Dear ${providerName},</p>
-          <p>A new service request has been made for your service titled <strong>${serviceTitle}</strong>.</p>
-          <p><strong>Requester:</strong> ${requesterName}</p>
-          <p><strong>Total Payment Received:</strong> $${totalPrice}</p>
-          <p>Please log in to your account to review the request and begin the service.</p>
-          <p>Thank you for providing your services through our platform!</p>
+          <h2>Nouvelle Demande de Service et Paiement</h2>
+          <p>Cher ${providerName},</p>
+          <p>Une nouvelle demande de service a été faite pour votre service intitulé <strong>${serviceTitle}</strong>.</p>
+          <p><strong>Demandeur :</strong> ${requesterName}</p>
+          <p><strong>Montant Total Reçu:</strong> $${totalPrice}</p>
+          <p>Veuillez vous connecter à votre compte pour examiner la demande et commencer le service.</p>
+          <p>Merci de fournir vos services via notre plateforme!</p>
         </div>
         <div class="footer">
-          <p>&copy; 2024 PME Cote D'Ivoire Marketplace. All rights reserved.</p>
+          <p>&copy; 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.</p>
         </div>
       </div>
     </body>
@@ -67,7 +67,7 @@ const sendProviderServiceRequestEmail = async ({ providerName, email, serviceTit
 
   return sendEmail({
     to: email,
-    subject: `New Service Request for ${serviceTitle}`,
+    subject: `Nouvelle Demande de Service pour ${serviceTitle}`,
     html: message,
   });
 };
