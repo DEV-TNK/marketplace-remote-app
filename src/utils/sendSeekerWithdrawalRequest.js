@@ -2,10 +2,10 @@ const sendEmail = require("./sendEMail");
 
 const sendSeekerWithdrawalEmail = async ({ username, email, amount }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Payment Withdrawal Request</title>
+    <title>Demande de Retrait de Paiement</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -89,35 +89,35 @@ const sendSeekerWithdrawalEmail = async ({ username, email, amount }) => {
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We wanted to inform you that a withdrawal request has been
-                      initiated from your account.
+                       Nous souhaitons vous informer qu'une demande de retrait a été
+                      initiée depuis votre compte.
                       <br />
-                      Here are the details:
+                      Voici les détails:
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Withdrawal Amount: ${amount}<br />
+                      Montant du Retrait: ${amount}<br />
                     </p>
                     <p>
-                      If you initiated this withdrawal request, there is no
-                      further action required from your end. However, if you did
-                      not authorize this withdrawal or have any concerns
-                      regarding it, please reach out to our support team
-                      immediately at
+                      Si vous avez initié cette demande de retrait, aucune
+                      autre action n'est requise de votre part. Cependant, si vous n'avez
+                      pas autorisé ce retrait ou si vous avez des préoccupations
+                      à ce sujet, veuillez contacter immédiatement notre équipe de support
+                      à
                       <a
                         href="mailto:migration@gfa-tech.com"
                         style="text-decoration: none"
                         >support</a
-                      >. We take the security of your account very seriously and
-                      will assist you in resolving any issues promptly.
+                      >. Nous prenons très au sérieux la sécurité de votre compte et
+                      nous vous aiderons à résoudre tout problème rapidement.
                     </p>
 
                     <p>
-                      <strong>Note</strong> <br />
-                      You will receive your money in your bank account after two
-                      business working days of making withdrawal request
+                      <strong>Remarque</strong> <br />
+                      Vous recevrez votre argent sur votre compte bancaire après deux
+                      jours ouvrables à compter de votre demande de retrait.
                     </p>
                   </div>
 
@@ -130,7 +130,7 @@ const sendSeekerWithdrawalEmail = async ({ username, email, amount }) => {
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -156,10 +156,10 @@ const sendSeekerWithdrawalEmail = async ({ username, email, amount }) => {
                 "
               >
                 <p style="margin-bottom: 2px">
-                   Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                   Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme votre plateforme de travail.
                 </p>
                 <p style="margin-bottom: 2px">
-                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -173,8 +173,8 @@ const sendSeekerWithdrawalEmail = async ({ username, email, amount }) => {
 
   return sendEmail({
     to: email,
-    subject: " Withdrawal Request Notification",
-    html: `<h4>Withdrawal Request Alert</h4>
+    subject: "Notification de Demande de Retrait",
+    html: `<h4>Alerte de Demande de Retrait</h4>
     ${message}
     `,
   });

@@ -9,10 +9,10 @@ const sendSeekerJobPaymentEmail = async ({
   type,
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Job Completion Comfirmation</title>
+    <title>Confirmation de l'Achèvement du Travail</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -99,22 +99,22 @@ const sendSeekerJobPaymentEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                       Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We are pleased to inform you that the job <strong>${jobTitle}</strong> has been marked as completed by ${jobProvider}.
+                     Nous avons le plaisir de vous informer que le travail <strong>${jobTitle}</strong> a été marqué comme terminé par ${jobProvider}.
 
                       <br />
-                     Here are the details of the completed job:
+                     Voici les détails du travail achevé:
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Title: ${jobTitle}<br />
+                      Titre: ${jobTitle}<br />
                       Type: ${type}<br />
-                      Price: ${price}<br />
-                      Provider Name: ${jobProvider}
+                      Prix: ${price}<br />
+                      Nom du prestataire: ${jobProvider}
                     </p>
                     <p>
-                      Congratulations on successfully finishing the task!
+                      Félicitations pour avoir réussi à terminer la tâche!
                     </p>
                   </div>
 
@@ -127,7 +127,7 @@ const sendSeekerJobPaymentEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Thanks for your time,<br />The PME Cote D'Ivoire Marketplace Team
+                       Merci pour votre temps,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -153,10 +153,10 @@ const sendSeekerJobPaymentEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                  Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme plateforme de travail.
                 </p>
                 <p style="margin-bottom: 2px">
-                <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -170,8 +170,8 @@ const sendSeekerJobPaymentEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: ` Job Completion Notification: ${jobTitle} `,
-    html: `<h4>Job Completion Alert</h4>
+    subject: ` Notification d'Achèvement de Travail: ${jobTitle} `,
+    html: `<h4>Alerte d'Achèvement de Travail</h4>
     ${message}
     `,
   });

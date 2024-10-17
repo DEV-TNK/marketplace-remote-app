@@ -10,10 +10,10 @@ const sendPaymentRequestApprovalEmail = async ({
   accountName
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Payment Request Approved</title>
+    <title>Demande de Paiement Approuvée</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -100,23 +100,23 @@ const sendPaymentRequestApprovalEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                    We're pleased to inform you that your payment request has been approved.
+                    Nous avons le plaisir de vous informer que votre demande de paiement a été approuvée.
                       
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      <strong>Transaction Details</strong>
+                      <strong>Détails de la transaction</strong>
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Bank: ${bankName}<br />
-                      Acc Number: ${accountNumber}<br />
-                      Acc Name: ${accountName}<br />
-                      Amount: ${amount}<br />
+                      Banque: ${bankName}<br />
+                      Numéro de Compte: ${accountNumber}<br />
+                      Nom du Compte: ${accountName}<br />
+                      Montant: ${amount}<br />
                     </p>
                     <p>
-                    Thank you for using our service.
+                    Merci d'utiliser notre service.
                     </p>
                   </div>
 
@@ -129,7 +129,7 @@ const sendPaymentRequestApprovalEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -155,10 +155,10 @@ const sendPaymentRequestApprovalEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing PME Cote D'Ivoire Marketplace.
+                  Merci d'avoir choisi PME Cote D'Ivoire Marketplace.
                 </p>
                 <p style="margin-bottom: 2px">
-                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -172,8 +172,8 @@ const sendPaymentRequestApprovalEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "Payment Request Approved",
-    html: `<h4>Payment Request Approved</h4>
+    subject: "Demande de Paiement Approuvée",
+    html: `<h4>Demande de Paiement Approuvée</h4>
     ${message}
     `,
   });

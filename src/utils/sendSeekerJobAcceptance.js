@@ -2,10 +2,10 @@ const sendEmail = require("./sendEMail");
 
 const sendSeekerAcceptanceEmail = async ({ username, email, jobTitle }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Payment Terms Notification</title>
+    <title>Notification des Conditions de Paiement</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -92,24 +92,20 @@ const sendSeekerAcceptanceEmail = async ({ username, email, jobTitle }) => {
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Congratulations on accepting the job offer for
+                      Félicitations pour avoir accepté l'offre d'emploi pour le poste de
                       ${jobTitle}.
                       <br />
-                      Please note that payment terms apply to this job. Kindly
-                      refrain from starting work until payment has been
-                      processed successfully by the job provider.
+                      Veuillez noter que des conditions de paiement s'appliquent à cet emploi. Veuillez ne pas commencer à travailler tant que le paiement n'a pas été effectué avec succès par le prestataire de l'emploi.
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      It's essential to understand that PME Cote D'Ivoire Marketplace is not
-                      liable if the job provider fails to pay after job
-                      completion. Please refer to our
+                      Il est essentiel de comprendre que PME Cote D'Ivoire Marketplace n'est pas responsable en cas de non-paiement après la réalisation du travail par le prestataire. Veuillez consulter nos
                       <a href="link_to_terms_and_conditions_page"
-                        >terms and conditions</a
+                        >termes et conditions</a
                       >
-                      for more details.
+                      pour plus de détails.
                     </p>
                   </div>
 
@@ -122,7 +118,7 @@ const sendSeekerAcceptanceEmail = async ({ username, email, jobTitle }) => {
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -148,10 +144,10 @@ const sendSeekerAcceptanceEmail = async ({ username, email, jobTitle }) => {
                 "
               >
                 <p style="margin-bottom: 2px">
-                    Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                    Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme plateforme d'emploi.
                 </p>
                 <p style="margin-bottom: 2px">
-                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -166,8 +162,8 @@ const sendSeekerAcceptanceEmail = async ({ username, email, jobTitle }) => {
 
   return sendEmail({
     to: email,
-    subject: "Offer Email!",
-    html: `<h4>Offer Acceptance Alert</h4>
+    subject: "Email d'Offre!",
+    html: `<h4>Alerte d'acceptation d'offre</h4>
     ${message}
     `,
   });

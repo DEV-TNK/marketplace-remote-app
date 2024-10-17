@@ -7,10 +7,10 @@ const sendProviderOutSourcJobPaymentEmail = async ({
   price
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Job Payment Confirmation</title>
+    <title>Confirmation de Paiement de Travail</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -97,46 +97,46 @@ const sendProviderOutSourcJobPaymentEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We are writing to inform you that payment has been
-                      received for the <strong>Out-Source Job Created</strong>.
+                      Nous vous informons que le paiement a été reçu pour le <strong>travail externalisé créé</strong>.
                       <br />
-                      You can now consider the payment process complete. <br>
+                      Vous pouvez désormais considérer que le processus de
+                      paiement est terminé. <br>
 
                       <br />
                     </p>
-                    
                      <p style="margin-bottom: 2px; color: #333">
-                      <strong>Payment details </strong> <br>
-                      <strong>Number of People </strong>: ${num}<br />
-                      <strong>Price</strong>: ${price}<br />
+                      <strong>Détails du paiement </strong> <br>
+                      <strong>Nombre de personnes </strong>: ${num}<br />
+                      <strong>Prix</strong>: ${price}<br />
                     </p>
                     <div style="width: 100%; text-align: center;">
-                    <p  style=" color: #16199c;  border-bottom: 2px solid #16199c; display: inline-flex; align-items: center; padding-bottom: 3px; margin-bottom: 5px;"> <strong>Next Steps</strong></p>
+                    <p  style=" color: #16199c;  border-bottom: 2px solid #16199c; display: inline-flex; align-items: center; padding-bottom: 3px; margin-bottom: 5px;"> <strong>Prochaines étapes</strong></p>
                     </div>
 
 
                     <p>
                       <p style="margin-bottom: 2px; color: #333">
-                      1. <strong>Initial Review </strong>: Our team will
-                      carefully review your job requirements to ensure we
-                      understand your needs fully.
+                      1. <strong>Revue initiale </strong>: Notre équipe
+                      examinera attentivement les exigences de votre travail
+                      pour s'assurer que nous comprenons pleinement vos besoins.
                       <br />
-                      2. <strong>Processing Time</strong>: Please allow
-                      <strong>10 days</strong> for us to process your job
-                      request. We'll be working diligently behind the scenes to
-                      match you with the most suitable candidates. <br />
-                      3. <strong>Feedback and Updates</strong>: We understand
-                      the importance of keeping you informed throughout the
-                      process. You'll receive regular updates on the status of
-                      your job, and our team will be available to address any
-                      questions or concerns you may have. <br />
-                      4. <strong>Contact Us</strong>: Should you have any
-                      questions or require assistance at any point during the
-                      process, please don't hesitate to reach out to us. You can
-                      contact our support team at [info@PMECoteD'IvoireMarketplace.com]
+                      2. <strong>Délai de traitement</strong>:  Veuillez
+                      accorder <strong>10 jours</strong> pour traiter votre
+                      demande de travail. Nous travaillerons avec diligence en
+                      coulisses pour vous trouver les candidats les plus
+                      appropriés. <br />
+                      3. <strong>Retour d'information et mises à jour</strong>: Nous comprenons l'importance de vous tenir informé tout au
+                      long du processus. Vous recevrez des mises à jour
+                      régulières sur l'état de votre travail, et notre équipe
+                      sera disponible pour répondre à toutes vos questions ou
+                      préoccupations. <br />
+                      4. <strong>Contactez-nous</strong>: Si vous avez des
+                      questions ou avez besoin d'assistance à tout moment, n'hésitez
+                      pas à nous contacter. Vous pouvez joindre notre équipe de
+                      support à [info@PMECoteDIvoireMarketplace.com]
                     </p>
 
                     </p>
@@ -151,7 +151,7 @@ const sendProviderOutSourcJobPaymentEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Côte d'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -177,10 +177,10 @@ const sendProviderOutSourcJobPaymentEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                   Thank you for choosing PME Cote D'Ivoire Marketplace.
+                   Merci de choisir PME Côte d'Ivoire Marketplace.
                 </p>
                 <p style="margin-bottom: 2px">
-                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                  <span>&copy;</span> 2024 PME Côte d'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -194,8 +194,8 @@ const sendProviderOutSourcJobPaymentEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: `Payment Approval Notification for Out-Source Jobs`,
-    html: `<h4>Job Payment Approval</h4>
+    subject: `Notification d'approbation de paiement pour travaux externalisés`,
+    html: `<h4>Approbation de Paiement pour Travail</h4>
     ${message}
     `,
   });

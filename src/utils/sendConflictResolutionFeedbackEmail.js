@@ -1,7 +1,5 @@
 const sendEmail = require("./sendEMail");
 
-
-
 const sendConflictResolutionFeedbackEmail = async ({
     username,
     email,
@@ -13,11 +11,11 @@ const sendConflictResolutionFeedbackEmail = async ({
 
     const messageContent = `
       <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8" />
-    <title>{{Conflict Resolution Feedback}}</title>
+    <title>Retour d'Information sur la Résolution de Conflit</title>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -81,32 +79,30 @@ const sendConflictResolutionFeedbackEmail = async ({
                       line-height: 30px;
                     ">
                                     <p style="margin-bottom: 2px; color: #333; font-weight: 600">
-                                    <p>Hello ${username},</p>
+                                    <p>Bonjour ${username},</p>
                                     </p>
                                     <p style="margin-bottom: 2px; color: #333">
 
-                                        You have received a response to your conflict report. Below are the
-                                        details of your request and our
-                                        response:
+                                        Vous avez reçu une réponse à votre rapport de conflit. Voici les
+                                        détails de votre demande et notre
+                                        réponse:
 
                                         <br />
 
-                                        <strong>Your Conflict Report:</strong>
+                                        <strong>Votre Rapport de Conflit:</strong>
                                         <br>
                                         ${reason}
                                     </p>
                                     <p style="margin-bottom: 2px; color: #333">
 
-                                        <strong>Our Response:</strong>
+                                        <strong>Notre Réponse:</strong>
                                         <br>
                                         ${message}
 
                                     </p>
                                     <p style="margin-bottom: 2px; color: #333">
-                                        <strong>Note:</strong> If you are not satisfied with this response, you can
-                                        either create another
-                                        ticket or
-                                        reply directly to this email for further assistance.
+                                        <strong>Remarque:</strong> Si vous n'êtes pas satisfait de cette réponse, vous pouvez
+                                        soit créer un autre ticket soit répondre directement à cet email pour obtenir une assistance supplémentaire.
                                     </p>
                                 </div>
 
@@ -117,7 +113,7 @@ const sendConflictResolutionFeedbackEmail = async ({
                       margin: 40px 0px 0px 0px;
                     ">
                                     <p style="color: #333">
-                                        Warm regards,<br />The <span> PME Cote D'Ivoire Marketplace</span> Team
+                                        Cordialement,<br />L'équipe du <span>Marketplace PME Cote D'Ivoire</span>
                                     </p>
                                 </div>
                             </div>
@@ -137,10 +133,10 @@ const sendConflictResolutionFeedbackEmail = async ({
                   color: #7e8299;
                 ">
                             <p style="margin-bottom: 2px">
-                                Thank you for choosing PME Cote D'Ivoire Marketplace.
+                                Merci d'avoir choisi le Marketplace PME Cote D'Ivoire.
                             </p>
                             <p style="margin-bottom: 2px">
-                               <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                               <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                             </p>
                         </td>
                     </tr>

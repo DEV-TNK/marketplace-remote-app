@@ -11,10 +11,10 @@ const sendOfferLetterEmail = async ({
   type,
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>{{Offer Letter From PME Cote D'Ivoire Marketplace}}</title>
+    <title>{{Lettre d'Offre de PME Cote D'Ivoire Marketplace}}<</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -101,26 +101,24 @@ const sendOfferLetterEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                       Cher(e) ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We are delighted to inform your Applicantion was
-                      successful and you have been sent an offer from
+                      Nous sommes ravis de vous informer que votre candidature a été
+                      acceptée et que vous avez reçu une offre de
                       <strong>${jobProvider}</strong>.
                       <br />
-                      Please review the Job details below before proceding to
-                      your <strong>Dashboard</strong> to accept or discuss more
-                      on the offer
+                      P Veuillez consulter les détails de l'emploi ci-dessous avant de vous rendre sur votre <strong>Tableau de bord</strong> pour accepter ou discuter de l'offre.
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Here are the details of your Job Offer:
+                      Voici les détails de votre offre d'emploi :
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Title: ${title}<br />
+                      Titre: ${title}<br />
                       Description: ${description}<br />
                       Type: ${type}<br />
-                      Price: ${price}<br />
-                      Delivery Date: ${deliveryDate}
+                      Prix: ${price}<br />
+                      Date de livraison: ${deliveryDate}
                     </p>
                   </div>
 
@@ -133,7 +131,7 @@ const sendOfferLetterEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -159,10 +157,10 @@ const sendOfferLetterEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                   Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                   Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme votre plateforme d'emploi.
                 </p>
                 <p style="margin-bottom: 2px">
-                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -176,8 +174,8 @@ const sendOfferLetterEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "Offer Email!",
-    html: `<h4>Job letter Alert</h4>
+    subject: "Email d'Offre!",
+    html: `<h4>Alerte de lettre d'emploi</h4>
     ${message}
     `,
   });

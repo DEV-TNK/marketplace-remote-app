@@ -7,10 +7,10 @@ const sendRejectLetterEmail = async ({
   jobProvider,
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Offer Rejection Letter from PME Cote D'Ivoire Marketplace</title>
+    <title>Lettre de rejet d'offre du marché PME Côte d'Ivoire</title>
     
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
@@ -94,15 +94,15 @@ const sendRejectLetterEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We regret to inform you that your application has been
-                      rejected by <strong>${jobProvider}</strong> for your
-                      application as <strong>${title}</strong> .
+                      Nous avons le regret de vous informer que votre candidature a été
+                      rejetée par <strong>${jobProvider}</strong> pour le poste de
+                      <strong>${title}</strong>.
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Thank you for your interest in the position.
+                       Nous vous remercions de l'intérêt que vous avez porté à cette offre.
                     </p>
                   </div>
                   <div
@@ -114,7 +114,7 @@ const sendRejectLetterEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe du marché PME Côte d'Ivoire
                     </p>
                   </div>
                 </div>
@@ -140,10 +140,10 @@ const sendRejectLetterEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                   Thank you for choosing PME Cote D'Ivoire Marketplace.
+                   Merci d'avoir choisi PME Côte d'Ivoire Marketplace.
                 </p>
                 <p style="margin-bottom: 2px">
-                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                  <span>&copy;</span> 2024 PME Côte d'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -157,8 +157,8 @@ const sendRejectLetterEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "Rejection Email!",
-    html: `<h4>Job letter Update</h4>
+    subject: "Email de rejet !",
+    html: `<h4>Mise à jour de la lettre d'emploi</h4>
     ${message}
     `,
   });

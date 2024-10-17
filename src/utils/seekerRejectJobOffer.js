@@ -11,10 +11,10 @@ const sendSeekerRejectOfferEmail = async ({
   type
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Job Offer Rejected Notification</title>
+    <title>Notification de rejet de l'offre de job</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -101,24 +101,22 @@ const sendSeekerRejectOfferEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${jobProvider},
+                      Cher/Chère ${jobProvider},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We regret to inform you that the job offer you extended
-                      for the position of [Job Title] has been rejected by
-                      ${username}.
+                      Nous regrettons de vous informer que l'offre de job que vous avez proposée pour le poste de ${jobTitle} a été refusée par ${username}.
                       <br />
-                      Please find the job details below for your reference:
+                      Veuillez trouver ci-dessous les détails du job pour votre référence:
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Title: ${jobTitle}<br />
+                      Titre: ${jobTitle}<br />
                       Description: ${description}<br />
                       Type: ${type}<br />
-                      Price: ${price}<br />
-                      Delivery Date: ${deliveryDate}
+                      Prix: ${price}<br />
+                      Date de livraison: ${deliveryDate}
                     </p>
                     <p>
-                      You can always reach out to
+                      Vous pouvez toujours contacter
                       <a
                         href="https://marketplacefrontendas-test.azurewebsites.net/authentication/signin"
                         target="_blank"
@@ -126,7 +124,7 @@ const sendSeekerRejectOfferEmail = async ({
                       >
                         <strong> ${username}</strong>
                       </a>
-                      to discuss more on this offer
+                      pour discuter davantage de cette offre.
                     </p>
                   </div>
                   <div
@@ -138,7 +136,7 @@ const sendSeekerRejectOfferEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -164,10 +162,10 @@ const sendSeekerRejectOfferEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                   Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                   Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme plateforme pour vos jobs.
                 </p>
                 <p style="margin-bottom: 2px">
-                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -182,8 +180,8 @@ const sendSeekerRejectOfferEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "Offer Email!",
-    html: `<h4>Offer Rejection Alert</h4>
+    subject: "Rejet d'offre!",
+    html: `<h4>Alerte de rejet de l'offre</h4>
     ${message}
     `,
   });

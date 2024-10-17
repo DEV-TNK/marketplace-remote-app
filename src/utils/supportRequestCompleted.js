@@ -7,10 +7,10 @@ const sendSupportRequestCompletedEmail = async ({
   supportReason,
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Support Request Completed</title>
+    <title>Demande d'Assistance Complétée</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -97,22 +97,22 @@ const sendSupportRequestCompletedEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                     We're pleased to inform you that your recent support request (ID: ${supportId}) has been successfully completed.
+                     Nous sommes heureux de vous informer que votre récente demande d'assistance (ID : ${supportId}) a été complétée avec succès.
                      
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                       Support Reason: ${supportReason}
+                        Motif de l'Assistance : ${supportReason}
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                     If you have any further questions or concerns, feel free to open another support request. 
-                     Our team is here to assist you.
+                     Si vous avez d'autres questions ou préoccupations, n'hésitez pas à soumettre une nouvelle demande d'assistance. 
+                     Notre équipe est là pour vous aider.
                     </p>
 
                     <p>
-                    Thank you for choosing our service.
+                    Merci d'avoir choisi notre service.
                     </p>
                   </div>
 
@@ -125,7 +125,7 @@ const sendSupportRequestCompletedEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -151,10 +151,10 @@ const sendSupportRequestCompletedEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                  Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme votre plateforme de travail.
                 </p>
                 <p style="margin-bottom: 2px">
-                  &copy; 2024 PME Cote D'Ivoire Marketplace. All rights Reserved.
+                  &copy; 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -168,8 +168,8 @@ const sendSupportRequestCompletedEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "Support Request Completed",
-    html: `<h4>Support Request Completed</h4>
+    subject: "Demande d'Assistance Complétée",
+    html: `<h4>Demande d'Assistance Complétée</h4>
     ${message}
     `,
   });

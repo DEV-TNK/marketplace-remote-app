@@ -5,10 +5,10 @@ const sendOutSourcingCreation = async ({
   email,
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Confirmation: Your Outsourcing Job Has Been Received!</title>
+    <title>Confirmation : Votre mission d'externalisation a bien été reçue </title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -95,21 +95,19 @@ const sendOutSourcingCreation = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Thank you for creating an outsourcing job with us! We've
-                      received your job details, and we're excited to get
-                      started. Our Team will get in touch with you as soon as possible
+                      Merci d'avoir créé une mission d'externalisation avec nous ! Nous avons
+                      bien reçu les détails de votre mission, et nous sommes impatients de commencer. Notre équipe vous contactera dès que possible.
                     </p>
                     <p>
-                    Should you have any
-                      questions or require assistance at any point during the
-                      process, please don't hesitate to reach out to us. You can
-                      contact our support team at [info@PMECoteD'IvoireMarketplace.com]
+                    Si vous avez des questions ou si vous avez besoin d'assistance à tout moment
+                      pendant le processus, n'hésitez pas à nous contacter. Vous pouvez
+                      joindre notre équipe d'assistance à l'adresse [info@PMECoteDIvoireMarketplace.com].
                     </p>
                     
-                    <p>Thank you for using our service.</p>
+                    <p>Merci d'utiliser notre service.</p>
                   </div>
 
                   <div
@@ -121,7 +119,7 @@ const sendOutSourcingCreation = async ({
                     "
                   >
                     <p style="color: #333">
-                      <strong>Warm regards </strong>,<br />The PME Cote D'Ivoire Marketplace Team
+                      <<strong>Cordialement</strong>,<br />L'équipe du marché PME Côte d'Ivoire
                     </p>
                   </div>
                 </div>
@@ -147,10 +145,10 @@ const sendOutSourcingCreation = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                   Thank you for choosing PME Cote D'Ivoire Marketplace.
+                   Merci d'avoir choisi PME Côte d'Ivoire Marketplace.
                 </p>
                 <p style="margin-bottom: 2px">
-                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                 <span>&copy;</span> 2024 PME Côte d'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -164,8 +162,8 @@ const sendOutSourcingCreation = async ({
 
   return sendEmail({
     to: email,
-    subject: `Confirmation: Your Outsourcing Job Has Been Received!`,
-    html: `<h4>OutSourcing Job Creation</h4>
+    subject: `Confirmation : Votre mission d'externalisation a bien été reçue !`,
+    html: `<h4>Création de mission d'externalisation</h4>
     ${message}
     `,
   });

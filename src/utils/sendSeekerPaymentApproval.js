@@ -7,10 +7,10 @@ const sendSeekerJobPaymentEmail = async ({
   price,
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Job Payment Approval</title>
+    <title>Approbation du Paiement de Travail</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -97,28 +97,28 @@ const sendSeekerJobPaymentEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                     We are pleased to inform you that your payment for ${jobTitle} has been approved and now available for withdrawal.. 
+                     Nous avons le plaisir de vous informer que votre paiement pour ${jobTitle} a été approuvé et est désormais disponible pour retrait. 
                       <br />
-                      Here are the details of your payment:
+                      Voici les détails de votre paiement:
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Title: ${jobTitle}<br />
-                      Price: ${price}<br />
+                      Titre: ${jobTitle}<br />
+                      Montant: ${price}<br />
                     </p>
                     <p>
-                       Please follow this steps to make withdrawal:
+                       Veuillez suivre ces étapes pour effectuer le retrait:
                       <ol>
-                        <li>Log in to your account on our platform.</li>
-                        <li>Navigate to the "Earnings" section.</li>
-                        <li>Select the option to withdraw funds.</li>
-                        <li>Follow the on-screen instructions to complete the withdrawal process.</li>
+                        <li>Connectez-vous à votre compte sur notre plateforme.</li>
+                        <li>Accédez à la section "Gains".</li>
+                        <li>Sélectionnez l'option pour retirer des fonds.</li>
+                        <li>Suivez les instructions à l'écran pour finaliser le processus de retrait.</li>
                       </ol>
-                      If you encounter any issues or have any questions regarding your payment, 
-                      feel free to reach out to our support team at <a href="mailto:migration@gfa-tech.com" style="text-decoration: none">support</a> for assistance. 
-                      We are here to help you every step of the way.
+                     Si vous rencontrez des problèmes ou avez des questions concernant votre paiement, 
+                      n'hésitez pas à contacter notre équipe de support à <a href="mailto:migration@gfa-tech.com" style="text-decoration: none">support</a> pour obtenir de l'aide. 
+                      Nous sommes là pour vous accompagner à chaque étape.
                     </p>
                   </div>
 
@@ -131,7 +131,7 @@ const sendSeekerJobPaymentEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -157,10 +157,10 @@ const sendSeekerJobPaymentEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                  Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme plateforme de travail.
                 </p>
                 <p style="margin-bottom: 2px">
-                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -174,8 +174,8 @@ const sendSeekerJobPaymentEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: `Payment Approval Notification for ${jobTitle}`,
-    html: `<h4>Job Payment Approval</h4>
+    subject: `Notification d'Approbation de Paiement pour ${jobTitle}`,
+    html: `<h4>Approbation de Paiement de Travail</h4>
     ${message}
     `,
   });

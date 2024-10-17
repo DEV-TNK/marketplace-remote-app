@@ -4,11 +4,11 @@ const sendResetPasswordAlert = async ({ username, email, origin }) => {
   const resetURL = `${origin}/support`;
 
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MARKETPLACE RESET PASSWORD</title>
+    <title>Réinitialisation du mot de passe MARKETPLACE</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
 
@@ -120,20 +120,18 @@ const sendResetPasswordAlert = async ({ username, email, origin }) => {
                         style="height: 60px" />
       </header>
       <section class="section-content">
-        <p>Hello ${username}</p>
+        <p>Bonjour ${username}</p>
         <p>
-          Your <span>PME Cote D'Ivoire Marketplace</span> Account password was successfully changed. If
-          you did not initiate this process, please contact our  <a href="${resetURL}"><span>support</span></a></p> team in
-          order to help you get you account back
+          Le mot de passe de votre compte <span>PME Côte d'Ivoire Marketplace</span> a été modifié avec succès. Si vous n'avez pas initié cette action, veuillez contacter notre équipe <a href="${resetURL}"><span>support</span></a> afin que nous puissions vous aider à récupérer votre compte.
         </p>
 
-        <p class="last">Best regards,</p>
-        <p>The <span>PME Cote D'Ivoire Marketplace</span> Team.</p>
+        <p class="last">Cordialement,</p>
+        <p>L'équipe <span>PME Côte d'Ivoire Marketplace</span>.</p>
       </section>
       <footer>
        
           <p class="copyright">
-           <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+           <span>&copy;</span> 2024 PME Côte d'Ivoire Marketplace. Tous droits réservés.
           </p>
 
       </footer>
@@ -144,8 +142,8 @@ const sendResetPasswordAlert = async ({ username, email, origin }) => {
 
   return sendEmail({
     to: email,
-    subject: "PME Cote D'Ivoire Marketplace Reset Password",
-    html: `<h4> Hello, ${username}</h4>
+    subject: "Réinitialisation du mot de passe PME Côte d'Ivoire Marketplace",
+    html: `<h4> Bonjour, ${username}</h4>
     ${message}
     `,
   });

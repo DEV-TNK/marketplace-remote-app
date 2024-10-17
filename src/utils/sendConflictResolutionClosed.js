@@ -8,10 +8,10 @@ const sendConflictResolutionClosedEmail = async ({
   message,
 }) => {
   const Emailmessage = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Conflict Resolution Closed</title>
+    <title>Résolution de conflit clôturée</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -98,25 +98,25 @@ const sendConflictResolutionClosedEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                     We are writing to inform you that the conflict resolution with  ID ${resolutionId} has been closed as it has been marked as resolved.
+                     Nous vous informons que la résolution de conflit avec l'ID ${resolutionId} a été clôturée car elle a été marquée comme résolue.
                      
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Reason: ${reason}
+                      Raison: ${reason}
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
                       Message: ${message}
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                     If you have any further concerns or need assistance, please don't hesitate to open another conflict resolution from your dashboard. 
-                     Our team is available to help you.
+                     Si vous avez d'autres préoccupations ou avez besoin d'aide, n'hésitez pas à ouvrir une nouvelle résolution de conflit depuis votre tableau de bord.
+                     Notre équipe est disponible pour vous aider.
                     </p>
 
                     <p>
-                    Thank you for your understanding.
+                    Merci pour votre compréhension.
                     </p>
                   </div>
 
@@ -129,7 +129,7 @@ const sendConflictResolutionClosedEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -155,10 +155,10 @@ const sendConflictResolutionClosedEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                  Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                  Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme plateforme pour vos jobs.
                 </p>
                 <p style="margin-bottom: 2px">
-                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -172,8 +172,8 @@ const sendConflictResolutionClosedEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "Conflict Resolution Closed",
-    html: `<h4>Conflict Resolution Closed</h4>
+    subject: "Résolution de conflit clôturée",
+    html: `<h4>Résolution de conflit clôturée</h4>
     ${Emailmessage}
     `,
   });
