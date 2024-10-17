@@ -6,7 +6,7 @@ const sendWelcomeEmail = async ({ username, email }) => {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to PME Cote D'Ivoire Marketplace</title>
+    <title>Bienvenue sur PME Côte d'Ivoire Marketplace</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
 
@@ -183,34 +183,32 @@ const sendWelcomeEmail = async ({ username, email }) => {
       </header>
       <section class="section-content">
         <div class="experince">
-          <p>Welcome to PME Cote D'Ivoire Marketplace!</p>
+          <p>Bienvenue sur PME Côte d'Ivoire Marketplace!</p>
           <img src="./images/person.png" alt="person" />
         </div>
-        <p>Hello ${username}</p>
+        <p>Bonjour ${username}</p>
         <p>
-          Welcome to <span>PME Cote D'Ivoire Marketplace</span>, your premier platform for discovering exciting remote job opportunities! 
-          We're thrilled to have you join our community, where you'll find a plethora of remote positions tailored to match your skills and preferences.
+          Bienvenue sur <span>PME Côte d'Ivoire Marketplace</span>, votre plateforme de choix pour découvrir des opportunités d'emploi à distance passionnantes !
+          Nous sommes ravis de vous accueillir dans notre communauté, où vous trouverez une multitude de postes à distance adaptés à vos compétences et préférences.
         </p>
         <div class="gettingStarted">
           <ul>
             <li>
-              At PME Cote D'Ivoire Marketplace, we understand the evolving landscape of work, and we're dedicated to connecting talented individuals like yourself with top-notch remote roles from leading companies worldwide. 
-              Whether you're seeking flexibility, autonomy, or the chance to work from anywhere, we've got you covered.
+              Chez PME Côte d'Ivoire Marketplace, nous comprenons l'évolution du monde du travail, et nous sommes dédiés à connecter des talents comme vous avec des rôles à distance de premier ordre auprès d'entreprises de renom à travers le monde. 
+              Que vous recherchiez flexibilité, autonomie ou l'opportunité de travailler de n'importe où, nous avons ce qu'il vous faut.
             </li>
             <li>
-              As a member of PME Cote D'Ivoire Marketplace, you'll gain access to a curated selection of remote job listings spanning various industries, including tech, marketing, design, customer support, and more. 
-              Our intuitive platform makes it easy to browse, apply, and track your job applications, ensuring a seamless experience from start to finish.
+             En tant que membre de PME Côte d'Ivoire Marketplace, vous aurez accès à une sélection exclusive d'offres d'emploi à distance couvrant divers secteurs, y compris la technologie, le marketing, le design, le support client, et bien plus encore. 
+              Notre plateforme intuitive facilite la recherche, la candidature et le suivi de vos candidatures, garantissant une expérience fluide du début à la fin.
             </li>
             <li>
-              But that's not all - PME Cote D'Ivoire Marketplace is more than just a job board. It's a vibrant community of remote professionals, offering networking opportunities, career resources, and insightful content to support your professional growth and success.
+              Mais ce n'est pas tout - PME Côte d'Ivoire Marketplace est bien plus qu'un simple tableau d'offres d'emploi. C'est une communauté dynamique de professionnels à distance, offrant des opportunités de réseautage, des ressources pour votre carrière, et du contenu enrichissant pour soutenir votre développement professionnel et votre succès.
             </li>
           </ul>
           <p>
-           So, whether you're embarking on a new remote career journey or seeking your next remote adventure, PME Cote D'Ivoire Marketplace is here to empower you every step of the way.
+           Que vous débutiez une nouvelle carrière à distance ou que vous recherchiez votre prochaine aventure à distance, PME Côte d'Ivoire Marketplace est là pour vous accompagner à chaque étape.
 
-            Get started today by exploring our latest job listings and joining the conversation in our community forums. The remote career of your dreams awaits!
-
-
+            Commencez dès aujourd'hui en explorant nos dernières offres d'emploi et en rejoignant la conversation dans nos forums communautaires. La carrière à distance de vos rêves vous attend!
           </p>
         </div>
         <div class="click">
@@ -219,15 +217,15 @@ const sendWelcomeEmail = async ({ username, email }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <button>Get Started Now</button>
+            <button>Commencer Maintenant</button>
           </a>
         </div>
-        <p class="last">Welcome aboard,</p>
-        <p>The <span>PME Cote D'Ivoire Marketplace</span> Team.</p>
+        <p class="last">Bienvenue à bord,</p>
+        <p>L'équipe <span>PME Cote D'Ivoire Marketplace</span> Team.</p>
       </section>
       <footer>
           <p class="copyright">
-            <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+            <span>&copy;</span> 2024 PME Côte d'Ivoire Marketplace. Tous droits réservés.
           </p>
         </div>
       </footer>
@@ -238,8 +236,8 @@ const sendWelcomeEmail = async ({ username, email }) => {
 
   return sendEmail({
     to: email,
-    subject: "Welcome To PME Cote D'Ivoire Marketplace",
-    html: `<h4> Hello, ${username}</h4>
+    subject: "Bienvenue sur PME Côte d'Ivoire Marketplace",
+    html: `<h4> Bonjour, ${username}</h4>
     ${message}
     `,
   });

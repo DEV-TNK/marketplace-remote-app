@@ -10,10 +10,10 @@ const sendVerificationEmail = async ({
   const verifyEmail = `${origin}/user/verify-email?token=${verificationToken}&email=${email}&userType=${userType}`;
 
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Email Verification</title>
+    <title>Vérification de l'email</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -97,7 +97,7 @@ const sendVerificationEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Hello ${username},
+                      Bonjour ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
                       Bienvenue sur PME Cote D'Ivoire Marketplace ! Nous sommes
@@ -166,8 +166,8 @@ const sendVerificationEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "PME Cote D'Ivoire Email Comfirmation",
-    html: `<h4> Hello, ${username}</h4>
+    subject: "Confirmation de l'email PME Cote D'Ivoire",
+    html: `<h4> Bonjour, ${username}</h4>
     ${message}
     `,
   });

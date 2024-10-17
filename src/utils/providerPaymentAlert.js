@@ -2,10 +2,10 @@ const sendEmail = require("./sendEMail");
 
 const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Job Payment Confirmation</title>
+    <title>Confirmation de Paiement de Job</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -92,20 +92,17 @@ const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                      Cher/Chère ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We are writing to inform you that payment has been
-                      received for the job titled <strong>${jobTitle}</strong>.
+                       Nous vous informons que le paiement pour le job intitulé <strong>${jobTitle}</strong> a été reçu.
                       <br />
-                      You can now consider the payment process complete
+                      Vous pouvez désormais considérer que le processus de paiement est complété.
                       <br />
                     </p>
                     <p>
-                      <strong>Note</strong> <br />
-                      Please always connect with your client about the job
-                      status and don't forget to hit the complete button only
-                      when the job have been completed
+                      <strong>Remarque</strong> <br />
+                      Veuillez toujours rester en contact avec votre client concernant l'état du job et n'oubliez pas d'appuyer sur le bouton de finalisation uniquement lorsque le job est terminé.
                     </p>
                   </div>
 
@@ -118,7 +115,7 @@ const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe PME Cote D'Ivoire Marketplace
                     </p>
                   </div>
                 </div>
@@ -144,10 +141,10 @@ const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
                 "
               >
                 <p style="margin-bottom: 2px">
-                   Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                   Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme plateforme pour vos jobs.
                 </p>
                 <p style="margin-bottom: 2px">
-                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -161,8 +158,8 @@ const sendProviderJobPaymentEmail = async ({ username, email, jobTitle }) => {
 
   return sendEmail({
     to: email,
-    subject: "Payment Email!",
-    html: `<h4>Payment Receipt Alert</h4>
+    subject: "Email de Confirmation de Paiement!",
+    html: `<h4>Alerte de Réception de Paiement</h4>
     ${message}
     `,
   });

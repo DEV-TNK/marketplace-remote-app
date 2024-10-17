@@ -12,10 +12,10 @@ const sendSeekerJobPaymentEmail = async ({
   currency
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Job Payment Confirmation</title>
+    <title>Confirmation de Paiement de Job</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -102,30 +102,30 @@ const sendSeekerJobPaymentEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${username},
+                       Cher ${username},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We are pleased to inform you that payment has been
-                      received for the job titled <strong>${jobTitle}</strong> from ${jobProvider}.
-                      You can now proceed with starting the job.
+                       Nous avons le plaisir de vous informer que le paiement a été
+                      reçu pour le job intitulé <strong>${jobTitle}</strong> de ${jobProvider}.
+                      Vous pouvez maintenant commencer le travail.
                       <br />
-                      Please review the job details below:
+                     Veuillez consulter les détails du job ci-dessous:
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Title: ${jobTitle}<br />
+                      Titre: ${jobTitle}<br />
                       Description: ${description}<br />
                       Type: ${type}<br />
-                      Price: ${currency} ${price} <br />
-                      Delivery Date: ${deliveryDate}
+                      Prix: ${currency} ${price} <br />
+                      Date de Livraison: ${deliveryDate}
                     </p>
                     <p>
-                      To start the Job, Please go to your
+                      Pour commencer le job, veuillez aller sur votre
                       <a
                         href="https://marketplacefrontendas-test.azurewebsites.net/authentication/signin"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <strong>Dashboard</strong>
+                        <strong>Tableau de Bord</strong>
                       </a>
                       .
                     </p>
@@ -140,7 +140,7 @@ const sendSeekerJobPaymentEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                      Cordialement,<br />L'équipe du Marketplace PME Cote D'Ivoire
                     </p>
                   </div>
                 </div>
@@ -166,10 +166,10 @@ const sendSeekerJobPaymentEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                   Thank you for choosing PME Cote D'Ivoire Marketplace.
+                    Merci d'avoir choisi le Marketplace PME Cote D'Ivoire.
                 </p>
                 <p style="margin-bottom: 2px">
-                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                 <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -183,8 +183,8 @@ const sendSeekerJobPaymentEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "Payment Email!",
-    html: `<h4>Job Payment Alert</h4>
+    subject: "Email de Paiement !",
+    html: `<h4>Alerte de Paiement de Job</h4>
     ${message}
     `,
   });

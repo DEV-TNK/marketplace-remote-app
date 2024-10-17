@@ -11,10 +11,10 @@ const sendAcceptanceJobEmail = async ({
   type
 }) => {
   const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Job Offer Accepted Notification</title>
+    <title>Notification d'Acceptation de Job</title>
     <style>
       @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -101,38 +101,39 @@ const sendAcceptanceJobEmail = async ({
                     <p
                       style="margin-bottom: 2px; color: #333; font-weight: 600"
                     >
-                      Dear ${jobProvider},
+                    Cher/Chère ${jobProvider},
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      We are pleased to inform you that your job offer for the
-                      position of ${jobTitle} has been accepted by ${username}.
+                      Nous avons le plaisir de vous informer que votre offre de job pour le
+                      poste de ${jobTitle} a été acceptée par ${username}.
                       <br />
-                      Please review the job details below:
+                      Veuillez consulter les détails du job ci-dessous:
                     </p>
                     <p style="margin-bottom: 2px; color: #333">
-                      Title: ${jobTitle}<br />
+                      Titre: ${jobTitle}<br />
                       Description: ${description}<br />
                       Type: ${type}<br />
-                      Price: ${price}<br />
-                      Delivery Date: ${deliveryDate}
+                      Prix: ${price}<br />
+                      Date de Livraison: ${deliveryDate}
                     </p>
                     <p>
-                      Please Note that the Job seeker won't start the Job until
-                      you make payment for the Job that will be hold by
-                      PME Cote D'Ivoire Marketplace to guarantee safe Client and Job Seeker
-                      relation and only release when you give permission that
-                      the Job seeker has fulfilled all Job requirement.
+                      Veuillez noter que le demandeur d'emploi ne commencera pas le job tant que
+                      vous n'aurez pas effectué le paiement pour le job, qui sera
+                      retenu par le Marketplace PME Cote D'Ivoire pour garantir une relation
+                      sécurisée entre le client et le demandeur d'emploi, et sera libéré uniquement
+                      lorsque vous donnerez votre accord que le demandeur a rempli toutes les
+                      exigences du job.
                     </p>
                     <p>
-                      To start the Job, Please go to your
+                      Pour commencer le job, veuillez vous rendre sur votre
                       <a
                         href="https://marketplacefrontendas-test.azurewebsites.net/authentication/signin"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <strong>Dashboard</strong>
+                        <strong>Tableau de Bord</strong>
                       </a>
-                      to make payment for the Job
+                      pour effectuer le paiement du job.
                     </p>
                   </div>
 
@@ -145,7 +146,7 @@ const sendAcceptanceJobEmail = async ({
                     "
                   >
                     <p style="color: #333">
-                      Warm regards,<br />The PME Cote D'Ivoire Marketplace Team
+                     Cordialement,<br />L'équipe du Marketplace PME Cote D'Ivoire
                     </p>
                   </div>
                 </div>
@@ -171,10 +172,10 @@ const sendAcceptanceJobEmail = async ({
                 "
               >
                 <p style="margin-bottom: 2px">
-                   Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.
+                   Merci d'avoir choisi le Marketplace PME Cote D'Ivoire comme votre plateforme de job.
                 </p>
                 <p style="margin-bottom: 2px">
-                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                  <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                 </p>
               </td>
             </tr>
@@ -188,8 +189,8 @@ const sendAcceptanceJobEmail = async ({
 
   return sendEmail({
     to: email,
-    subject: "Offer Email!",
-    html: `<h4>Offer Acceptance Alert</h4>
+    subject: "Email d'Offre !",
+    html: `<h4>Alerte d'Acceptation d'Offre</h4>
     ${message}
     `,
   });

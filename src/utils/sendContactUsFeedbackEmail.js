@@ -1,7 +1,6 @@
 const sendEmail = require("./sendEMail");
 
 
-
 const sendContactUsFeedbackEmail = async ({
     username,
     email,
@@ -13,11 +12,11 @@ const sendContactUsFeedbackEmail = async ({
 
     const messageContent = `
       <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8" />
-    <title>{{Contact Us Feedback}}</title>
+    <title>{{Retour de Contactez-Nous}}</title>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -81,32 +80,30 @@ const sendContactUsFeedbackEmail = async ({
                       line-height: 30px;
                     ">
                                     <p style="margin-bottom: 2px; color: #333; font-weight: 600">
-                                    <p>Hello ${username},</p>
+                                    <p>Bonjour ${username},</p>
                                     </p>
                                     <p style="margin-bottom: 2px; color: #333">
 
-                                        You have received a response to your request. Below are the
-                                        details of your request and our
-                                        response:
+                                        Vous avez reçu une réponse à votre demande. Voici les détails de votre
+                                        demande ainsi que notre réponse:
 
                                         <br />
 
-                                        <strong>Your Request:</strong>
+                                        <strong>Votre demande:</strong>
                                         <br>
                                         ${reason}
                                     </p>
                                     <p style="margin-bottom: 2px; color: #333">
 
-                                        <strong>Our Response:</strong>
+                                        <strong>Notre réponse:</strong>
                                         <br>
                                         ${message}
 
                                     </p>
                                     <p style="margin-bottom: 2px; color: #333">
-                                        <strong>Note:</strong> If you are not satisfied with this response, you can
-                                        either create another help
-                                        ticket or
-                                        reply directly to this email for further assistance.
+                                        <strong>Remarque:</strong> Si vous n'êtes pas satisfait(e) de cette réponse, vous
+                                        pouvez créer un autre ticket
+                                        d'assistance ou répondre directement à cet email pour obtenir plus d'aide.
                                     </p>
                                 </div>
 
@@ -117,7 +114,7 @@ const sendContactUsFeedbackEmail = async ({
                       margin: 40px 0px 0px 0px;
                     ">
                                     <p style="color: #333">
-                                        Warm regards,<br />The <span>PME Cote D'Ivoire Marketplace</span> Team
+                                        Cordialement,<br />L'équipe <span>PME Cote D'Ivoire Marketplace</span>
                                     </p>
                                 </div>
                             </div>
@@ -137,10 +134,10 @@ const sendContactUsFeedbackEmail = async ({
                   color: #7e8299;
                 ">
                             <p style="margin-bottom: 2px">
-                                Thank you for choosing PME Cote D'Ivoire Marketplace.
+                                Merci d'avoir choisi PME Cote D'Ivoire Marketplace.
                             </p>
                             <p style="margin-bottom: 2px">
-                               <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.
+                               <span>&copy;</span> 024 PME Cote D'Ivoire Marketplace. Tous droits réservés.
                             </p>
                         </td>
                     </tr>

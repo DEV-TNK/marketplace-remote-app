@@ -9,11 +9,11 @@ const sendCoursePurchaseEmail = async ({
     hour,
 }) => {
     const message = `<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <title>{{Thank You for Purchasing Our Course!}}</title>
+    <title>{{Merci d'avoir acheté notre cours !}}</title>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap");
 
@@ -52,35 +52,29 @@ const sendCoursePurchaseEmail = async ({
                                 <!--begin:Text-->
                                 <div
                                     style="font-size: 15px; font-weight: normal; margin-bottom: 27px; line-height: 30px">
-                                    <p style="margin-bottom:2px; color:#333; font-weight: 600">Dear ${username},</p>
-                                    <p style="margin-bottom:2px; color:#333">Thank You for Purchasing Our Course!</h2>
-                                    <p>We wanted to take a moment to express our gratitude for your recent purchase of
-                                        our course. Your support means a lot
-                                        to us!</p>
+                                    <p style="margin-bottom:2px; color:#333; font-weight: 600">Cher/Chère ${username},</p>
+                                    <p style="margin-bottom:2px; color:#333">Merci d'avoir acheté notre cours!</h2>
+                                    <p>Nous souhaitons exprimer notre gratitude pour l'achat récent de notre cours. Votre soutien nous est très précieux!</p>
                                     <p style="margin-bottom: 2px; color: #333">
-                                        Here are the details of your course:
+                                        Voici les détails de votre cours:
                                     </p>
                                     <p style="margin-bottom: 2px; color: #333">
-                                        Title: ${title}<br />
-                                        Category: ${category}<br />
-                                        Price: ${price}<br />
-                                        Hours: ${hour}
+                                        Titre: ${title}<br />
+                                        Catégorie: ${category}<br />
+                                        Prix: ${price}<br />
+                                        Heures: ${hour}
                                     </p>
 
-                                    <p style="margin-bottom:2px; color:#333">We hope you find the course valuable and
-                                        that it helps you achieve your goals. Should you have any questions or need
-                                        further assistance, don't hesitate to reach out to us.</p>
-                                    <p style="margin-bottom:2px; color:#333">Thank you once again for choosing Remsana as your Online Learning Platform</p>
-                                    <p style="margin-bottom:2px; color:#333">Should you have any questions or require
-                                        further assistance, please do not hesitate to contact our dedicated support team
-                                        at <a href="mailto:support@PMECoteD'IvoireMarketplace.com"
+                                    <p style="margin-bottom:2px; color:#333">Nous espérons que vous trouverez ce cours utile et qu'il vous aidera à atteindre vos objectifs. Si vous avez des questions ou besoin d'assistance, n'hésitez pas à nous contacter.</p>
+                                    <p style="margin-bottom:2px; color:#333">Merci encore d'avoir choisi Remsana comme votre plateforme d'apprentissage en ligne</p>
+                                    <p style="margin-bottom:2px; color:#333">Si vous avez des questions ou avez besoin d'assistance supplémentaire, n'hésitez pas à contacter notre équipe de support dédiée à l'adresse suivante <a href="mailto:support@PMECoteD'IvoireMarketplace.com"
                                             style="text-decoration: none">support@PMECoteD'IvoireMarketplace.com</a>.</p>
                                 </div>
                                 <!--end:Text-->
 
                                 <div
                                     style="font-size: 15px; font-weight: normal; line-height: 30px; margin: 40px 0px 0px 0px">
-                                    <p style="color:#333;">Warm regards,<br>The PME Cote D'Ivoire Marketplace Team</p>
+                                    <p style="color:#333;">Cordialement,<br>L'équipe PME Cote D'Ivoire Marketplace</p>
                                 </div>
                             </div>
                         </td>
@@ -89,8 +83,8 @@ const sendCoursePurchaseEmail = async ({
                         style="display: flex; justify-content: center; margin:0 25px 35px 25px; border-top: 1px solid #e7e9ed;">
                         <td align="center" valign="center"
                             style="font-size: 13px; text-align:left; padding: 10px 0 0 0; font-weight: 500; color: #7E8299">
-                            <p style="margin-bottom:2px">Thank you for choosing PME Cote D'Ivoire Marketplace as your job platform.</p>
-                            <p style="margin-bottom:2px"> <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. All rights reserved.</p>
+                            <p style="margin-bottom:2px">Merci d'avoir choisi PME Cote D'Ivoire Marketplace comme votre plateforme d'emploi.</p>
+                            <p style="margin-bottom:2px"> <span>&copy;</span> 2024 PME Cote D'Ivoire Marketplace. Tous droits réservés.</p>
                         </td>
                     </tr>
                 </tbody>
@@ -104,8 +98,8 @@ const sendCoursePurchaseEmail = async ({
     return sendEmail({
         to: email,
         subject:
-            "Congratulations! Your New Purchased Course is Now Live on PME Cote D'Ivoire Marketplace Platform",
-        html: `<h4> Hello, ${username}</h4>
+            "Félicitations ! Votre nouveau cours acheté est maintenant en ligne sur la plateforme PME Cote D'Ivoire Marketplace",
+        html: `<h4> Bonjour, ${username}</h4>
     ${message}
     `,
     });
