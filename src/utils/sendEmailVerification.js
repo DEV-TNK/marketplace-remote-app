@@ -8,6 +8,7 @@ const sendVerificationEmail = async ({
   origin,
 }) => {
   const verifyEmail = `${origin}/user/verify-email?token=${verificationToken}&email=${email}&userType=${userType}`;
+  
 
   const message = `<!DOCTYPE html>
 <html lang="fr">
